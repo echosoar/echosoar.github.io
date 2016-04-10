@@ -1,2 +1,2 @@
-# echosoar.github.io
-高扬的小站
+# IWenKu.net
+欢迎大家访问我的博客 http://iwenku.net
