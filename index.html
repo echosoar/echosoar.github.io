@@ -1,36 +1,53 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta charset='utf-8'>
+<div id="container">loading...</div>
+<script>
+if(/invite=(\w*)/.test(location.href)){
+  var invite = /invite=(\w*)/.exec(location.href);
+  invite = invite[1];
+  location.href = 'https://iwenku.net/account/?sso=signup&invite=' + invite + '&fromName=Jser.pro&from=' + location.href.replace(/invite=(\w*)/g,'');
+}
+if(/ssid=(\w*)/.test(location.href)) {
+  var ssid = /ssid=(\w*)/.exec(location.href);
+  ssid = ssid[1];
+  localStorage.setItem('jserProSSID', ssid);
+  location.href = location.href.replace(/ssid=(\w*)/g,'');
+}
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+var req = function(url, params, cb) {
+	var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4) {
+            if(xhr.status == 200){
+            	var data = xhr.responseText;
+        		try{ data = JSON.parse(data);}catch(e){}
+    			cb(data);
+            }else {
+            	cb({success: false, error: '接口错误<br />API Error'});
+            }
+        }
+    }
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.send(params);
+}
 
-    <title>Loction to IWenKu.net</title>
-  </head>
+var loginLink = 'https://iwenku.net/account/?sso=signin&fromName=Jser.pro&from=' + location.href;
+var ssid = localStorage.getItem('jserProSSID');
+if(!ssid) {
+  location.href = loginLink;
+} else {
+  req('https://iwenku.net/account/ssid.php', 'ssid=' + ssid, function(data) {
+    if(data.success) {
+      document.getElementById("container").innerHTML = 'login success! 网站建设中...点击退出登录';
+    } else {
+      location.href = loginLink;
+    }
+  });
+}
 
-  <body>
-
-    <header>
-      <div class="container">
-        <h1>Echosoar.GitHub.io</h1>
-        <h2>高扬的小站</h2>
-
-        <section id="downloads">
-          <a href="https://github.com/echosoar" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
-
-    <div class="container">
-      <section id="main_content">
-        <p>高扬的技术博客-页面即将跳转...请稍后...</p>
-        <script>location="http://iwenku.net";</script>
-      </section>
-    </div>
-
-    
-  </body>
-</html>
+document.getElementById("container").onclick = function() {
+  localStorage.removeItem('jserProSSID');
+  location.href = loginLink;
+}
+</script>
