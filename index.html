@@ -6,12 +6,14 @@ if(/invite=(\w*)/.test(location.href)){
   var invite = /invite=(\w*)/.exec(location.href);
   invite = invite[1];
   location.href = 'https://iwenku.net/account/?sso=signup&invite=' + invite + '&fromName=Jser.pro&from=' + location.href.replace(/invite=(\w*)/g,'');
+  throw new Error('exit');
 }
 if(/ssid=(\w*)/.test(location.href)) {
   var ssid = /ssid=(\w*)/.exec(location.href);
   ssid = ssid[1];
   localStorage.setItem('jserProSSID', ssid);
   location.href = location.href.replace(/ssid=(\w*)/g,'');
+  throw new Error('exit');
 }
 
 var req = function(url, params, cb) {
