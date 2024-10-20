@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                 html,body { padding: 0; font-size: 14px;}
+                    header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        padding: 12px 0;
+                        border-bottom: 1px solid #ccc;
+                        background-color: #fff;
+                        z-index: 3;
+                    }
+                    nav > a {
+                        margin-right: 20px;
+                        font-size: 16px;
+                        color: #666;
+                        line-height: 20px;
+                        text-decoration: none;
+                    }
+                    .list {
+                        padding-top: 72px;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .list-item {
+                        display: block;
+                        padding: 12px 0;
+                        border-bottom: 1px dotted #e5e5e5;
+                        text-decoration: none;
+                        color: #333;
+                        position: relative;
+                        box-sizing: border-box;
+                        padding-right: 80px;
+                    }
+
+                    .list-item span {
+                        display: block;
+                        font-size: 16px;
+                        line-height: 20px;
+                        color: #333;
+                    }
+                    .list-item time {
+                        display: block;
+                        position: absolute;
+                        right: 0;
+                        top: 12px;
+                        font-size: 12px;
+                        color: #999;
+                        line-height: 20px;
+                    }
+                    .title {
+                        padding-top: 72px;
+                        text-align: center;
+                    }
+                    .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    article {
+                        padding: 24px 0;
+                        line-height: 1.8;
+                    }
+                    article > p {
+                        padding: 12px 0;
+                    }
+                    article img {
+                        max-width: 100%;
+                        height: auto;
+                        margin: 12px auto;
+                        display: block;
+                        border-radius: 4px;
+                        border: 1px solid #e5e5e5;
+                    }
+                    article pre {
+                        padding: 12px;
+                        background-color: #f5f5f5;
+                        border-radius: 4px;
+                        overflow: auto;
+                    }
+                    article .inline-code {
+                        padding: 0px 4px;
+                        background-color: #e0e0e0;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                       
+                    .center {
+                        position: relative;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .right {
+                        position: absolute;
+                        right: 0;
+                        font-size: 16px;
+                        color: #666;
+                        top: 0;
+                        line-height: 20px;
+                        text-decoration:none;
+                    }
+                    footer {
+                        padding: 40px 0;
+                        text-align: center;
+                        font-size: 13px;
+                        color: #999;
+                    }
+                </style>
+            </head>
+            <body><header>
+            <div class="center">
+                <nav><a href="/">Home</a><a href="/about/">About</a><a href="/weekly/">Weekly</a></nav>
+                <a class="right" href="/rss.xml">RSS</a>
+            </div>
+        </header>
+<h1 class="title">从 V8 源码分析一个JS 数组的内存占用问题</h1>
+<time class="time">2021/08/22</time>
+<article class="center"><p>前段时间，在排查一个问题的时候，遇到了一个有点令人困惑的情况，有下面这两段代码：</p>
+<pre><code>const a = new Array(99999);
+a[99998] = undefined;</code></pre>
+<pre><code>const b = new Array(99999);
+b[99999] = undefined;</code></pre>
+<p>我们通过 
+<span class="inline-code">node --inspect-brk</span>
+ 来分别运行这两段代码，在代码运行的最开始和结束的时候分别task heap snapshot，分析对应的内存占用信息如下：</p>
+<p><img src="https://cdn.1htr.cn/blog/20210822-v8-01.png" alt="" /></p>
+<p><img src="https://cdn.1htr.cn/blog/20210822-v8-02.png" alt="" /></p>
+<p>可以发现第二段代码的内存占用明显要小于第一段，那么问题就出现在这个 
+<span class="inline-code">99999</span>
+ 的越界赋值上面。</p>
+<p>在V8代码（
+<a href="https://github.com/v8/v8/blob/master/src/objects/js-array.h#L19" target="_blank">v8/src/objects/js-array.h#L19</a>
+）中有很明确的标注，数组有两种模式，快数组和慢数组，在数组初始化时，默认的存储方式为快数组（
+<a href="https://github.com/v8/v8/blob/master/src/objects/js-objects.h#L317" target="_blank">v8/src/objects/js-objects.h#L317</a>
+），其内存占用是连续的，而慢数组会使用HashTable来进行数据存储。</p>
+<p>另外数组会分为压紧（
+<strong>Packed</strong>
+）的和有洞的（
+<strong>Holey</strong>
+）两种，例如 
+<span class="inline-code">['a', 'b', 'c']</span>
+ 这样的数组长度为3，数组索引0、1、2均有值，那么就认为是Packed；而对于 
+<span class="inline-code">['a',,,'d']</span>
+ 这样的数组，长度为4，但是索引1、2位置并没有进行初始化赋值，那么就认为是Holey。当数组出现了较大空洞的时候，内存明显是被浪费了。</p>
+<p>V8中对于大型空洞数组进行了优化，在V8博客（
+<a href="https://v8.dev/blog/fast-properties#elements-or-array-indexed-properties" target="_blank">https://v8.dev/blog/fast-properties</a>
+）中进行说明了这一点，对于非常大的Holey数组来说，FixedArray会造成内存浪费，所以会使用字典来节约内存，也就是会使用慢数组模式。</p>
+<p>使用v8-debug分别对最开始的两段代码进行调试：</p>
+<p><img src="https://cdn.1htr.cn/blog/20210822-v8-03.png" alt="" /></p>
+<p><img src="https://cdn.1htr.cn/blog/20210822-v8-04.png" alt="" /></p>
+<p>可以很明显的看到，第一个数组为FixedArray，而第二个数组为Dictionary，那么为什么只有第二个数组转换为了字典模式呢？</p>
+<p>在V8中JSArray是继承于JSObject的，所以当设置属性的时候，会依次执行 
+<span class="inline-code">Object::SetProperty</span>
+ 、 
+<span class="inline-code">Object::AddDataProperty</span>
+ 、 
+<span class="inline-code">JSObject::AddDataElement</span>
+ 、 
+<span class="inline-code">ShouldConvertToSlowElements</span>
+ ,回到V8代码中，
+<span class="inline-code">ShouldConvertToSlowElements</span>
+这个方法，它是用来判断是否将一个数组转换为慢模式（Dictionary）（
+<a href="https://github.com/v8/v8/blob/master/src/objects/js-objects-inl.h#L794" target="_blank">v8/src/objects/js-objects-inl.h#L794</a>
+）：</p>
+<p><img src="https://cdn.1htr.cn/blog/20210822-v8-05.png" alt="" /></p>
+<p>从上面的代码可以看到，当设置 
+<span class="inline-code">99998</span>
+ 的时候，索引小于当前容量的时候，返回值为false，也就是不进行转换。</p>
+<p>而当设置 
+<span class="inline-code">99999</span>
+ 这个索引的值的时候，因为超出了原来的FixedArray容量，那么就会进行扩容，扩容的算法（
+<a href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/objects/js-objects.h#L540" target="_blank">v8/src/objects/js-objects.h#L540</a>
+）为容量 + 容量 /2 + 16，那么原来 99999 的容量就会扩容放大到 15万。</p>
+<p><img src="https://cdn.1htr.cn/blog/20210822-v8-06.png" alt="" /></p>
+<p>然后会执行 
+<span class="inline-code"><font style="color:#005CC5;">GetFastElementsUsage</font></span>
+ 来获取原来的数组中非空洞（
+<a href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/objects/js-objects.cc#L4725" target="_blank">v8/src/objects/js-objects.cc#L4725</a>
+）的元素数量，乘以 
+<span class="inline-code">kPreferFastElementsSizeFactor(值为3)</span>
+  与 
+<span class="inline-code">kEntrySize (值为2)</span>
+ ，与新的容量长度进行对比，如果小于新的容量长度，那么就转换为慢数组。</p>
+<p>最开始的第二段代码中，非空洞元素数量为0，计算后的乘积也为0，因此小于15万的新数组长度，于是数组转换为了慢数组，使用了Dictionary进行数据的存储，从而节省了大量的内存。</p></article>
+<footer>
+            © 2015-2024 Coder Soar
+        </footer></body>
+            </html>
+        
