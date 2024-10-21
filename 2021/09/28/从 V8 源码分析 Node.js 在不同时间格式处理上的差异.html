@@ -1,7 +1,7 @@
 <!DOCTYPE html>
             <html>
             <head>
-                <title>Home - soar's blog</title>
+                <title>从 V8 源码分析 Node.js 在不同时间格式处理上的差异 - soar's blog</title>
                 <meta charset="utf-8">
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -127,7 +127,79 @@
                 <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
             </div>
         </header>
-<div class="list"><a href="/2021/09/28/从 V8 源码分析 Node.js 在不同时间格式处理上的差异.html" class="list-item"><span>从 V8 源码分析 Node.js 在不同时间格式处理上的差异</span><time>2021/09/28</time></a><a href="/2021/08/22/从 V8 源码分析一个JS 数组的内存占用问题.html" class="list-item"><span>从 V8 源码分析一个JS 数组的内存占用问题</span><time>2021/08/22</time></a></div>
+<h1 class="title">从 V8 源码分析 Node.js 在不同时间格式处理上的差异</h1>
+<time class="time">2021/09/28</time>
+<article class="center"><p>一个时间的几种不同方式的写法，导致输出的结果不一样：</p>
+<pre><code>console.log(new Date('2021-10-01'));
+console.log(new Date('2021-10-1'));
+console.log(new Date('2021/10/01'));
+console.log(new Date('2021/10/1'));
+console.log(new Date('2021-10-01 0:0:0'));
+console.log(new Date('2021/10/01 0:0:0'));</code></pre>
+<p>在 
+<span class="inline-code">Node.js</span>
+ 中的执行结果为：</p>
+<pre><code>2021-10-01T00:00:00.000Z		// 与其他不同
+2021-09-30T16:00:00.000Z
+2021-09-30T16:00:00.000Z
+2021-09-30T16:00:00.000Z
+2021-09-30T16:00:00.000Z
+2021-09-30T16:00:00.000Z</code></pre>
+<p>从上面的例子可以看出来，当使用 
+<span class="inline-code">补0</span>
+ 形式的以 
+<span class="inline-code">-</span>
+ 连接的日期字符串时，会认为传入的字符串是基于 
+<span class="inline-code">UTC</span>
+ 时区的，而其他形式的会基于本地时区，导致第一种会比其他时间快8个小时，那原因是为什么呢？</p>
+<p>来翻一下V8的源码，到 Date parse字符串的部分（
+<a href="https://github.com/v8/v8/blob/master/src/date/dateparser-inl.h#L72" target="_blank">https://github.com/v8/v8/blob/master/src/date/dateparser-inl.h#L72</a>
+），可以看到在一开始先调用了 
+<span class="inline-code">ParseES5DateTime</span>
+ 来处理符合 ES5 ISO 8601 格式的时间字符串。</p>
+<p>ISO 8601 的时间字符串定义了两种时间格式，一种是 
+<span class="inline-code">YYYY-MM-DD</span>
+ 格式的日期格式，另外一种是 
+<span class="inline-code">YYYY-MM-DDTHH:MM:DD</span>
+格式的日期+时间格式，如果是日期格式，那么将会使用
+<strong> UTC时区</strong>
+ 来解析该参数，而如果是时间+日期的格式，则将会被作为 
+<strong>本地时区</strong>
+ 处理，这也就解释了为什么 
+<span class="inline-code">new Date('2021-10-01')</span>
+ 会变成UTC时区的时间。</p>
+<p>从V8的实现中来看（
+<a href="https://github.com/v8/v8/blob/master/src/date/dateparser-inl.h#L344" target="_blank">https://github.com/v8/v8/blob/master/src/date/dateparser-inl.h#L344</a>
+），在判断符合 ES5 ISO 8601 规范的日期格式时，通过调用
+<span class="inline-code"><font style="color:rgb(36, 41, 47);">tz-></font>Set<font style="color:rgb(36, 41, 47);">(</font>0<font style="color:rgb(36, 41, 47);">)</font></span>
+  将这个事件的时区偏移量设置为 UTC + 0。</p>
+<p>在完成时间的解析处理后，调用 
+<span class="inline-code">tz->Write</span>
+方法（
+<a href="https://github.com/v8/v8/blob/master/src/date/dateparser.cc#L99" target="_blank">https://github.com/v8/v8/blob/master/src/date/dateparser.cc#L99</a>
+）将时间偏移量写入结果数组（out），在其中判断了是否设置过时区（调用 
+<span class="inline-code">TimeZoneComposer::Set</span>
+ 方法后会将其内部的 sign
+<i> 属性设置为 1 或 -1，如果未调用过，那么 sign 的值为 kNone ），如果 `sign</i>
+<span class="inline-code">设置过，那么就在结果数组的第7个值（</span>
+out[DateParser::UTC
+<i>OFFSET]
+<span class="inline-code">）写入时区偏移量 ；否则，就会将 </span>
+out[DateParser::UTC</i>
+OFFSET]
+<span class="inline-code">设置为 </span>
+NaN`。</p>
+<p>而对于其他的时间格式，如果没有在传入的时间字符串中指定时区，那么就不会调用 
+<span class="inline-code">TimeZoneComposer::Set</span>
+ 方法，在 ParseDateTimeString 方法的尾部处理时区时（
+<a href="https://github.com/v8/v8/blob/master/src/builtins/builtins-date.cc#L51" target="_blank">https://github.com/v8/v8/blob/master/src/builtins/builtins-date.cc#L51</a>
+），会判断 
+<span class="inline-code">out[DateParser::UTC_OFFSET]</span>
+ 的值，如果是NaN，会根据本地时区来给时间附加一个偏移量，所以除了
+<span class="inline-code">YYYY-MM-DD</span>
+ 格式之外的其他形式时间字符串解析后的时区都变成了笔者所在的 
+<span class="inline-code">UTC+8</span>
+。 </p></article>
 <footer>
             © 2015-2024 Coder Soar
         </footer></body>
