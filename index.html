@@ -6,7 +6,7 @@
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
-                 html,body { padding: 0; font-size: 14px;}
+                 html,body { padding: 0; margin: 0;font-size: 14px;}
                     header {
                         position: fixed;
                         top: 0;
@@ -17,6 +17,10 @@
                         background-color: #fff;
                         z-index: 3;
                     }
+                    nav {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                    }
                     nav > a {
                         margin-right: 20px;
                         font-size: 16px;
@@ -25,7 +29,9 @@
                         text-decoration: none;
                     }
                     .list {
+                        padding: 0 24px;
                         padding-top: 72px;
+                        box-sizing: border-box;
                         width: 100%;
                         max-width: 680px;
                         margin: 0 auto;
@@ -57,12 +63,15 @@
                         line-height: 20px;
                     }
                     .title {
+                        padding: 0 24px;
+                        box-sizing: border-box;
                         padding-top: 72px;
                         text-align: center;
                     }
                     .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
                     article {
-                        padding: 24px 0;
+                        padding: 24px;
+                        box-sizing: border-box;
                         line-height: 1.8;
                     }
                     article > p {
@@ -115,10 +124,10 @@
             </head>
             <body><header>
             <div class="center">
-                <nav><a href="/">Home</a><a href="/about/">About</a><a href="/weekly/">Weekly</a></nav>
+                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
             </div>
         </header>
-<div class="list"><a href="/2021/08/22/从 V8 源码分析一个JS 数组的内存占用问题.html" class="list-item"><span>从 V8 源码分析一个JS 数组的内存占用问题</span><time>2021/08/22</time></a><a href="/2020/01/01/感谢幸福的2019，和记忆深刻的这十年.html" class="list-item"><span>感谢幸福的2019，和记忆深刻的这十年</span><time>2020/01/01</time></a><a href="/2019/01/01/2018已成过往，期待更幸福的2019.html" class="list-item"><span>2018已成过往，期待更幸福的2019</span><time>2019/01/01</time></a><a href="/2018/11/13/无论悲欢，新的一天总会充满激情.html" class="list-item"><span>无论悲欢，新的一天总会充满激情</span><time>2018/11/13</time></a><a href="/2017/06/16/总会再记起天行健五块钱的牛肉面.html" class="list-item"><span>总会再记起天行健五块钱的牛肉面</span><time>2017/06/16</time></a><a href="/2015/12/30/2016即将来临，回忆一下我的2015.html" class="list-item"><span>2016即将来临，回忆一下我的2015</span><time>2015/12/30</time></a></div>
+<div class="list"><a href="/2021/08/22/从 V8 源码分析一个JS 数组的内存占用问题.html" class="list-item"><span>从 V8 源码分析一个JS 数组的内存占用问题</span><time>2021/08/22</time></a></div>
 <footer>
             © 2015-2024 Coder Soar
         </footer></body>
