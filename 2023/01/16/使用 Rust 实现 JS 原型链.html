@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <title>使用 Rust 实现 JS 原型链 - soar's blog</title>
+                <meta charset="utf-8">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                 html,body { padding: 0; margin: 0;font-size: 14px;}
+                    header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        padding: 12px 0;
+                        border-bottom: 1px solid #ccc;
+                        background-color: #fff;
+                        z-index: 3;
+                    }
+                    nav {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                    }
+                    nav > a {
+                        margin-right: 20px;
+                        font-size: 16px;
+                        color: #666;
+                        line-height: 20px;
+                        text-decoration: none;
+                    }
+                    .list {
+                        padding: 0 24px;
+                        padding-top: 72px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .list-item {
+                        display: block;
+                        padding: 12px 0;
+                        border-bottom: 1px dotted #e5e5e5;
+                        text-decoration: none;
+                        color: #333;
+                        position: relative;
+                        box-sizing: border-box;
+                        padding-right: 80px;
+                    }
+
+                    .list-item span {
+                        display: block;
+                        font-size: 16px;
+                        line-height: 20px;
+                        color: #333;
+                    }
+                    .list-item time {
+                        display: block;
+                        position: absolute;
+                        right: 0;
+                        top: 12px;
+                        font-size: 12px;
+                        color: #999;
+                        line-height: 20px;
+                    }
+                    .title {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                        padding-top: 72px;
+                        text-align: center;
+                    }
+                    .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    article {
+                        padding: 24px;
+                        box-sizing: border-box;
+                        line-height: 1.8;
+                    }
+                    article > p {
+                        padding: 12px 0;
+                    }
+                    article img {
+                        max-width: 100%;
+                        height: auto;
+                        margin: 12px auto;
+                        display: block;
+                        border-radius: 4px;
+                        border: 1px solid #e5e5e5;
+                    }
+                    article pre {
+                        padding: 12px;
+                        background-color: #f5f5f5;
+                        border-radius: 4px;
+                        overflow: auto;
+                    }
+                    article .inline-code {
+                        padding: 0px 4px;
+                        background-color: #e0e0e0;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                       
+                    .center {
+                        position: relative;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .right {
+                        position: absolute;
+                        right: 0;
+                        font-size: 16px;
+                        color: #666;
+                        top: 0;
+                        line-height: 20px;
+                        text-decoration:none;
+                    }
+                    footer {
+                        padding: 40px 0;
+                        text-align: center;
+                        font-size: 13px;
+                        color: #999;
+                    }
+                </style>
+            </head>
+            <body><header>
+            <div class="center">
+                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
+            </div>
+        </header>
+<h1 class="title">使用 Rust 实现 JS 原型链</h1>
+<time class="time">2023/01/16</time>
+<article class="center"><p>在 JavaScript 中，继承的逻辑是通过原型链来实现的，JavaScript 对象有一个指向一个原型对象的链。当访问一个对象的属性时，会在当前对象以及对象的原型上层层向上进行搜索，直到找到一个名字匹配的属性或到达原型链的末尾。</p>
+<p>比如，在JS中实例化一个数组对象时，它会继承 Array.prototype 这个原型对象的所有属性和方法：</p>
+<pre><code>let arr = new Array();
+a.push == Array.prototype.push; // true</code></pre>
+<p>那么，当我们要实现一个 JS 解释引擎时，其中很关键的部分就是要实现原型对象和原型链。</p>
+<h3>内置对象</h3>
+<p>在 JavaScript 中，几乎所有的对象都是 Object 类型的实例，它们都会从 Object.prototype 继承属性和方法，所以我们先定义一个 Object 的结构。</p>
+<pre><code>// 对象
+pub struct Object {
+    // 静态属性和方法，比如 Object.keys
+    pub property: HashMap<String, Property>,
+    // 属性列表，对象的属性列表需要次序
+    pub property_list: Vec<String>,
+    // 内置属性
+    pub inner_property: HashMap<String, Property>,
+    // 原型对象，用于查找原型链
+    // 如果是构造方法对象，如 Object，则指向一个真实存在的 Object
+    // 如：Array.prototype[key] = value
+    // 如：Array.prototype.constructor = Array
+    pub prototype: Option<Rc<RefCell<Object>>>,
+    // 如果是实例，则存在 constructor 值，指向构造方法
+    // 如： arr.constructor = Array
+    pub constructor: Option<Rc<RefCell<Object>>>,
+    // 对象的值
+    value: Option<Box<Statement>>,
+}</code></pre>
+<p>由于在 JS 中，内置的对象 Array 和 Function 等，也都是一个对象，所以我们来声明一个方法，获取一个最原始的对象，作为这些内置对象的基本对象：</p>
+<pre><code>pub fn new_global_object() -> Rc<RefCell<Object>> {
+  let object = Rc::new(RefCell::new(Object::new(None)));
+  let object_clone = Rc::clone(&object);
+  let mut object_mut = (*object_clone).borrow_mut();
+  // 创建原型链
+  let prototype =  Rc::new(RefCell::new(Object::new(None)));
+  // 创建 constructor 弱引用，指向自己
+  // 即 Object.prototype.constructor == Object
+  (*prototype).borrow_mut().define_property(String::from("constructor"), Property {
+    enumerable: false,
+    value: Value::RefObject(Rc::downgrade(&object)),
+  });
+ // 绑定原型对象到 Object 上
+  object_mut.prototype = Some(prototype);
+  object
+}
+</code></pre>
+<p>基于上面这个方法，我们创建几个内置对象，如 Array、Function 等：</p>
+<pre><code>// Object
+let object = new_global_object();
+// Array
+let array = new_global_object();
+// Function
+let function = new_global_object();
+
+// 全局对象
+pub struct Global {
+  pub object: Rc<RefCell<Object>>,
+  pub array: Rc<RefCell<Object>>,
+  pub function: Rc<RefCell<Object>>,
+}
+let global = Global{
+  object,
+  array,
+  function,
+};</code></pre>
+<h3>绑定原型方法</h3>
+<p>这个时候，我们只是获取了几个对象的声明，但是还没有绑定这个内置对象的原型方法，所以需要对 Object、Array 等来绑定原型方法。</p>
+<p>首先，我们需要定义原型方法的结构，原型方法需要接受一个执行的上下文，其中需要包含一些内置对象（Object、Array ）的定义，便于在原型方法内创建新的对象实例，另外需要包含当前执行的 this，用于对 this 进行修改。</p>
+<pre><code>// 内置方法的结构
+pub type BuiltinFunction = fn(&mut CallContext, Vec<Value>) -> Value;
+// 执行上下文
+pub struct CallContext<'a> {
+  pub global: &'a Global,
+  pub this: Weak<RefCell<Object>>
+}</code></pre>
+<p>下之后，我们就可以声明一些原型方法，下面以 Array 为例，绑定 Array.prototype.toString、push 和 join 等方法。</p>
+<pre><code>// 绑定 Array 的原型方法
+pub fn bind_global_array(global: &Global) {
+  let arr = (*global.array).borrow_mut();
+  if let Some(prop)= &arr.prototype {
+    let prototype_rc = Rc::clone(prop);
+    let mut prototype = prototype_rc.borrow_mut();
+    // 绑定 Array.prototype.toString
+    let name = String::from("toString");
+    prototype.define_property(name.clone(), Property { enumerable: true, value: builtin_function(global, name, 0f64, array_to_string) });
+      
+    // 绑定 Array.prototype.join
+    let name = String::from("join");
+    prototype.define_property(name.clone(), Property { enumerable: true, value: builtin_function(global, name, 1f64, array_join) });
+      
+    // 绑定 Array.prototype.push
+    let name = String::from("push");
+    prototype.define_property(name.clone(), Property { enumerable: true, value: builtin_function(global, name, 1f64, array_push) });
+  }
+}
+
+// toString 方法，实际上相当于 array.join()
+fn array_to_string(ctx: &mut CallContext, _: Vec<Value>) -> Value {
+  array_join(ctx, vec![])
+}
+
+// join 方法，接受一个参数，作为 join 的连接符
+fn array_join(ctx: &mut CallContext, args: Vec<Value>) -> Value {
+  let mut join = ",";
+  if args.len() > 0 {
+    if let Value::String(join_param) = &args[0] {
+      join = join_param;
+    }
+  }
+  let mut string_list: Vec<String> = vec![];
+  // 创建迭代数组时的闭包
+  let iter = |_: i32, value: &Value| {
+    string_list.push(value.to_string());
+  };
+  // 迭代数组
+  array_iter_mut(ctx, iter);
+  Value::String(string_list.join(join))
+}
+
+// 接收一个 闭包，用来迭代数组
+fn array_iter_mut<F: FnMut(i32, &Value)>(ctx: &mut CallContext, mut callback: F) {
+  let this_origin = ctx.this.upgrade();
+  let this_rc = this_origin.unwrap();
+  let this = this_rc.borrow_mut();
+  let len = this.get_property_value(String::from("length"));
+  if let Value::Number(len) = len {
+    for index in 0..(len as i32) {
+      (callback)(index, &this.get_property_value(index.to_string()));
+    }
+  }
+}
+
+// Array.prototype.push，可以一次 push 多个值
+fn array_push(ctx: &mut CallContext, args: Vec<Value>) -> Value {
+  // 插入值
+  let this_rc = ctx.this.upgrade().unwrap();
+  let mut this = this_rc.borrow_mut();
+  // 获取长度
+  let mut len = this.get_property_value(String::from("length")).to_number().unwrap() as usize;
+  for value in args.iter() {
+    // 向 Object 中定义的 property 这个 HashMap 中添加值
+    this.define_property(len.to_string(), Property { enumerable: true, value: value.clone() });
+    len += 1
+  }
+  // 计算push 后的长度
+  let new_length = Value::Number(len as f64);
+  this.define_property(String::from("length"),  Property { enumerable: false, value: new_length.clone() });
+  return new_length
+}</code></pre>
+<h3>创建实例</h3>
+<p>当我们有了全局内置对象和各种原型方法后，我们就可以创建对应的实例了，例如创建一个 array 实例：</p>
+<pre><code> pub fn create_array(global: &Global, length: usize) -> Value {
+  // 由于 js 中所有的对象都是 object
+  let array = Rc::new(RefCell::new(Object::new(value)));
+  let array_clone = Rc::clone(&array);
+  let mut array_mut = (*array_clone).borrow_mut();
+  // 绑定 array.constructor = global.Array
+  // 此时就相当于 array 有了 Array 上的各种原型方法
+  array_mut.constructor = Some(Rc::clone(&global.array));
+  object
+  // 定义 array 的长度
+  array_mut.define_property(String::from("length"),  Property {
+     enumerable: true,
+     value: Value::Number(length as f64),
+   });
+  Value::Array(array)
+}</code></pre>
+<h3>执行效果</h3>
+<pre><code>#[test]
+fn run_object_keys() {
+  let mut jsi = JSI::new();
+  let result = jsi.run(String::from("\
+  let obj = { a: 123, b: false, c: 'xxx'}\n
+  Object.keys(obj).toString()"));
+  assert_eq!(result , Value::String(String::from("a,b,c")));
+}</code></pre>
+<p><img src="https://cdn.1htr.cn/blog/202410230659114.png" alt="" /></p></article>
+<footer>
+            © 2015-2024 Coder Soar
+        </footer></body>
+            </html>
+        

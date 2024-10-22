@@ -1,7 +1,7 @@
 <!DOCTYPE html>
             <html>
             <head>
-                <title>Weekly - soar's blog</title>
+                <title>TS allowSyntheticDefaultImports and esModuleInterop - soar's blog</title>
                 <meta charset="utf-8">
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -127,7 +127,73 @@
                 <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
             </div>
         </header>
-<div class="list"><a href="/weekly/2024/10/23/第105期-偷懒爱好者周刊.html" class="list-item"><span>第105期 偷懒爱好者周刊</span><time>2024/10/23</time></a><a href="/weekly/2024/10/16/第104期-偷懒爱好者周刊.html" class="list-item"><span>第104期 偷懒爱好者周刊</span><time>2024/10/16</time></a><a href="/weekly/2024/10/09/第103期-偷懒爱好者周刊.html" class="list-item"><span>第103期 偷懒爱好者周刊</span><time>2024/10/09</time></a></div>
+<h1 class="title">TS allowSyntheticDefaultImports and esModuleInterop</h1>
+<time class="time">2022/05/22</time>
+<article class="center"><p>按照官方文档来的说法，当设置为 true， 并且模块没有显式指定默认导出时，
+<span class="inline-code">allowSyntheticDefaultImports</span>
+ 可以让你这样写导入：</p>
+<pre><code>import react from 'react';
+console.log('react', react);</code></pre>
+<p>而不是：</p>
+<pre><code>import * as React from "react";
+console.log('react', react);</code></pre>
+<p>但是 
+<span class="inline-code">allowSyntheticDefaultImports</span>
+ 仅对类型检查起作用，不影响ts编译之后的结果。</p>
+<p>比如上面第一段代码，直接通过 import 引入 react，编译之后的代码：</p>
+<pre><code>"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = require("react");
+console.log('react', react_1.default);</code></pre>
+<p>执行的结果输出为 
+<span class="inline-code">undefined</span>
+ ，而通过 import * 引入react，编译之后的代码为：</p>
+<pre><code>"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const react = require("react");
+console.log('react', react);</code></pre>
+<p>执行输出的结果就是正常的 react。</p>
+<p>那么，如果想让第一种写法，也能获取到 react，那就要使用 
+<span class="inline-code">esModuleInterop</span>
+ 参数了。</p>
+<p><span class="inline-code">esModuleInterop</span>
+ 仅对编译成 commonjs 生效，当开启这个配置后，直接使用 import 引入 react 的代码被编译成了：</p>
+<pre><code>"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+console.log('react', react_1.default);
+</code></pre>
+<p>增加了一个 
+<span class="inline-code">__importDefault</span>
+ 方法，给没有 default 导出的模块包裹一层 default 属性，如果是使用 import * 引入的情况，那么就会编译成：</p>
+<pre><code>"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react = __importStar(require("react"));
+console.log('react', react);
+</code></pre>
+<p>其执行逻辑简单的说就是遍历 react 导出的所有内容，将这些导出的内容挂载到一个全新的对象上面，并且将这个对象的default属性设置为自己本身，然后返回这个对象。</p></article>
 <footer>
             © 2015-2024 Coder Soar
         </footer></body>
