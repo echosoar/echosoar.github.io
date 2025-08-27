@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <title>同事问了我一个问题：foo.x 的值是什么？ - soar's blog</title>
+                <meta charset="utf-8">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Menlo';}
+                    header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        padding: 12px 0;
+                        border-bottom: 1px solid #ccc;
+                        background-color: #fff;
+                        z-index: 3;
+                        overflow: hidden;
+                    }
+                    nav {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                    }
+                    nav > a {
+                        margin-right: 20px;
+                        font-size: 16px;
+                        color: #666;
+                        line-height: 20px;
+                        text-decoration: none;
+                    }
+                    .pageHeader {
+                        padding: 0 24px;
+                        padding-top: 60px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    .pageHeader a {
+                        font-size: 14px;
+                        color: #6c86ee;
+                        text-decoration: none;
+                    }
+                    .list {
+                        padding: 0 24px;
+                        padding-top: 12px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .list-item {
+                        display: block;
+                        padding: 12px 0;
+                        border-bottom: 1px dotted #e5e5e5;
+                        text-decoration: none;
+                        color: #333;
+                        position: relative;
+                        box-sizing: border-box;
+                        padding-right: 80px;
+                    }
+
+                    .list-item span {
+                        display: block;
+                        font-size: 16px;
+                        line-height: 20px;
+                        color: #333;
+                    }
+                    .list-item time {
+                        display: block;
+                        position: absolute;
+                        right: 0;
+                        top: 12px;
+                        font-size: 12px;
+                        color: #999;
+                        line-height: 20px;
+                    }
+                    .title {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                        padding-top: 72px;
+                        text-align: center;
+                    }
+                    .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    article {
+                        padding: 24px;
+                        box-sizing: border-box;
+                        line-height: 1.8;
+                    }
+                    article > p {
+                        padding: 12px 0;
+                    }
+                    article img {
+                        max-width: 100%;
+                        height: auto;
+                        margin: 12px auto;
+                        display: block;
+                        border-radius: 4px;
+                        border: 1px solid #e5e5e5;
+                    }
+                    article pre {
+                        padding: 12px;
+                        background-color: #f5f5f5;
+                        border-radius: 4px;
+                        overflow: auto;
+                    }
+                    article .inline-code {
+                        padding: 0px 4px;
+                        background-color: #e0e0e0;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                       
+                    .center {
+                        position: relative;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .right {
+                        position: absolute;
+                        right: 0;
+                        font-size: 16px;
+                        color: #666;
+                        top: 0;
+                        line-height: 20px;
+                        text-decoration:none;
+                    }
+                    footer {
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                        padding: 0 24px;
+                        padding-bottom: 40px;
+                        padding-top: 12px;
+                        text-align: center;
+                        font-size: 13px;
+                        box-sizing: border-box;
+                        color: #999;
+                    }
+                    .giscus {
+                        margin-bottom: 24px;
+                    }
+                </style>
+            </head>
+            <body><header>
+            <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
+                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
+                <div style="padding-right: 24px;">
+                    <a href="https://x.com/codersoar" target="_blank">X</a> / <a href="https://github.com/echosoar" target="_blank">Github</a>
+                </div>
+            </div>
+        </header>
+<h1 class="title">同事问了我一个问题：foo.x 的值是什么？</h1>
+<time class="time">2018/11/27</time>
+<article class="center"><p>今天晚上在公司同事突然问了我一个问题：</p>
+<pre><code>var foo = {n: 1};
+var bar = foo;
+foo.x = foo = {n: 2};</code></pre>
+<p>最终结果中的foo.x的值是什么？</p>
+<p>我定睛一看，这样的问题估计有大坑！</p>
+<p>然后琢磨了一下回道：一个对象，其中x层级无限循环：</p>
+<pre><code>{
+  n: 2,
+  x: {
+    n: 2,
+    x: {...}
+  }
+}</code></pre>
+<p>然而我同事一脸就知道你会这么说的表情告诉我：不对！</p>
+<p>瞬间我脑海中闪过千万个年头，作为一个沉浸于碰运气。。。oh不，沉浸于钻研问题多年的小青年，怎么能被小看！</p>
+<p>难道是我记错了？这种连等不是从右向左的？</p>
+<p>既然这样子，那结果应该是。。。{n: 1} !，瞬间新的答案脱口而出，脑海中浮现出同事诧异且崇拜的表情，，，</p>
+<p>“不对！哈哈哈哈”</p>
+<p>听到这句话，作为一个程序猿，我的第一反应是“不可能！”，第二反应是“肯定你自己搞错了！”，接下来的反应自然而然就是打开控制台，把代码粘贴进去，加一行console，然后猛敲一下回车！</p>
+<p><i><i>undefined</i></i></p>
+<p>麻蛋！为什么是undefined，为什么我竟然会错？这不科学。。。</p>
+<p>于是，我搜搜搜搜</p>
+<p>古人诚不欺我，鲁迅大大的名言没错：你遇到的问题在很久很久以前肯定有别人遇到过并且在Stack Overflow上面问了！</p>
+<p> 
+<a href="https://stackoverflow.com/questions/32342809/javascript-code-trick-whats-the-value-of-foo-x" target="_blank">Javascript code trick :What's the value of foo.x</a></p>
+<p>不过回答特别简略。。。还是我自己来分析一遍吧</p>
+<p>首先要分析出来在代码层面那一部分是先执行的，可以参考 
+<a href="https://es5.github.io/#x11.13.1" target="_blank">ES5规范11.13节</a>
+ 进行一些解释：</p>
+<p>规范中一上来就说了赋值运算包含哪些形式：</p>
+<pre><code>AssignmentExpression :
+    ConditionalExpression
+    LeftHandSideExpression AssignmentOperator AssignmentExpression
+
+AssignmentOperator : one of
+     =  *=  /=  %=  +=  -=  等等等</code></pre>
+<p>规范中写了 
+<i><i>AssignmentExpression</i>
+<i> : </i>
+<i>LeftHandSideExpression</i>
+<i> = </i>
+<i>AssignmentExpression</i></i>
+  的运算逻辑：</p>
+<pre><code>The production AssignmentExpression : LeftHandSideExpression = AssignmentExpression is evaluated as follows:
+    1. Let lref be the result of evaluating LeftHandSideExpression.
+    2. Let rref be the result of evaluating AssignmentExpression.
+    3. Let rval be GetValue(rref).
+    4. Throw a SyntaxError exception if the following conditions are all true:
+        · Type(lref) is Reference is true
+        · IsStrictReference(lref) is true
+        · Type(GetBase(lref)) is Environment Record
+        · GetReferencedName(lref) is either \"eval\" or \"arguments\"
+    5. Call PutValue(lref, rval).
+    6. Return rval.</code></pre>
+<p>从上面可以得到的信息是：</p>
+<ol><li><p>计算 
+<i><i>LeftHandSideExpression.</i></i>
+，然后把结果赋值给 lref</p></li><li><p>计算 
+<i><i>AssignmentExpression</i></i>
+ ，赋值给 rref</p></li><li><p>获取rref的值赋给rval</p></li><li><p>把rval的值赋给lref</p></li><li><p>返回rval</p></li></ol>
+<p>而 LeftHandSideExpression 左侧表达式我们也可以从 
+<a href="https://es5.github.io/#x11.2" target="_blank">ES5规范11.2节</a>
+ 中找到：</p>
+<pre><code>LeftHandSideExpression :
+    NewExpression
+    CallExpression</code></pre>
+<p>有兴趣的童鞋可以翻看一些NewExpression和CallExpression的定义，都在规范的这一节里面，不过其中并不包含=操作，其实我们从上面的AssignmentOperator中也可以得到 LeftHandSideExpression 所代表的就是 foo.x</p>
+<p>所以 foo.x = foo = {n: 2}; 可以转换为 foo.x = (foo = {n: 2});</p>
+<p>在规范11.2中也定义了LeftHandSideExpression的执行流程：</p>
+<pre><code>The production MemberExpression : MemberExpression [ Expression ] is evaluated as follows:
+1. Let baseReference be the result of evaluating MemberExpression.
+2. Let baseValue be GetValue(baseReference).
+3. Let propertyNameReference be the result of evaluating Expression.
+4. Let propertyNameValue be GetValue(propertyNameReference).
+5. Call CheckObjectCoercible(baseValue).
+6. Let propertyNameString be ToString(propertyNameValue).
+7. If the syntactic production that is being evaluated is contained in strict mode code, let strict be true, else let strict be false.
+8. Return a value of type Reference whose base value is baseValue and whose referenced name is propertyNameString, and whose strict mode flag is strict.
+The production CallExpression : CallExpression [ Expression ] is evaluated in exactly the same manner, except that the contained CallExpression is evaluated in step 1.</code></pre>
+<p>按照上面的流程，
+<i><i>LeftHandSideExpression</i>
+<i> 其实就是从 </i>
+<i>MemberExpression</i>
+<i>  （foo）中 获取 baseValue， 从 </i>
+<i>Expression</i>
+<i>  (x)中获取 propertyNameReference，然后根据他们两个来获取 一个 </i>
+<i>Reference</i></i>
+ 类型的值。</p>
+<p>而一个 
+<i><i>Reference</i>
+<i> 类型的值按照规范8.7节中说的，包含</i>
+<i>base</i>
+<i> value、</i>
+<i>referenced</i></i>
+ name  和 strict reference flag 三部分，base value对于foo.x来说就是foo，也就是 {n: 1}，reference就是x。</p>
+<p>因此lref就是一个 Reference 类型的值，base 是 {n: 1}, reference name是'x'。</p>
+<p>现在开始计算 
+<i><i>AssignmentExpression</i>
+<i> 的值，也就是 foo = {n: 2}，首先是和上面一样的逻辑，获取 </i>
+<i>foo 的Reference</i></i>
+，即为llref即 base 为 global，reference 为 foo。</p>
+<p>然后获取右边的值，也就是{n: 2}，即为rrval，赋值给上面的llref，也就是
+<i><i>在此处改变了foo的引用变成了 {n:2} ，从此foo与之前的 {n: 1} 没有任何联系了</i></i>
+！！！</p>
+<p>然后将 rrval 返回给左边的 lref，这个时候lref引用的还是 {n:1} ,所以赋值之后 lref的值就变成了 {n:1, x: {n: 2}} ，不过这个时候已经与foo没有任何关系了，因为引用的联系在上一步已经断掉了。</p>
+<p>所以最终foo就是{n:2}，而foo.x 就会调用 {n:2}.x ，那么值也就是为 undefined。</p></article>
+<footer>
+<script src="https://giscus.app/client.js"
+        data-repo="echosoar/echosoar.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOApSAOc4Co7sV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>         
+            © 2015-2025 Soar<br />
+            <div style="display: flex;align-items: center;justify-content: center;">
+            <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1543276800000-22?scale=0.4&theme=3d-num" alt="page" height="20px" />
+            </div>
+        </footer></body>
+            </html>
+        

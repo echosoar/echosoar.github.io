@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+            <feed xmlns="http://www.w3.org/2005/Atom">
+                <title>Other</title>
+                <link href="https://echosoar.github.io/other/atom.xml" rel="self"/>
+                <link href="https://echosoar.github.io/other/"/>
+                <updated>2025-08-27T13:57:28.572Z</updated>
+                <id>https://echosoar.github.io/other/</id>
+                <author>
+                    <name>Soar</name>
+                </author>
+                <follow_challenge>
+                    <feedId>105073521852861440</feedId>
+                    <userId>62733912072851456</userId>
+                </follow_challenge>
+                <entry>
+                            <title>系统架构师知识点</title>
+                            <link href="https://echosoar.github.io/other/2025/04/01/系统架构师知识点.html"/>
+                            <id>https://echosoar.github.io/other/2025/04/01/系统架构师知识点.html</id>
+                            <updated>2025-04-01T00:00:00.000Z</updated>
+                            <summary>系统架构师知识点</summary>
+                        </entry><entry>
+                            <title>2024年度科技互联网大事记</title>
+                            <link href="https://echosoar.github.io/other/2024/12/31/2024年度科技互联网大事记.html"/>
+                            <id>https://echosoar.github.io/other/2024/12/31/2024年度科技互联网大事记.html</id>
+                            <updated>2024-12-31T00:00:00.000Z</updated>
+                            <summary>2024年度科技互联网大事记</summary>
+                        </entry><entry>
+                            <title>我觉得好用的免费、开源Mac软件</title>
+                            <link href="https://echosoar.github.io/other/2024/11/12/我觉得好用的免费、开源Mac软件.html"/>
+                            <id>https://echosoar.github.io/other/2024/11/12/我觉得好用的免费、开源Mac软件.html</id>
+                            <updated>2024-11-12T00:00:00.000Z</updated>
+                            <summary>我觉得好用的免费、开源Mac软件</summary>
+                        </entry>
+            </feed>

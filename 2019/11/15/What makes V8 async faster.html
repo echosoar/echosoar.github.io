@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <title>What makes V8 async faster - soar's blog</title>
+                <meta charset="utf-8">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Menlo';}
+                    header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        padding: 12px 0;
+                        border-bottom: 1px solid #ccc;
+                        background-color: #fff;
+                        z-index: 3;
+                        overflow: hidden;
+                    }
+                    nav {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                    }
+                    nav > a {
+                        margin-right: 20px;
+                        font-size: 16px;
+                        color: #666;
+                        line-height: 20px;
+                        text-decoration: none;
+                    }
+                    .pageHeader {
+                        padding: 0 24px;
+                        padding-top: 60px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    .pageHeader a {
+                        font-size: 14px;
+                        color: #6c86ee;
+                        text-decoration: none;
+                    }
+                    .list {
+                        padding: 0 24px;
+                        padding-top: 12px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .list-item {
+                        display: block;
+                        padding: 12px 0;
+                        border-bottom: 1px dotted #e5e5e5;
+                        text-decoration: none;
+                        color: #333;
+                        position: relative;
+                        box-sizing: border-box;
+                        padding-right: 80px;
+                    }
+
+                    .list-item span {
+                        display: block;
+                        font-size: 16px;
+                        line-height: 20px;
+                        color: #333;
+                    }
+                    .list-item time {
+                        display: block;
+                        position: absolute;
+                        right: 0;
+                        top: 12px;
+                        font-size: 12px;
+                        color: #999;
+                        line-height: 20px;
+                    }
+                    .title {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                        padding-top: 72px;
+                        text-align: center;
+                    }
+                    .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    article {
+                        padding: 24px;
+                        box-sizing: border-box;
+                        line-height: 1.8;
+                    }
+                    article > p {
+                        padding: 12px 0;
+                    }
+                    article img {
+                        max-width: 100%;
+                        height: auto;
+                        margin: 12px auto;
+                        display: block;
+                        border-radius: 4px;
+                        border: 1px solid #e5e5e5;
+                    }
+                    article pre {
+                        padding: 12px;
+                        background-color: #f5f5f5;
+                        border-radius: 4px;
+                        overflow: auto;
+                    }
+                    article .inline-code {
+                        padding: 0px 4px;
+                        background-color: #e0e0e0;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                       
+                    .center {
+                        position: relative;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .right {
+                        position: absolute;
+                        right: 0;
+                        font-size: 16px;
+                        color: #666;
+                        top: 0;
+                        line-height: 20px;
+                        text-decoration:none;
+                    }
+                    footer {
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                        padding: 0 24px;
+                        padding-bottom: 40px;
+                        padding-top: 12px;
+                        text-align: center;
+                        font-size: 13px;
+                        box-sizing: border-box;
+                        color: #999;
+                    }
+                    .giscus {
+                        margin-bottom: 24px;
+                    }
+                </style>
+            </head>
+            <body><header>
+            <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
+                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
+                <div style="padding-right: 24px;">
+                    <a href="https://x.com/codersoar" target="_blank">X</a> / <a href="https://github.com/echosoar" target="_blank">Github</a>
+                </div>
+            </div>
+        </header>
+<h1 class="title">What makes V8 async faster</h1>
+<time class="time">2019/11/15</time>
+<article class="center"><p>在
+<a href="https://v8.dev/blog/fast-async" target="_blank">V8 blog</a>
+中，有说过v8的async优化节约了一个额外的Promise和两个Microtasks，那么本篇文章来更详细的讲述一下优化了哪两个Microtasks。</p>
+<p>看这个例子：</p>
+<pre><code>async function foo() {
+  const w = await v;
+  return w;
+}</code></pre>
+<p>在文章中讲述了V8是如何处理这个await的，那么转换为真实的js代码时怎样的呢？</p>
+<pre><code>function foo(v) {
+  const implicit_promise = new Promise((resolve, reject) =&gt;{
+    const promise = Promise.resolve().then(return v);
+    const throwaway = new Promise((resolve, reject) =&gt; {
+      promise.then(resolve, reject);
+    }).then(result =&gt; {
+      resumeFoo(result);
+    }).catch(err =&gt; {
+      throwFoo(err);
+    });
+
+    const resumeFoo = function (result) {
+      const returnValue = (v =&gt; {
+        // 原来的foo执行逻辑
+        const w = v;
+        return w;
+
+      })(result);
+      resolve(returnValue);
+    };
+
+    const throwFoo = err =&gt; {
+      reject(err);
+    }
+  });
+  return implicit_promise;
+}</code></pre>
+<p>在js执行时，会把每个promise的then塞入Microtasks，而Microtasks会在每次事件循环后进行情况，于是参照上面的js代码可以看到：</p>
+<p>第一个Microtask：</p>
+<pre><code>const promise = Promise.resolve().then(return v);</code></pre>
+<p>这个Microtask中无论v是不是一个Promise，通过
+<span class="inline-code">Promise.resolve().then</span>
+这样的处理之后都会变为一个Promise，但是这对于v本来就是一个Promise的话显得很多余，于是在v8中判断了下如果是Promise就不再包裹，减少了一次Microtasks。</p>
+<p>第二个Microtask：</p>
+<pre><code>promise.then(resolve, reject);</code></pre>
+<p>第三个Microtask：</p>
+<pre><code>const throwaway = new Promise((resolve, reject) =&gt; {
+  promise.then(resolve, reject);
+}).then(result =&gt; {
+  resumeFoo(result);
+}).catch(err =&gt; {
+  throwFoo(err);
+});</code></pre>
+<p>能够看到throwaway这部分代码完全是可以优化成下面这样的：</p>
+<pre><code>promise.then(resumeFoo, throwFoo);</code></pre>
+<p>又减少了一个Microtasks，于是最终的代码变成了这样：</p>
+<pre><code>function foo() {
+  const implicit_promise = new Promise((resolve, reject) =&gt;{
+    v.then(resumeFoo, throwFoo);
+    const resumeFoo = function (result) {
+      const returnValue = (v =&gt; {
+        // 原来的foo执行逻辑
+        const w = v;
+        return w;
+
+      })(result);
+      resolve(returnValue);
+    };
+
+    const throwFoo = err =&gt; {
+      reject(err);
+    }
+  });
+  return implicit_promise;
+}</code></pre>
+<p>那么再来看这段代码的输出：</p>
+<pre><code>const p = Promise.resolve();
+(async () =&gt; {
+  await p; console.log('after:await');
+})();
+p.then(() =&gt; console.log('tick:a'))
+ .then(() =&gt; console.log('tick:b'));</code></pre>
+<p>变换成node12的执行逻辑：</p>
+<pre><code>const p = Promise.resolve();
+(async () =&gt; {
+  const implicit_promise = new Promise((resolve, reject) =&gt;{
+    v.then(resumeFoo, throwFoo);
+    const resumeFoo = function (result) {
+      const returnValue = (v =&gt; {
+
+        console.log('after:await');
+
+      })(result);
+      resolve(returnValue);
+    };
+
+    const throwFoo = err =&gt; {
+      reject(err);
+    }
+  });
+  return implicit_promise;
+})();
+p.then(() =&gt; console.log('tick:a'))
+ .then(() =&gt; console.log('tick:b'));</code></pre>
+<p>所以按照从上到下执行的逻辑就是：</p>
+<ol><li><p>先触发第一个then，把 resumeFoo 塞入microtask</p></li><li><p>触发第二个then，把 
+<span class="inline-code">console.log('tick:a')</span>
+ 塞入microtask</p></li></ol>
+<p>开始执行Microtasks，输出 
+<span class="inline-code">after:await</span>
+，再输出 
+<span class="inline-code">tick:a</span>
+。</p>
+<p>然后再触发第三个then将 
+<span class="inline-code">console.log('tick:b')</span>
+ 塞入Microtasks，再去清理Microtasks，执行输出 
+<span class="inline-code">tick:b</span>
+。</p></article>
+<footer>
+<script src="https://giscus.app/client.js"
+        data-repo="echosoar/echosoar.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOApSAOc4Co7sV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>         
+            © 2015-2025 Soar<br />
+            <div style="display: flex;align-items: center;justify-content: center;">
+            <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1573776000000-26?scale=0.4&theme=3d-num" alt="page" height="20px" />
+            </div>
+        </footer></body>
+            </html>
+        

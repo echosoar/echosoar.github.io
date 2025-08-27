@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <title>第9期 偷懒爱好者周刊 - soar's blog</title>
+                <meta charset="utf-8">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Menlo';}
+                    header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        padding: 12px 0;
+                        border-bottom: 1px solid #ccc;
+                        background-color: #fff;
+                        z-index: 3;
+                        overflow: hidden;
+                    }
+                    nav {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                    }
+                    nav > a {
+                        margin-right: 20px;
+                        font-size: 16px;
+                        color: #666;
+                        line-height: 20px;
+                        text-decoration: none;
+                    }
+                    .pageHeader {
+                        padding: 0 24px;
+                        padding-top: 60px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    .pageHeader a {
+                        font-size: 14px;
+                        color: #6c86ee;
+                        text-decoration: none;
+                    }
+                    .list {
+                        padding: 0 24px;
+                        padding-top: 12px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .list-item {
+                        display: block;
+                        padding: 12px 0;
+                        border-bottom: 1px dotted #e5e5e5;
+                        text-decoration: none;
+                        color: #333;
+                        position: relative;
+                        box-sizing: border-box;
+                        padding-right: 80px;
+                    }
+
+                    .list-item span {
+                        display: block;
+                        font-size: 16px;
+                        line-height: 20px;
+                        color: #333;
+                    }
+                    .list-item time {
+                        display: block;
+                        position: absolute;
+                        right: 0;
+                        top: 12px;
+                        font-size: 12px;
+                        color: #999;
+                        line-height: 20px;
+                    }
+                    .title {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                        padding-top: 72px;
+                        text-align: center;
+                    }
+                    .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    article {
+                        padding: 24px;
+                        box-sizing: border-box;
+                        line-height: 1.8;
+                    }
+                    article > p {
+                        padding: 12px 0;
+                    }
+                    article img {
+                        max-width: 100%;
+                        height: auto;
+                        margin: 12px auto;
+                        display: block;
+                        border-radius: 4px;
+                        border: 1px solid #e5e5e5;
+                    }
+                    article pre {
+                        padding: 12px;
+                        background-color: #f5f5f5;
+                        border-radius: 4px;
+                        overflow: auto;
+                    }
+                    article .inline-code {
+                        padding: 0px 4px;
+                        background-color: #e0e0e0;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                       
+                    .center {
+                        position: relative;
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                    }
+                    .right {
+                        position: absolute;
+                        right: 0;
+                        font-size: 16px;
+                        color: #666;
+                        top: 0;
+                        line-height: 20px;
+                        text-decoration:none;
+                    }
+                    footer {
+                        width: 100%;
+                        max-width: 680px;
+                        margin: 0 auto;
+                        padding: 0 24px;
+                        padding-bottom: 40px;
+                        padding-top: 12px;
+                        text-align: center;
+                        font-size: 13px;
+                        box-sizing: border-box;
+                        color: #999;
+                    }
+                    .giscus {
+                        margin-bottom: 24px;
+                    }
+                </style>
+            </head>
+            <body><header>
+            <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
+                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
+                <div style="padding-right: 24px;">
+                    <a href="https://x.com/codersoar" target="_blank">X</a> / <a href="https://github.com/echosoar" target="_blank">Github</a>
+                </div>
+            </div>
+        </header>
+<h1 class="title">第9期 偷懒爱好者周刊</h1>
+<time class="time">2022/12/21</time>
+<article class="center"><h3>一、有趣的网站</h3>
+<p>本周分享 3 个在线游戏网站。</p>
+<h4>1. flash 保存计划</h4>
+<p>收集了非常多的flash小游戏，通过 Ruffle（ rust 实现的 wasm 版本 flash 播放器）在不再支持 flash 的浏览器上让这些小游戏可以在线运行。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082206033.png" alt="" /></p>
+<p>地址：
+<a href="https://flash.zczc.cz/" target="_blank">https://flash.zczc.cz/</a></p>
+<h4>2. 中文家用游戏博物馆</h4>
+<p>收录家用游戏机和掌机的中文游戏资料，可以通过在线模拟器运行这些游戏。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082206329.png" alt="" /></p>
+<p>地址：
+<a href="http://www.famicn.com/" target="_blank">http://www.famicn.com/</a></p>
+<h4>3. MyEmulator</h4>
+<p>可以在线通过 SNES、NDS、GBA、NES、N64等模拟器来运行游戏。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082207856.png" alt="" /></p>
+<p>地址：
+<a href="https://myemulator.online/" target="_blank">https://myemulator.online/</a></p>
+<h3>二、好用的工具</h3>
+<p>本周分享 3 个在线绘图工具</p>
+<h4>1. miro</h4>
+<p>miro有一个特色功能（Smart drawing），可以把画笔手绘的图形自动识别转成规则图形，适合画流程图。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082207225.png" alt="" /></p>
+<p>地址：
+<a href="https://miro.com/" target="_blank">https://miro.com/</a></p>
+<h4>2. excalidraw</h4>
+<p>开源的绘图板工具，完全免费不用登录，而且还有模拟手绘风格。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082208219.png" alt="" /></p>
+<p>地址：
+<a href="https://excalidraw.com/" target="_blank">https://excalidraw.com/</a></p>
+<h4>3. 乐吾乐</h4>
+<p>特色是在流程图绘制的基础上提供了很多电子元件、物联网设备的图形。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082209071.png" alt="" /></p>
+<p>地址：
+<a href="http://t.le5le.com/" target="_blank">http://t.le5le.com/</a></p>
+<h3>三、收藏的资源</h3>
+<p>本周分享 3 个在线音乐资源。</p>
+<h4>1. Radiooooo</h4>
+<p>通过地图与时间轴，倾听不同国家不同时代的音乐，比如1930年中国的音乐。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082209298.png" alt="" /></p>
+<p>地址：
+<a href="https://radiooooo.com/" target="_blank">https://radiooooo.com/</a></p>
+<h4>2. Music Historian</h4>
+<p>根据年龄段、分类过滤 last.fm (世界上最大的社交音乐平台) Top 3w 艺术家，并播放这个艺术家最好的歌曲。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082209108.png" alt="" /></p>
+<p>地址：
+<a href="https://musichistorian.org/" target="_blank">https://musichistorian.org/</a></p>
+<h4>3. 中华传统音乐资源数据库</h4>
+<p>民族音乐、京剧戏曲等传统中国音乐资源数据库。</p>
+<p><img src="https://cdn.1htr.cn/blog/202504082210470.png" alt="" /></p>
+<p>地址：
+<a href="http://s.cdcgcart.cn/enters/src/index/index.html" target="_blank">http://s.cdcgcart.cn/enters/src/index/index.html</a></p>
+<h4>其他</h4>
+<p>经常有朋友们问周刊有没有交流群，于是最近建了个微信群，想要交流、灌水、推荐工具的朋友们都可以加群一起聊聊 </p>
+<p>由于微信超过 200 人无法扫码入群，可以添加偷懒小助手拉入群</p>
+<p><img src="https://cdn.1htr.cn/blog/202411160912962.png" alt="" /></p>
+<h3>刊尾</h3>
+<p><img src="https://cdn.1htr.cn/blog/202410221239697.png" alt="" /></p>
+<p>本周刊在微信公众号“偷懒爱好者”首发，每周三更新，欢迎您关注、点赞、转发！</p>
+<p><img src="https://cdn.1htr.cn/blog/202410221239151.gif" alt="" /></p>
+<p>您也可以通过 RSS（ https://echosoar.github.io/weekly/atom.xml ） 免费订阅</p></article>
+<footer>
+<script src="https://giscus.app/client.js"
+        data-repo="echosoar/echosoar.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOApSAOc4Co7sV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+</script>         
+            © 2015-2025 Soar<br />
+            <div style="display: flex;align-items: center;justify-content: center;">
+            <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1671580800000-11?scale=0.4&theme=3d-num" alt="page" height="20px" />
+            </div>
+        </footer></body>
+            </html>
+        
