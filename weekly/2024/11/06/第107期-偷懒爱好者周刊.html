@@ -6,39 +6,71 @@
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
-                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Menlo';}
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo';}
                     header {
                         position: fixed;
                         top: 0;
                         left: 0;
                         width: 100%;
-                        padding: 12px 0;
-                        border-bottom: 1px solid #ccc;
+                        padding: 24px;
+                        height: 72px;
+                        box-sizing: border-box;
+                        border-bottom: 1px solid rgba(106, 28, 113, 0.09);
                         background-color: #fff;
                         z-index: 3;
                         overflow: hidden;
                     }
+                    .header-title {
+                        color: rgb(23,57,87);
+                        font-weight: 500;
+                        font-size: 16px;
+                        text-decoration: none;
+                    }
                     nav {
-                        padding: 0 24px;
+                        padding: 0px;
                         box-sizing: border-box;
                     }
                     nav > a {
-                        margin-right: 20px;
+                        margin-left: 20px;
                         font-size: 16px;
-                        color: #666;
+                        color: rgb(23,57,87);
                         line-height: 20px;
                         text-decoration: none;
+                        font-weight: 400;
                     }
                     .pageHeader {
-                        padding: 0 24px;
-                        padding-top: 60px;
+                        padding: 48px;
+                        margin-top: 72px;
                         box-sizing: border-box;
                         width: 100%;
-                        max-width: 680px;
-                        margin: 0 auto;
                         display: flex;
+                        flex-direction: column;
                         justify-content: space-between;
                         align-items: center;
+                        background-color: rgba(229, 229, 247, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .pageHeader h1 {
+                        font-size: 42px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                        .divider {
+                            margin: 0 8px;
+                            color: #ccc;
+                            user-select: none;
+                        }
+                    .pageHeader h2 {
+                        font-size: 32px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
                     }
                     .pageHeader a {
                         font-size: 14px;
@@ -46,37 +78,45 @@
                         text-decoration: none;
                     }
                     .list {
-                        padding: 0 24px;
-                        padding-top: 12px;
+                        padding: 24px;
+                        padding-top: 48px;
                         box-sizing: border-box;
                         width: 100%;
-                        max-width: 680px;
+                        min-height: 100vh;
+                        max-width: 700px;
                         margin: 0 auto;
                     }
                     .list-item {
                         display: block;
-                        padding: 12px 0;
-                        border-bottom: 1px dotted #e5e5e5;
                         text-decoration: none;
                         color: #333;
                         position: relative;
                         box-sizing: border-box;
                         padding-right: 80px;
+                        font-size: 16px;
+                        line-height: 26px;
+                        min-height: 26px;
+                        margin-bottom: 12px;
                     }
 
                     .list-item span {
                         display: block;
-                        font-size: 16px;
-                        line-height: 20px;
-                        color: #333;
+                        line-height: 26px;
+                        min-height: 26px;
+                        color: #007BB6;
+                    }
+                    .list-item span:hover {
+                        text-decoration: underline;
                     }
                     .list-item time {
-                        display: block;
                         position: absolute;
                         right: 0;
-                        top: 12px;
-                        font-size: 12px;
-                        color: #999;
+                        top: 0;
+                        height: 100%;
+                        display: flex;
+                        font-weight: 500;
+                        align-items: center;
+                        color: #17395780;
                         line-height: 20px;
                     }
                     .title {
@@ -89,10 +129,28 @@
                     article {
                         padding: 24px;
                         box-sizing: border-box;
-                        line-height: 1.8;
+                        line-height: 1.5;
+                        max-width: 700px;
+                        padding: 24px;
+                        margin: 0 auto;
+                        font-size: 16px;
+                        color: rgb(23, 57, 87);
                     }
-                    article > p {
-                        padding: 12px 0;
+                    .giscus {
+                        width: 100%;
+                        max-width: 700px;
+                        margin: 24px auto;
+                    }
+                    p {
+                        margin: 0;
+                        margin-bottom: 24px;
+                        padding: 0;
+                    }
+                    li > p {
+                        margin-bottom: 6px;
+                    }
+                    article {
+                        min-height: 100vh;
                     }
                     article img {
                         max-width: 100%;
@@ -102,15 +160,27 @@
                         border-radius: 4px;
                         border: 1px solid #e5e5e5;
                     }
+                    article a {
+                        color: rgb(0, 123, 182);
+                        text-decoration: none;
+                    }
+
+                    article a:hover {
+                        text-decoration: underline;
+                    }
                     article pre {
                         padding: 12px;
-                        background-color: #f5f5f5;
+                        background-color: #007BB608;
                         border-radius: 4px;
                         overflow: auto;
+                        font-size: 15px;
+                        line-height: 1.5;
+                        color: rgb(0, 128, 117);
+                        border: 1px solid #389ab129;
                     }
                     article .inline-code {
                         padding: 0px 4px;
-                        background-color: #e0e0e0;
+                        background-color: #007BB608;
                         border-radius: 4px;
                         font-size: 14px;
                         color: #333;
@@ -119,7 +189,7 @@
                     .center {
                         position: relative;
                         width: 100%;
-                        max-width: 680px;
+                        max-width: 1240px;
                         margin: 0 auto;
                     }
                     .right {
@@ -132,16 +202,18 @@
                         text-decoration:none;
                     }
                     footer {
+                        color: rgba(23, 57, 87, 0.5);
                         width: 100%;
-                        max-width: 680px;
                         margin: 0 auto;
-                        padding: 0 24px;
-                        padding-bottom: 40px;
-                        padding-top: 12px;
-                        text-align: center;
-                        font-size: 13px;
+                        padding: 24px;
                         box-sizing: border-box;
-                        color: #999;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 13px;
+                        background-color: rgba(229, 247, 237, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
                     }
                     .giscus {
                         margin-bottom: 24px;
@@ -150,15 +222,16 @@
             </head>
             <body><header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
-                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
-                <div style="padding-right: 24px;">
-                    <a href="https://x.com/codersoar" target="_blank">X</a> / <a href="https://github.com/echosoar" target="_blank">Github</a>
-                </div>
+                <a class="header-title" href="/">Soar's Blog</a>
+                <nav><a href="/">Articles</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
+                
             </div>
         </header>
-<h1 class="title">第107期 偷懒爱好者周刊</h1>
+<div class="pageHeader">
+<h2>第107期 偷懒爱好者周刊</h2>
 <time class="time">2024/11/06</time>
-<article class="center"><h3>一、上周科技圈大事记</h3>
+</div>
+<article><h3>一、上周科技圈大事记</h3>
 <ul><li><p>周一（10.28）</p>
 <ul><li><p>苹果公司正式上线 Apple Intelligence（苹果智能）</p></li></ul></li><li><p>周二（10.29）</p>
 <ul><li><p>Github 宣布 Copilot 集成 Claude 等模型</p></li><li><p>Python 取代 JavaScript 成为
@@ -220,25 +293,32 @@
 <a href="https://toolight.zhubai.love/" target="_blank">竹白</a>
 ”平台同步更新</p>
 <p>您也可以通过 RSS（ https://toolight.cn/open/p/weekly/atom.xml ） 免费订阅</p></article>
-<footer>
-<script src="https://giscus.app/client.js"
-        data-repo="echosoar/echosoar.github.io"
-        data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
-        data-category="Announcements"
-        data-category-id="DIC_kwDOApSAOc4Co7sV"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="light"
-        data-lang="zh-CN"
-        crossorigin="anonymous"
-        async>
-</script>         
-            © 2015-2025 Soar<br />
+
+        <div class="giscus">
+        
+            <script src="https://giscus.app/client.js"
+                data-repo="echosoar/echosoar.github.io"
+                data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+                data-category="Announcements"
+                data-category-id="DIC_kwDOApSAOc4Co7sV"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>  
+        </div>
+        <footer>
+            <div>
+                © 2015-2025<br />
+                Soar's Blog. All rights reserved.
+            </div>
             <div style="display: flex;align-items: center;justify-content: center;">
-            <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1730851200000-13?scale=0.4&theme=3d-num" alt="page" height="20px" />
+                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1730851200000-13?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
         </footer></body>
             </html>

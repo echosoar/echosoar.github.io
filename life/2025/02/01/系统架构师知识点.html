@@ -6,39 +6,71 @@
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
-                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Menlo';}
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo';}
                     header {
                         position: fixed;
                         top: 0;
                         left: 0;
                         width: 100%;
-                        padding: 12px 0;
-                        border-bottom: 1px solid #ccc;
+                        padding: 24px;
+                        height: 72px;
+                        box-sizing: border-box;
+                        border-bottom: 1px solid rgba(106, 28, 113, 0.09);
                         background-color: #fff;
                         z-index: 3;
                         overflow: hidden;
                     }
+                    .header-title {
+                        color: rgb(23,57,87);
+                        font-weight: 500;
+                        font-size: 16px;
+                        text-decoration: none;
+                    }
                     nav {
-                        padding: 0 24px;
+                        padding: 0px;
                         box-sizing: border-box;
                     }
                     nav > a {
-                        margin-right: 20px;
+                        margin-left: 20px;
                         font-size: 16px;
-                        color: #666;
+                        color: rgb(23,57,87);
                         line-height: 20px;
                         text-decoration: none;
+                        font-weight: 400;
                     }
                     .pageHeader {
-                        padding: 0 24px;
-                        padding-top: 60px;
+                        padding: 48px;
+                        margin-top: 72px;
                         box-sizing: border-box;
                         width: 100%;
-                        max-width: 680px;
-                        margin: 0 auto;
                         display: flex;
+                        flex-direction: column;
                         justify-content: space-between;
                         align-items: center;
+                        background-color: rgba(229, 229, 247, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .pageHeader h1 {
+                        font-size: 42px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                        .divider {
+                            margin: 0 8px;
+                            color: #ccc;
+                            user-select: none;
+                        }
+                    .pageHeader h2 {
+                        font-size: 32px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
                     }
                     .pageHeader a {
                         font-size: 14px;
@@ -46,37 +78,45 @@
                         text-decoration: none;
                     }
                     .list {
-                        padding: 0 24px;
-                        padding-top: 12px;
+                        padding: 24px;
+                        padding-top: 48px;
                         box-sizing: border-box;
                         width: 100%;
-                        max-width: 680px;
+                        min-height: 100vh;
+                        max-width: 700px;
                         margin: 0 auto;
                     }
                     .list-item {
                         display: block;
-                        padding: 12px 0;
-                        border-bottom: 1px dotted #e5e5e5;
                         text-decoration: none;
                         color: #333;
                         position: relative;
                         box-sizing: border-box;
                         padding-right: 80px;
+                        font-size: 16px;
+                        line-height: 26px;
+                        min-height: 26px;
+                        margin-bottom: 12px;
                     }
 
                     .list-item span {
                         display: block;
-                        font-size: 16px;
-                        line-height: 20px;
-                        color: #333;
+                        line-height: 26px;
+                        min-height: 26px;
+                        color: #007BB6;
+                    }
+                    .list-item span:hover {
+                        text-decoration: underline;
                     }
                     .list-item time {
-                        display: block;
                         position: absolute;
                         right: 0;
-                        top: 12px;
-                        font-size: 12px;
-                        color: #999;
+                        top: 0;
+                        height: 100%;
+                        display: flex;
+                        font-weight: 500;
+                        align-items: center;
+                        color: #17395780;
                         line-height: 20px;
                     }
                     .title {
@@ -89,10 +129,28 @@
                     article {
                         padding: 24px;
                         box-sizing: border-box;
-                        line-height: 1.8;
+                        line-height: 1.5;
+                        max-width: 700px;
+                        padding: 24px;
+                        margin: 0 auto;
+                        font-size: 16px;
+                        color: rgb(23, 57, 87);
                     }
-                    article > p {
-                        padding: 12px 0;
+                    .giscus {
+                        width: 100%;
+                        max-width: 700px;
+                        margin: 24px auto;
+                    }
+                    p {
+                        margin: 0;
+                        margin-bottom: 24px;
+                        padding: 0;
+                    }
+                    li > p {
+                        margin-bottom: 6px;
+                    }
+                    article {
+                        min-height: 100vh;
                     }
                     article img {
                         max-width: 100%;
@@ -102,15 +160,27 @@
                         border-radius: 4px;
                         border: 1px solid #e5e5e5;
                     }
+                    article a {
+                        color: rgb(0, 123, 182);
+                        text-decoration: none;
+                    }
+
+                    article a:hover {
+                        text-decoration: underline;
+                    }
                     article pre {
                         padding: 12px;
-                        background-color: #f5f5f5;
+                        background-color: #007BB608;
                         border-radius: 4px;
                         overflow: auto;
+                        font-size: 15px;
+                        line-height: 1.5;
+                        color: rgb(0, 128, 117);
+                        border: 1px solid #389ab129;
                     }
                     article .inline-code {
                         padding: 0px 4px;
-                        background-color: #e0e0e0;
+                        background-color: #007BB608;
                         border-radius: 4px;
                         font-size: 14px;
                         color: #333;
@@ -119,7 +189,7 @@
                     .center {
                         position: relative;
                         width: 100%;
-                        max-width: 680px;
+                        max-width: 1240px;
                         margin: 0 auto;
                     }
                     .right {
@@ -132,16 +202,18 @@
                         text-decoration:none;
                     }
                     footer {
+                        color: rgba(23, 57, 87, 0.5);
                         width: 100%;
-                        max-width: 680px;
                         margin: 0 auto;
-                        padding: 0 24px;
-                        padding-bottom: 40px;
-                        padding-top: 12px;
-                        text-align: center;
-                        font-size: 13px;
+                        padding: 24px;
                         box-sizing: border-box;
-                        color: #999;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 13px;
+                        background-color: rgba(229, 247, 237, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
                     }
                     .giscus {
                         margin-bottom: 24px;
@@ -150,15 +222,16 @@
             </head>
             <body><header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
-                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
-                <div style="padding-right: 24px;">
-                    <a href="https://x.com/codersoar" target="_blank">X</a> / <a href="https://github.com/echosoar" target="_blank">Github</a>
-                </div>
+                <a class="header-title" href="/">Soar's Blog</a>
+                <nav><a href="/">Articles</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
+                
             </div>
         </header>
-<h1 class="title">系统架构师知识点</h1>
-<time class="time">2025/04/01</time>
-<article class="center"><h2>第一章 计算机组成</h2>
+<div class="pageHeader">
+<h2>系统架构师知识点</h2>
+<time class="time">2025/02/01</time>
+</div>
+<article><h2>第一章 计算机组成</h2>
 <ul><li><p>第1节 ： 磁盘调度移臂算法</p>
 <ol><li><p>最短移臂调度：找距离当前磁头所在 
 <span class="inline-code">柱面</span>
@@ -719,25 +792,32 @@
 <ol><li><p>项目背景：为什么要做这个项目</p></li><li><p>项目的功能和技术介绍</p></li><li><p>回应子题目并过渡到主体</p></li></ol></li></ul>
 <p>            a. 经历 xxx 个月的项目开发，该xxx系统顺利投入使用，协助客户xxx，运行至今客户反馈良好，该系统由于xxx等原因，建设过程困难重重，但由于笔者及项目团队成员十分重视项目的“题目”，最终保证了该项目的按质按量顺利交付。</p>
 <p>            b. 当然，在本项目中，还有一些不足，比如xxxx，在后续的学习和工作中，我将不断和同行进行交流，提升自己的专业技术水平，更好的完成系统架构设计工作。</p></article>
-<footer>
-<script src="https://giscus.app/client.js"
-        data-repo="echosoar/echosoar.github.io"
-        data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
-        data-category="Announcements"
-        data-category-id="DIC_kwDOApSAOc4Co7sV"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="light"
-        data-lang="zh-CN"
-        crossorigin="anonymous"
-        async>
-</script>         
-            © 2015-2025 Soar<br />
+
+        <div class="giscus">
+        
+            <script src="https://giscus.app/client.js"
+                data-repo="echosoar/echosoar.github.io"
+                data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+                data-category="Announcements"
+                data-category-id="DIC_kwDOApSAOc4Co7sV"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>  
+        </div>
+        <footer>
+            <div>
+                © 2015-2025<br />
+                Soar's Blog. All rights reserved.
+            </div>
             <div style="display: flex;align-items: center;justify-content: center;">
-            <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1743465600000-8?scale=0.4&theme=3d-num" alt="page" height="20px" />
+                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1738368000000-8?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
         </footer></body>
             </html>

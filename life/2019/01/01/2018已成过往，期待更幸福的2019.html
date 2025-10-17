@@ -6,39 +6,71 @@
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
-                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Menlo';}
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo';}
                     header {
                         position: fixed;
                         top: 0;
                         left: 0;
                         width: 100%;
-                        padding: 12px 0;
-                        border-bottom: 1px solid #ccc;
+                        padding: 24px;
+                        height: 72px;
+                        box-sizing: border-box;
+                        border-bottom: 1px solid rgba(106, 28, 113, 0.09);
                         background-color: #fff;
                         z-index: 3;
                         overflow: hidden;
                     }
+                    .header-title {
+                        color: rgb(23,57,87);
+                        font-weight: 500;
+                        font-size: 16px;
+                        text-decoration: none;
+                    }
                     nav {
-                        padding: 0 24px;
+                        padding: 0px;
                         box-sizing: border-box;
                     }
                     nav > a {
-                        margin-right: 20px;
+                        margin-left: 20px;
                         font-size: 16px;
-                        color: #666;
+                        color: rgb(23,57,87);
                         line-height: 20px;
                         text-decoration: none;
+                        font-weight: 400;
                     }
                     .pageHeader {
-                        padding: 0 24px;
-                        padding-top: 60px;
+                        padding: 48px;
+                        margin-top: 72px;
                         box-sizing: border-box;
                         width: 100%;
-                        max-width: 680px;
-                        margin: 0 auto;
                         display: flex;
+                        flex-direction: column;
                         justify-content: space-between;
                         align-items: center;
+                        background-color: rgba(229, 229, 247, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .pageHeader h1 {
+                        font-size: 42px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                        .divider {
+                            margin: 0 8px;
+                            color: #ccc;
+                            user-select: none;
+                        }
+                    .pageHeader h2 {
+                        font-size: 32px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
                     }
                     .pageHeader a {
                         font-size: 14px;
@@ -46,37 +78,45 @@
                         text-decoration: none;
                     }
                     .list {
-                        padding: 0 24px;
-                        padding-top: 12px;
+                        padding: 24px;
+                        padding-top: 48px;
                         box-sizing: border-box;
                         width: 100%;
-                        max-width: 680px;
+                        min-height: 100vh;
+                        max-width: 700px;
                         margin: 0 auto;
                     }
                     .list-item {
                         display: block;
-                        padding: 12px 0;
-                        border-bottom: 1px dotted #e5e5e5;
                         text-decoration: none;
                         color: #333;
                         position: relative;
                         box-sizing: border-box;
                         padding-right: 80px;
+                        font-size: 16px;
+                        line-height: 26px;
+                        min-height: 26px;
+                        margin-bottom: 12px;
                     }
 
                     .list-item span {
                         display: block;
-                        font-size: 16px;
-                        line-height: 20px;
-                        color: #333;
+                        line-height: 26px;
+                        min-height: 26px;
+                        color: #007BB6;
+                    }
+                    .list-item span:hover {
+                        text-decoration: underline;
                     }
                     .list-item time {
-                        display: block;
                         position: absolute;
                         right: 0;
-                        top: 12px;
-                        font-size: 12px;
-                        color: #999;
+                        top: 0;
+                        height: 100%;
+                        display: flex;
+                        font-weight: 500;
+                        align-items: center;
+                        color: #17395780;
                         line-height: 20px;
                     }
                     .title {
@@ -89,10 +129,28 @@
                     article {
                         padding: 24px;
                         box-sizing: border-box;
-                        line-height: 1.8;
+                        line-height: 1.5;
+                        max-width: 700px;
+                        padding: 24px;
+                        margin: 0 auto;
+                        font-size: 16px;
+                        color: rgb(23, 57, 87);
                     }
-                    article > p {
-                        padding: 12px 0;
+                    .giscus {
+                        width: 100%;
+                        max-width: 700px;
+                        margin: 24px auto;
+                    }
+                    p {
+                        margin: 0;
+                        margin-bottom: 24px;
+                        padding: 0;
+                    }
+                    li > p {
+                        margin-bottom: 6px;
+                    }
+                    article {
+                        min-height: 100vh;
                     }
                     article img {
                         max-width: 100%;
@@ -102,15 +160,27 @@
                         border-radius: 4px;
                         border: 1px solid #e5e5e5;
                     }
+                    article a {
+                        color: rgb(0, 123, 182);
+                        text-decoration: none;
+                    }
+
+                    article a:hover {
+                        text-decoration: underline;
+                    }
                     article pre {
                         padding: 12px;
-                        background-color: #f5f5f5;
+                        background-color: #007BB608;
                         border-radius: 4px;
                         overflow: auto;
+                        font-size: 15px;
+                        line-height: 1.5;
+                        color: rgb(0, 128, 117);
+                        border: 1px solid #389ab129;
                     }
                     article .inline-code {
                         padding: 0px 4px;
-                        background-color: #e0e0e0;
+                        background-color: #007BB608;
                         border-radius: 4px;
                         font-size: 14px;
                         color: #333;
@@ -119,7 +189,7 @@
                     .center {
                         position: relative;
                         width: 100%;
-                        max-width: 680px;
+                        max-width: 1240px;
                         margin: 0 auto;
                     }
                     .right {
@@ -132,16 +202,18 @@
                         text-decoration:none;
                     }
                     footer {
+                        color: rgba(23, 57, 87, 0.5);
                         width: 100%;
-                        max-width: 680px;
                         margin: 0 auto;
-                        padding: 0 24px;
-                        padding-bottom: 40px;
-                        padding-top: 12px;
-                        text-align: center;
-                        font-size: 13px;
+                        padding: 24px;
                         box-sizing: border-box;
-                        color: #999;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 13px;
+                        background-color: rgba(229, 247, 237, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
                     }
                     .giscus {
                         margin-bottom: 24px;
@@ -150,15 +222,16 @@
             </head>
             <body><header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
-                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
-                <div style="padding-right: 24px;">
-                    <a href="https://x.com/codersoar" target="_blank">X</a> / <a href="https://github.com/echosoar" target="_blank">Github</a>
-                </div>
+                <a class="header-title" href="/">Soar's Blog</a>
+                <nav><a href="/">Articles</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
+                
             </div>
         </header>
-<h1 class="title">2018已成过往，期待更幸福的2019</h1>
+<div class="pageHeader">
+<h2>2018已成过往，期待更幸福的2019</h2>
 <time class="time">2019/01/01</time>
-<article class="center"><p>匆匆忙忙18年就这么过去了，这一年发生的很多事情都让我成长了许多，也学会了很多，只有自己也在不断变化才能跟得上生活、工作上的变化。</p>
+</div>
+<article><p>匆匆忙忙18年就这么过去了，这一年发生的很多事情都让我成长了许多，也学会了很多，只有自己也在不断变化才能跟得上生活、工作上的变化。</p>
 <p>首先也是最重要的事情，多了一位陪伴我品位生活中酸甜苦辣的人，给了我更多面向病痛、面向失败和未来生活的勇气，时长在不经意间流露出来的爱意使我的内心充满了幸福。你改变了我的很多生活上的陋习，也让我开始注意到身体健康对于一切的重要性，我们一起去买的那一副羽毛球拍我想在19年一定会发挥很大很大的用处。能与你一起做做淡雅美味的食物，逛逛幽静的小街，穿越人潮涌动的断桥风荷，一起玩我们喜欢的游戏，看我们喜欢电影，一起承担生活中的一切，就是我最大的幸福。</p>
 <p>三月份，首次担任了S级大促的前端总PM，作为天猫每年仅有6次S级大促（38、618、99、双十一、12.12、年货节）之一，也是今年的第一次S级大促，38承担了面向接下来一年的互动体验等方面的技术实践与探索，在这个过程中对于协调资源、开发任务分配、人员协同与沟通方面都有了一些实践经验，也让我收获和了解了很多之前从未接触过的东西。</p>
 <p>四月份的一个雨夜，骑着电瓶车不小心撞了一下，经历了过往二十余年受的最重的一次伤。首先是心灵上面的伤，当我撞得那一瞬间，第五肢传来了难以言说的痛，嗯。。据说男人最痛的地方就是这里，当时心里就想完了完了。。。多亏了那位妙手回春的医生，帮我完美的缝合了，万幸的是蛋还在，还没碎，还能用。其次是身体上的痛，锁骨断了，一瞬间半边身子都没有知觉，在被救护车送到医院的途中还遭受了N次伤害，为啥去医院的路上那么多减速带。。这要是更重伤势的病人估计没到医院就癫的要去见马克思了。</p>
@@ -168,25 +241,32 @@
 <p>十一月份的时候，又迎来了一年一度的双十一，这是我在天猫亲身参与的第三个双十一了，从第一次的打酱油，第二次上线的紧张焦虑，到这一次的游刃有余，感觉自己在这个过程中收获颇多，不过和之前不同的是，这次感觉并没有以前那么激动了，也许是因为经历的次数多了？也许是因为今年并没有什么让我大开胃口的吃的吧。。。</p>
 <p>记得小时候天天盼着，天天盼着过年，然后时间过的好慢好慢，但是到现在却感觉这一年过的好快，一周没啥感觉就过去了，一个月也没啥感觉就过去了，这一年也制定过许多规划，时间上面的，工作上面的，但是执行的并不怎么好，希望来年认真履行规划，继续坚持每背英语单词，早睡早起锻炼好身体，和湾湾继续幸福的生活下去。</p>
 <p>此上，于杭州</p></article>
-<footer>
-<script src="https://giscus.app/client.js"
-        data-repo="echosoar/echosoar.github.io"
-        data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
-        data-category="Announcements"
-        data-category-id="DIC_kwDOApSAOc4Co7sV"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="light"
-        data-lang="zh-CN"
-        crossorigin="anonymous"
-        async>
-</script>         
-            © 2015-2025 Soar<br />
+
+        <div class="giscus">
+        
+            <script src="https://giscus.app/client.js"
+                data-repo="echosoar/echosoar.github.io"
+                data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+                data-category="Announcements"
+                data-category-id="DIC_kwDOApSAOc4Co7sV"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>  
+        </div>
+        <footer>
+            <div>
+                © 2015-2025<br />
+                Soar's Blog. All rights reserved.
+            </div>
             <div style="display: flex;align-items: center;justify-content: center;">
-            <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1546300800000-19?scale=0.4&theme=3d-num" alt="page" height="20px" />
+                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1546300800000-19?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
         </footer></body>
             </html>

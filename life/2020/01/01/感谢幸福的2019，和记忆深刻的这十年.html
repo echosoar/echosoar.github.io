@@ -6,39 +6,71 @@
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
-                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Menlo';}
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo';}
                     header {
                         position: fixed;
                         top: 0;
                         left: 0;
                         width: 100%;
-                        padding: 12px 0;
-                        border-bottom: 1px solid #ccc;
+                        padding: 24px;
+                        height: 72px;
+                        box-sizing: border-box;
+                        border-bottom: 1px solid rgba(106, 28, 113, 0.09);
                         background-color: #fff;
                         z-index: 3;
                         overflow: hidden;
                     }
+                    .header-title {
+                        color: rgb(23,57,87);
+                        font-weight: 500;
+                        font-size: 16px;
+                        text-decoration: none;
+                    }
                     nav {
-                        padding: 0 24px;
+                        padding: 0px;
                         box-sizing: border-box;
                     }
                     nav > a {
-                        margin-right: 20px;
+                        margin-left: 20px;
                         font-size: 16px;
-                        color: #666;
+                        color: rgb(23,57,87);
                         line-height: 20px;
                         text-decoration: none;
+                        font-weight: 400;
                     }
                     .pageHeader {
-                        padding: 0 24px;
-                        padding-top: 60px;
+                        padding: 48px;
+                        margin-top: 72px;
                         box-sizing: border-box;
                         width: 100%;
-                        max-width: 680px;
-                        margin: 0 auto;
                         display: flex;
+                        flex-direction: column;
                         justify-content: space-between;
                         align-items: center;
+                        background-color: rgba(229, 229, 247, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .pageHeader h1 {
+                        font-size: 42px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                        .divider {
+                            margin: 0 8px;
+                            color: #ccc;
+                            user-select: none;
+                        }
+                    .pageHeader h2 {
+                        font-size: 32px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
                     }
                     .pageHeader a {
                         font-size: 14px;
@@ -46,37 +78,45 @@
                         text-decoration: none;
                     }
                     .list {
-                        padding: 0 24px;
-                        padding-top: 12px;
+                        padding: 24px;
+                        padding-top: 48px;
                         box-sizing: border-box;
                         width: 100%;
-                        max-width: 680px;
+                        min-height: 100vh;
+                        max-width: 700px;
                         margin: 0 auto;
                     }
                     .list-item {
                         display: block;
-                        padding: 12px 0;
-                        border-bottom: 1px dotted #e5e5e5;
                         text-decoration: none;
                         color: #333;
                         position: relative;
                         box-sizing: border-box;
                         padding-right: 80px;
+                        font-size: 16px;
+                        line-height: 26px;
+                        min-height: 26px;
+                        margin-bottom: 12px;
                     }
 
                     .list-item span {
                         display: block;
-                        font-size: 16px;
-                        line-height: 20px;
-                        color: #333;
+                        line-height: 26px;
+                        min-height: 26px;
+                        color: #007BB6;
+                    }
+                    .list-item span:hover {
+                        text-decoration: underline;
                     }
                     .list-item time {
-                        display: block;
                         position: absolute;
                         right: 0;
-                        top: 12px;
-                        font-size: 12px;
-                        color: #999;
+                        top: 0;
+                        height: 100%;
+                        display: flex;
+                        font-weight: 500;
+                        align-items: center;
+                        color: #17395780;
                         line-height: 20px;
                     }
                     .title {
@@ -89,10 +129,28 @@
                     article {
                         padding: 24px;
                         box-sizing: border-box;
-                        line-height: 1.8;
+                        line-height: 1.5;
+                        max-width: 700px;
+                        padding: 24px;
+                        margin: 0 auto;
+                        font-size: 16px;
+                        color: rgb(23, 57, 87);
                     }
-                    article > p {
-                        padding: 12px 0;
+                    .giscus {
+                        width: 100%;
+                        max-width: 700px;
+                        margin: 24px auto;
+                    }
+                    p {
+                        margin: 0;
+                        margin-bottom: 24px;
+                        padding: 0;
+                    }
+                    li > p {
+                        margin-bottom: 6px;
+                    }
+                    article {
+                        min-height: 100vh;
                     }
                     article img {
                         max-width: 100%;
@@ -102,15 +160,27 @@
                         border-radius: 4px;
                         border: 1px solid #e5e5e5;
                     }
+                    article a {
+                        color: rgb(0, 123, 182);
+                        text-decoration: none;
+                    }
+
+                    article a:hover {
+                        text-decoration: underline;
+                    }
                     article pre {
                         padding: 12px;
-                        background-color: #f5f5f5;
+                        background-color: #007BB608;
                         border-radius: 4px;
                         overflow: auto;
+                        font-size: 15px;
+                        line-height: 1.5;
+                        color: rgb(0, 128, 117);
+                        border: 1px solid #389ab129;
                     }
                     article .inline-code {
                         padding: 0px 4px;
-                        background-color: #e0e0e0;
+                        background-color: #007BB608;
                         border-radius: 4px;
                         font-size: 14px;
                         color: #333;
@@ -119,7 +189,7 @@
                     .center {
                         position: relative;
                         width: 100%;
-                        max-width: 680px;
+                        max-width: 1240px;
                         margin: 0 auto;
                     }
                     .right {
@@ -132,16 +202,18 @@
                         text-decoration:none;
                     }
                     footer {
+                        color: rgba(23, 57, 87, 0.5);
                         width: 100%;
-                        max-width: 680px;
                         margin: 0 auto;
-                        padding: 0 24px;
-                        padding-bottom: 40px;
-                        padding-top: 12px;
-                        text-align: center;
-                        font-size: 13px;
+                        padding: 24px;
                         box-sizing: border-box;
-                        color: #999;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 13px;
+                        background-color: rgba(229, 247, 237, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
                     }
                     .giscus {
                         margin-bottom: 24px;
@@ -150,15 +222,16 @@
             </head>
             <body><header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
-                <nav><a href="/">Home</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
-                <div style="padding-right: 24px;">
-                    <a href="https://x.com/codersoar" target="_blank">X</a> / <a href="https://github.com/echosoar" target="_blank">Github</a>
-                </div>
+                <a class="header-title" href="/">Soar's Blog</a>
+                <nav><a href="/">Articles</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
+                
             </div>
         </header>
-<h1 class="title">感谢幸福的2019，和记忆深刻的这十年</h1>
+<div class="pageHeader">
+<h2>感谢幸福的2019，和记忆深刻的这十年</h2>
 <time class="time">2020/01/01</time>
-<article class="center"><p>沉伦锦年只如初见，岁月静好生生欢颜。这十年充满了幸福、惊喜，十年前绝不会预想到这十年我会发生什么变化。我想，我应该在这里回忆一下过去的十年以及畅想一下接下来的十年。</p>
+</div>
+<article><p>沉伦锦年只如初见，岁月静好生生欢颜。这十年充满了幸福、惊喜，十年前绝不会预想到这十年我会发生什么变化。我想，我应该在这里回忆一下过去的十年以及畅想一下接下来的十年。</p>
 <h4>2010 ~ 2013 充满了苦痛却又幸福的高中</h4>
 <p>我小时候生活在葱省的一个十八线小县城，那里充满了人间的烟火气，每天中午放学回到家都能在楼道里面闻到各家各户的饭菜香味，也通过各种声音幻想了各家各户各种方式的吵架姿势。那个时候的我刚刚经历了中考，以一个吊车尾的成绩考上了我们当地排名前二的高中，虽然一共就俩，全年级一千多个人我排在七百多名，究其原因也不是中考没有考好，反而是以我当时的水平考这样的成绩还算不错，毕竟在初中的时候迷恋上了看小说，白天在学校偷偷摸摸地看，晚上回家通宵达旦地看，为了上课的时候能看到课桌桌洞里面的电子书，还自己带了锤头把课桌敲了个洞，这样手可以放在课桌里面，头可以趴桌上看，老师们也经常问我为什么老趴桌子上，而我的回答每次都出奇的相同，肚子疼，估计老师们都会琢磨为什么这个同学一上课就肚子疼呢？也是佩服我自己当初为了看小说能够想这么多奇淫技巧。</p>
 <p>整天不好好学习就知道看小说，那学习能好吗？还记得当初班主任找我说，你这个成绩读高中也考不上大学，还是想想去读个技校吧，读完了还能找个厂上个班，老婆孩子热炕头也很好啊。不过我从小志存高远，尤其是看了那么多YY小说里面都是吊打一切不服，觉得读技校都是一些充当配角调皮捣蛋的孩子才去的。没有想到经过这么久的不懈努力我也到达了这种境地，要说失望吧也谈不上，也怪不得别人，只能抓着中考前最后的一点点时间开始认真复习，也不知是否因为看了那么多小说，语文成绩还算不错，数学也算是传统个人强项，在这种情况下想要尽快提高成绩，那就只能找最弱的进行突破，毕竟从90分提升到100分难，但是从50分提升到70分还是比较简单的。幸好这一番努力还是起作用了，最终就算是花了不少钱，还是考上了高中，否则我想现在的我肯定是另外一番境地。</p>
@@ -174,25 +247,32 @@
 <p>虽然一直都有人说，你在一个多牛逼多牛逼的公司，但是事实上它所带给我的除了还算丰厚的薪水之外，更多的是压力，更多的是敬畏，可能很少有人有这种一点点失误会造成巨大影响的机会，担任过38、618等无数次大促的前端、会场PM，每次项目组的人都和我说，不出问题活动上微博热搜，出了问题你上微博热搜，所以在阿里比在杭州的其他地方还难，不过幸好没有住在公司南边。</p>
 <p>不知道接下来的一年、两年、三五年会发生什么，更别说十年后了，虽说唯一不变的就是变化，那么希望能够在这些变化里面品静好人生。 </p>
 <p>当然，If not now, when? If not me, who?</p></article>
-<footer>
-<script src="https://giscus.app/client.js"
-        data-repo="echosoar/echosoar.github.io"
-        data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
-        data-category="Announcements"
-        data-category-id="DIC_kwDOApSAOc4Co7sV"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="light"
-        data-lang="zh-CN"
-        crossorigin="anonymous"
-        async>
-</script>         
-            © 2015-2025 Soar<br />
+
+        <div class="giscus">
+        
+            <script src="https://giscus.app/client.js"
+                data-repo="echosoar/echosoar.github.io"
+                data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+                data-category="Announcements"
+                data-category-id="DIC_kwDOApSAOc4Co7sV"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>  
+        </div>
+        <footer>
+            <div>
+                © 2015-2025<br />
+                Soar's Blog. All rights reserved.
+            </div>
             <div style="display: flex;align-items: center;justify-content: center;">
-            <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1577836800000-19?scale=0.4&theme=3d-num" alt="page" height="20px" />
+                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1577836800000-19?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
         </footer></body>
             </html>
