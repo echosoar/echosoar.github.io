@@ -1,12 +1,12 @@
 <!DOCTYPE html>
             <html>
             <head>
-                <title>Articles - soar's blog</title>
+                <title>Tech - soar's blog</title>
                 <meta charset="utf-8">
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
-                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo';}
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
                     header {
                         position: fixed;
                         top: 0;
@@ -118,6 +118,7 @@
                         align-items: center;
                         color: #17395780;
                         line-height: 26px;
+                        font-size: 16px;
                     }
                     .title {
                         padding: 0 24px;
@@ -131,6 +132,7 @@
                         box-sizing: border-box;
                         line-height: 1.5;
                         max-width: 700px;
+                        width: 100%;
                         padding: 24px;
                         margin: 0 auto;
                         font-size: 16px;
@@ -139,6 +141,8 @@
                     .giscus {
                         width: 100%;
                         max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 6px 24px;
                         margin: 24px auto;
                     }
                     p {
@@ -150,7 +154,7 @@
                         margin-bottom: 6px;
                     }
                     article {
-                        min-height: 100vh;
+                        min-height: calc(100vh - 120px);
                     }
                     article img {
                         max-width: 100%;
@@ -218,17 +222,34 @@
                     .giscus {
                         margin-bottom: 24px;
                     }
+                    @media screen {
+                        @media (max-width: 750px) {
+                            nav > a {
+                                font-size: 14px;
+                                margin-left: 10px;
+                            }
+                            .pageHeader {
+                                padding: 24px;
+                            }
+                            .list-item time {
+                                font-size: 14px;
+                            }
+                            .header-title span {
+                                display: none;
+                            }
+                        }
+                    }
                 </style>
             </head>
             <body><header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
-                <a class="header-title" href="/">Soar</a>
-                <nav><a href="/">Articles</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
+                <a class="header-title" href="/">Soar<span>'s Blog</span></a>
+                <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
                 
             </div>
         </header>
 <div class="pageHeader">
-                        <h1>Articles</h1>
+                        <h1>Technology</h1>
                         <div>
                             <a href="https://echosoar.github.io/atom.xml" target="_blank">RSS</a>
                             <span class="divider"> | </span>

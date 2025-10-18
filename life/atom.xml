@@ -3,10 +3,10 @@
                 <title>Life</title>
                 <link href="https://echosoar.github.io/life/atom.xml" rel="self"/>
                 <link href="https://echosoar.github.io/life/"/>
-                <updated>2025-10-17T16:03:23.805Z</updated>
+                <updated>2025-10-18T00:14:38.484Z</updated>
                 <id>https://echosoar.github.io/life/</id>
                 <author>
-                    <name>Soar's Blog</name>
+                    <name>soar</name>
                 </author>
                 <follow_challenge>
                     <feedId>105073521852861440</feedId>
@@ -72,23 +72,5 @@
                             <id>https://echosoar.github.io/life/2019/01/01/2018已成过往，期待更幸福的2019.html</id>
                             <updated>2019-01-01T00:00:00.000Z</updated>
                             <summary>2018已成过往，期待更幸福的2019</summary>
-                        </entry><entry>
-                            <title>无论悲欢，新的一天总会充满激情</title>
-                            <link href="https://echosoar.github.io/life/2018/11/13/无论悲欢，新的一天总会充满激情.html"/>
-                            <id>https://echosoar.github.io/life/2018/11/13/无论悲欢，新的一天总会充满激情.html</id>
-                            <updated>2018-11-13T00:00:00.000Z</updated>
-                            <summary>无论悲欢，新的一天总会充满激情</summary>
-                        </entry><entry>
-                            <title>总会再记起天行健五块钱的牛肉面</title>
-                            <link href="https://echosoar.github.io/life/2017/06/16/总会再记起天行健五块钱的牛肉面.html"/>
-                            <id>https://echosoar.github.io/life/2017/06/16/总会再记起天行健五块钱的牛肉面.html</id>
-                            <updated>2017-06-16T00:00:00.000Z</updated>
-                            <summary>总会再记起天行健五块钱的牛肉面</summary>
-                        </entry><entry>
-                            <title>2016即将来临，回忆一下我的2015</title>
-                            <link href="https://echosoar.github.io/life/2015/12/30/2016即将来临，回忆一下我的2015.html"/>
-                            <id>https://echosoar.github.io/life/2015/12/30/2016即将来临，回忆一下我的2015.html</id>
-                            <updated>2015-12-30T00:00:00.000Z</updated>
-                            <summary>2016即将来临，回忆一下我的2015</summary>
                         </entry>
             </feed>
