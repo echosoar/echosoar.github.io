@@ -3,7 +3,7 @@
                 <title>Life</title>
                 <link href="https://echosoar.github.io/life/atom.xml" rel="self"/>
                 <link href="https://echosoar.github.io/life/"/>
-                <updated>2025-10-18T00:14:38.484Z</updated>
+                <updated>2025-10-18T00:21:27.900Z</updated>
                 <id>https://echosoar.github.io/life/</id>
                 <author>
                     <name>soar</name>
@@ -18,18 +18,6 @@
                             <id>https://echosoar.github.io/life/2025/03/01/回望那个 1+1=3 的 2024.html</id>
                             <updated>2025-03-01T00:00:00.000Z</updated>
                             <summary>回望那个 1+1=3 的 2024</summary>
-                        </entry><entry>
-                            <title>系统架构师知识点</title>
-                            <link href="https://echosoar.github.io/life/2025/02/01/系统架构师知识点.html"/>
-                            <id>https://echosoar.github.io/life/2025/02/01/系统架构师知识点.html</id>
-                            <updated>2025-02-01T00:00:00.000Z</updated>
-                            <summary>系统架构师知识点</summary>
-                        </entry><entry>
-                            <title>2024年度科技互联网大事记</title>
-                            <link href="https://echosoar.github.io/life/2024/12/31/2024年度科技互联网大事记.html"/>
-                            <id>https://echosoar.github.io/life/2024/12/31/2024年度科技互联网大事记.html</id>
-                            <updated>2024-12-31T00:00:00.000Z</updated>
-                            <summary>2024年度科技互联网大事记</summary>
                         </entry><entry>
                             <title>我觉得好用的免费、开源Mac软件</title>
                             <link href="https://echosoar.github.io/life/2024/11/12/我觉得好用的免费、开源Mac软件.html"/>
@@ -72,5 +60,17 @@
                             <id>https://echosoar.github.io/life/2019/01/01/2018已成过往，期待更幸福的2019.html</id>
                             <updated>2019-01-01T00:00:00.000Z</updated>
                             <summary>2018已成过往，期待更幸福的2019</summary>
+                        </entry><entry>
+                            <title>无论悲欢，新的一天总会充满激情</title>
+                            <link href="https://echosoar.github.io/life/2018/11/13/无论悲欢，新的一天总会充满激情.html"/>
+                            <id>https://echosoar.github.io/life/2018/11/13/无论悲欢，新的一天总会充满激情.html</id>
+                            <updated>2018-11-13T00:00:00.000Z</updated>
+                            <summary>无论悲欢，新的一天总会充满激情</summary>
+                        </entry><entry>
+                            <title>总会再记起天行健五块钱的牛肉面</title>
+                            <link href="https://echosoar.github.io/life/2017/06/16/总会再记起天行健五块钱的牛肉面.html"/>
+                            <id>https://echosoar.github.io/life/2017/06/16/总会再记起天行健五块钱的牛肉面.html</id>
+                            <updated>2017-06-16T00:00:00.000Z</updated>
+                            <summary>总会再记起天行健五块钱的牛肉面</summary>
                         </entry>
             </feed>
