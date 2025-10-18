@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <title>第74期 偷懒爱好者周刊 - soar's blog</title>
+                <meta charset="utf-8">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                    header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        padding: 24px;
+                        height: 72px;
+                        box-sizing: border-box;
+                        border-bottom: 1px solid rgba(106, 28, 113, 0.09);
+                        background-color: #fff;
+                        z-index: 3;
+                        overflow: hidden;
+                    }
+                    .header-title {
+                        color: rgb(23,57,87);
+                        font-weight: 500;
+                        font-size: 16px;
+                        text-decoration: none;
+                    }
+                    nav {
+                        padding: 0px;
+                        box-sizing: border-box;
+                    }
+                    nav > a {
+                        margin-left: 20px;
+                        font-size: 16px;
+                        color: rgb(23,57,87);
+                        line-height: 20px;
+                        text-decoration: none;
+                        font-weight: 400;
+                    }
+                    .pageHeader {
+                        padding: 48px;
+                        margin-top: 72px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        align-items: center;
+                        background-color: rgba(229, 229, 247, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .pageHeader h1 {
+                        font-size: 42px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                        .divider {
+                            margin: 0 8px;
+                            color: #ccc;
+                            user-select: none;
+                        }
+                    .pageHeader h2 {
+                        font-size: 32px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    .pageHeader a {
+                        font-size: 14px;
+                        color: #6c86ee;
+                        text-decoration: none;
+                    }
+                    .list {
+                        padding: 24px;
+                        padding-top: 48px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        min-height: 100vh;
+                        max-width: 700px;
+                        margin: 0 auto;
+                    }
+                    .list-item {
+                        display: block;
+                        text-decoration: none;
+                        color: #333;
+                        position: relative;
+                        box-sizing: border-box;
+                        padding-right: 90px;
+                        font-size: 16px;
+                        line-height: 26px;
+                        min-height: 26px;
+                        margin-bottom: 12px;
+                    }
+
+                    .list-item span {
+                        display: block;
+                        line-height: 26px;
+                        min-height: 26px;
+                        color: #007BB6;
+                    }
+                    .list-item span:hover {
+                        text-decoration: underline;
+                    }
+                    .list-item time {
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        height: 26px;
+                        display: flex;
+                        font-weight: 500;
+                        align-items: center;
+                        color: #17395780;
+                        line-height: 26px;
+                        font-size: 16px;
+                    }
+                    .title {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                        padding-top: 72px;
+                        text-align: center;
+                    }
+                    .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    article {
+                        padding: 24px;
+                        box-sizing: border-box;
+                        line-height: 1.5;
+                        max-width: 700px;
+                        width: 100%;
+                        padding: 24px;
+                        margin: 0 auto;
+                        font-size: 16px;
+                        color: rgb(23, 57, 87);
+                    }
+                    .giscus {
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 6px 24px;
+                        margin: 24px auto;
+                    }
+                    p {
+                        margin: 0;
+                        margin-bottom: 24px;
+                        padding: 0;
+                    }
+                    li > p {
+                        margin-bottom: 6px;
+                    }
+                    article {
+                        min-height: calc(100vh - 120px);
+                    }
+                    article img {
+                        max-width: 100%;
+                        height: auto;
+                        margin: 12px auto;
+                        display: block;
+                        border-radius: 4px;
+                        border: 1px solid #e5e5e5;
+                    }
+                    article a {
+                        color: rgb(0, 123, 182);
+                        text-decoration: none;
+                    }
+
+                    article a:hover {
+                        text-decoration: underline;
+                    }
+                    article pre {
+                        padding: 12px;
+                        background-color: #007BB608;
+                        border-radius: 4px;
+                        overflow: auto;
+                        font-size: 15px;
+                        line-height: 1.5;
+                        color: rgb(0, 128, 117);
+                        border: 1px solid #389ab129;
+                    }
+                    article .inline-code {
+                        padding: 0px 4px;
+                        background-color: #007BB608;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                       
+                    .center {
+                        position: relative;
+                        width: 100%;
+                        max-width: 1240px;
+                        margin: 0 auto;
+                    }
+                    .right {
+                        position: absolute;
+                        right: 0;
+                        font-size: 16px;
+                        color: #666;
+                        top: 0;
+                        line-height: 20px;
+                        text-decoration:none;
+                    }
+                    footer {
+                        color: rgba(23, 57, 87, 0.5);
+                        width: 100%;
+                        margin: 0 auto;
+                        padding: 24px;
+                        box-sizing: border-box;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 13px;
+                        background-color: rgba(229, 247, 237, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .giscus {
+                        margin-bottom: 24px;
+                    }
+                    @media screen {
+                        @media (max-width: 750px) {
+                            nav > a {
+                                font-size: 14px;
+                                margin-left: 10px;
+                            }
+                            .pageHeader {
+                                padding: 24px;
+                            }
+                            .list-item time {
+                                font-size: 14px;
+                            }
+                            .header-title span {
+                                display: none;
+                            }
+                        }
+                    }
+                </style>
+            </head>
+            <body><header>
+            <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
+                <a class="header-title" href="/">Soar<span>'s Blog</span></a>
+                <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
+                
+            </div>
+        </header>
+<div class="pageHeader">
+<h2>第74期 偷懒爱好者周刊</h2>
+<time class="time">2024/03/20</time>
+</div>
+<article><h3>一、上周科技圈大事记</h3>
+<ul><li><p>周一（3.11）</p>
+<ul><li><p>马斯克宣布将开源 xAI 公司的 AI 大模型 
+<a href="https://github.com/xai-org/grok-1" target="_blank">Grok</a></p></li></ul></li><li><p>周二（3.12）</p>
+<ul><li><p>苹果宣布扩建上海研究中心，并在深圳新建应用研究实验室</p></li></ul></li><li><p>周三（3.13）</p>
+<ul><li><p>荣耀公司表示已投入 100 亿用于 AI 研发</p></li><li><p>国务院印发《推动大规模设备更新和消费品以旧换新行动方案》</p></li><li><p>Figure 发布了结合 OpenAI 大模型的机器人 Figure 01</p></li></ul></li><li><p>周四（3.14）</p>
+<ul><li><p>SpaceX 星舰第三次试飞取得部分成功，返回大气层时失联</p></li><li><p>因未能充分保护未成年人，意大利对 TikTok 罚款 1000 万欧元</p></li><li><p>AI 大模型公司“零一万物”发布
+<a href="https://platform.lingyiwanwu.com/" target="_blank"> Yi 大模型 API 开放平台</a></p></li><li><p>苹果公布 300 亿参数多模态 AI 大模型 
+<a href="https://arxiv.org/abs/2403.09611" target="_blank">MM1</a></p></li></ul></li><li><p>周五（3.15）</p>
+<ul><li><p>腾讯、清华、港科大联合推出图生视频模型 
+<a href="https://follow-your-click.github.io/" target="_blank">Follow-Your-Click</a></p></li><li><p>全国消协“
+<a href="https://315.cca.org.cn/" target="_blank">智慧315</a>
+”平台上线</p></li><li><p>麦当劳点餐系统出现全球性故障</p></li></ul></li><li><p>周六（3.16）</p>
+<ul><li><p>DNA 数据存储联盟发布首个 DNA 存储规范</p></li></ul></li><li><p>周日（3.17）</p>
+<ul><li><p>盒马、大润发否认被出售给中粮</p></li></ul></li></ul>
+<h3>二、有趣的网站</h3>
+<p>本周分享 3 个有趣的网站</p>
+<h4>1. 红白机游戏盒</h4>
+<p>这个网站提供了非常多的免费在线小游戏，包含赛车、动作、益智等各种游戏种类。。</p>
+<p><a href="https://nes.heheda.top/" target="_blank">红白机游戏盒</a></p>
+<h4>2. openVertebrate</h4>
+<p>oVert 项目由 18 个机构耗时 6 年，通过对两栖、爬行、鱼类、鸟类和哺乳动物的一半以上的纲或属进行 CT 扫描，从而获得的脊椎动物标本的 3D 复原图像，让人们能从内到外近距离观察这些生物。</p>
+<p><a href="https://www.morphosource.org/projects/000368762" target="_blank">openVertebrate</a></p>
+<h4>3. Earthworm</h4>
+<p>这是一个通过输入单词来构造句子从而学习英语的项目，从最简单的句子开始然后越来越复杂。</p>
+<h4></h4>
+<p><a href="https://earthworm.cuixueshe.com/" target="_blank">Earthworm</a></p>
+<h3>三、好用的工具</h3>
+<p>本周分享 3 个在线工具</p>
+<h4>1. Change Face</h4>
+<p>这是一个由 AI 驱动的人脸替换工具，可以将一张图像中的人脸移植到另外一张图像上，无需登录可以免费使用。</p>
+<p><a href="https://www.changeface.online/" target="_blank">Change Face</a></p>
+<h4>2. Kimi</h4>
+<p>输入网址或者上传图片后，由 AI 帮助分析理解内容，需登录可以免费使用。</p>
+<p><a href="https://kimi.moonshot.cn/" target="_blank">Kimi</a></p>
+<h4>3. Stylar</h4>
+<p>这是一个基于 AI 的图像处理工具，提供了文字生成图像、图像生成图像等功能，登录后每周有免费使用额度。</p>
+<p><a href="https://www.stylar.ai/" target="_blank">Stylar</a></p>
+<h3>四、收藏的资源</h3>
+<p>本周分享 3 个收藏的数据资源。</p>
+<h4>1. world vector logo</h4>
+<p>这个网站收录了世界上各种 logo 的矢量图形。</p>
+<p><a href="https://worldvectorlogo.com/" target="_blank">world vector logo</a></p>
+<h4>2. UI Notes</h4>
+<p>这个网站提供了数百个 App 的真实截图，可以用来参考获得设计灵感。</p>
+<p><a href="https://uinotes.com/app" target="_blank">UI Notes</a></p>
+<h4>3. 识典古籍</h4>
+<p>北大与字节跳动一起开发的一个免费古籍在线阅读平台。</p>
+<p><a href="https://www.shidianguji.com/" target="_blank">识典古籍</a></p>
+<h4>其他</h4>
+<p>经常有朋友们问周刊有没有交流群，于是最近建了个微信群。</p>
+<p>想要交流、灌水、推荐其他工具的朋友们，欢迎添加“偷懒小助手”加入交流群：</p>
+<p><img src="https://cdn.1htr.cn/blog/202411160912962.png" alt="" /></p>
+<h3>刊尾</h3>
+<p><img src="https://cdn.1htr.cn/blog/202410221239697.png" alt="" /></p>
+<p>每周三在微信公众号“偷懒爱好者”首发，欢迎关注、评论！</p>
+<p>也欢迎关注我的 X：codersoar，您还可以通过 RSS（ https://echosoar.github.io/weekly/atom.xml ）免费订阅本周刊</p></article>
+
+        <div class="giscus">
+        
+            <script src="https://giscus.app/client.js"
+                data-repo="echosoar/echosoar.github.io"
+                data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+                data-category="Announcements"
+                data-category-id="DIC_kwDOApSAOc4Co7sV"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>  
+        </div>
+        <footer>
+            <div>
+                © 2015-2025<br />
+                Soar's Blog. All rights reserved.
+            </div>
+            <div style="display: flex;align-items: center;justify-content: center;">
+                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1710892800000-12?scale=0.4&theme=3d-num" alt="page" height="20px" />
+            </div>
+        </footer></body>
+            </html>
+        
