@@ -3,7 +3,7 @@
                 <title>偷懒爱好者周刊</title>
                 <link href="https://echosoar.github.io/weekly/atom.xml" rel="self"/>
                 <link href="https://echosoar.github.io/weekly/"/>
-                <updated>2025-10-21T00:38:24.300Z</updated>
+                <updated>2025-10-21T23:19:08.703Z</updated>
                 <id>https://echosoar.github.io/weekly/</id>
                 <author>
                     <name>soar</name>
@@ -13,6 +13,12 @@
                     <userId>62733912072851456</userId>
                 </follow_challenge>
                 <entry>
+                            <title>第155期 偷懒爱好者周刊</title>
+                            <link href="https://echosoar.github.io/weekly/2025/10/22/第155期-偷懒爱好者周刊.html"/>
+                            <id>https://echosoar.github.io/weekly/2025/10/22/第155期-偷懒爱好者周刊.html</id>
+                            <updated>2025-10-22T00:00:00.000Z</updated>
+                            <summary>第155期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。欢迎访问 https://echosoar.github.io/weekly/2025/10/22/第155期-偷懒爱好者周刊.html 阅读本期周刊全部内容。</summary>
+                        </entry><entry>
                             <title>第154期 偷懒爱好者周刊</title>
                             <link href="https://echosoar.github.io/weekly/2025/10/15/第154期-偷懒爱好者周刊.html"/>
                             <id>https://echosoar.github.io/weekly/2025/10/15/第154期-偷懒爱好者周刊.html</id>
@@ -66,11 +72,5 @@
                             <id>https://echosoar.github.io/weekly/2025/08/19/第146期-偷懒爱好者周刊.html</id>
                             <updated>2025-08-19T00:00:00.000Z</updated>
                             <summary>第146期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。欢迎访问 https://echosoar.github.io/weekly/2025/08/19/第146期-偷懒爱好者周刊.html 阅读本期周刊全部内容。</summary>
-                        </entry><entry>
-                            <title>第145期 偷懒爱好者周刊</title>
-                            <link href="https://echosoar.github.io/weekly/2025/08/13/第145期-偷懒爱好者周刊.html"/>
-                            <id>https://echosoar.github.io/weekly/2025/08/13/第145期-偷懒爱好者周刊.html</id>
-                            <updated>2025-08-13T00:00:00.000Z</updated>
-                            <summary>第145期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。欢迎访问 https://echosoar.github.io/weekly/2025/08/13/第145期-偷懒爱好者周刊.html 阅读本期周刊全部内容。</summary>
                         </entry>
             </feed>
