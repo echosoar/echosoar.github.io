@@ -127,6 +127,17 @@
                         text-align: center;
                     }
                     .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    .descInfo {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: #999;
+                        font-size: 13px;
+                        padding: 12px 0;
+                    }
+                    .descInfo time {
+                        padding: 0;
+                    }
                     article {
                         padding: 24px;
                         box-sizing: border-box;
@@ -250,7 +261,7 @@
         </header>
 <div class="pageHeader">
 <h2>我觉得好用的免费、开源Mac软件</h2>
-<time class="time">2024/11/12</time>
+<div class="descInfo"><time class="time">2024/11/12</time><span class="divider"> | </span><span>3 min</span></div>
 </div>
 <article><h3>Bruno</h3>
 <p>本地 API 测试工具，类似于 Postman，但是各种 API 配置是以文件形式管理的，可以保存到 Git 上。</p>

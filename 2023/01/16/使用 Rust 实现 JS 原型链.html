@@ -127,6 +127,17 @@
                         text-align: center;
                     }
                     .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    .descInfo {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: #999;
+                        font-size: 13px;
+                        padding: 12px 0;
+                    }
+                    .descInfo time {
+                        padding: 0;
+                    }
                     article {
                         padding: 24px;
                         box-sizing: border-box;
@@ -250,7 +261,7 @@
         </header>
 <div class="pageHeader">
 <h2>使用 Rust 实现 JS 原型链</h2>
-<time class="time">2023/01/16</time>
+<div class="descInfo"><time class="time">2023/01/16</time><span class="divider"> | </span><span>13 min</span></div>
 </div>
 <article><p>在 JavaScript 中，继承的逻辑是通过原型链来实现的，JavaScript 对象有一个指向一个原型对象的链。当访问一个对象的属性时，会在当前对象以及对象的原型上层层向上进行搜索，直到找到一个名字匹配的属性或到达原型链的末尾。</p>
 <p>比如，在JS中实例化一个数组对象时，它会继承 Array.prototype 这个原型对象的所有属性和方法：</p>
