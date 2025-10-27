@@ -138,6 +138,12 @@
                     .descInfo time {
                         padding: 0;
                     }
+                    .descInfo a {
+                        color: rgb(0, 123, 182);
+                    }
+                    .descInfo a:hover {
+                        text-decoration: underline;
+                    }
                     article {
                         padding: 24px;
                         box-sizing: border-box;
@@ -261,7 +267,7 @@
         </header>
 <div class="pageHeader">
 <h2>从 V8 源码分析 Node.js 在不同时间格式处理上的差异</h2>
-<div class="descInfo"><time class="time">2021/09/28</time><span class="divider"> | </span><span>5 min</span></div>
+<div class="descInfo"><time class="time">2021/09/28</time><span class="divider"> | </span><span>5 min</span><span class="divider"> | </span><a href="https://x.com/codersoar" target="_blank">欢迎在 X 上关注我</a></div>
 </div>
 <article><p>一个时间的几种不同方式的写法，导致输出的结果不一样：</p>
 <pre><code>console.log(new Date('2021-10-01'));

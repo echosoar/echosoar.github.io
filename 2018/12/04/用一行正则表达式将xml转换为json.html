@@ -138,6 +138,12 @@
                     .descInfo time {
                         padding: 0;
                     }
+                    .descInfo a {
+                        color: rgb(0, 123, 182);
+                    }
+                    .descInfo a:hover {
+                        text-decoration: underline;
+                    }
                     article {
                         padding: 24px;
                         box-sizing: border-box;
@@ -261,7 +267,7 @@
         </header>
 <div class="pageHeader">
 <h2>用一行正则表达式将xml转换为json</h2>
-<div class="descInfo"><time class="time">2018/12/04</time><span class="divider"> | </span><span>14 min</span></div>
+<div class="descInfo"><time class="time">2018/12/04</time><span class="divider"> | </span><span>14 min</span><span class="divider"> | </span><a href="https://x.com/codersoar" target="_blank">欢迎在 X 上关注我</a></div>
 </div>
 <article><p>前一段时间在写一个 RSS 阅读器的微信小程序，由于 RSS 文件内容是基于 xml 的，然而翻了好多开源的 xml 解析器，发现都相互依赖了很多东西，而且体积都很大，不是很适合我在微信小程序中使用。</p>
 <p>在寻找的过程中突然记起了以前看过 developit 写过的一个只有 1kb 解析 markdown 的库 -- 
