@@ -3,7 +3,7 @@
                 <title>偷懒爱好者周刊</title>
                 <link href="https://echosoar.github.io/weekly/atom.xml" rel="self"/>
                 <link href="https://echosoar.github.io/weekly/"/>
-                <updated>2025-12-01T23:52:44.378Z</updated>
+                <updated>2025-12-02T14:23:39.311Z</updated>
                 <id>https://echosoar.github.io/weekly/</id>
                 <author>
                     <name>soar</name>
@@ -13,6 +13,25 @@
                     <userId>62733912072851456</userId>
                 </follow_challenge>
                 <entry>
+                            <title>第161期 偷懒爱好者周刊</title>
+                            <link href="https://echosoar.github.io/weekly/2025/12/03/第161期-偷懒爱好者周刊.html"/>
+                            <id>https://echosoar.github.io/weekly/2025/12/03/第161期-偷懒爱好者周刊.html</id>
+                            <updated>2025-12-03T00:00:00.000Z</updated>
+                            <summary>第161期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。访问 https://echosoar.github.io/weekly/2025/12/03/第161期-偷懒爱好者周刊.html 阅读本期周刊全部内容。
+
+本期内容包含：
+1. Model web viewer
+2. QbGrip
+3. 四十新闻
+4. Poline
+5. geojson
+6. jsfuck
+7. CCL 语料库检索系统
+8. VG Music
+9. The midi shrine 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
+                        </entry><entry>
                             <title>第160期 偷懒爱好者周刊</title>
                             <link href="https://echosoar.github.io/weekly/2025/11/26/第160期-偷懒爱好者周刊.html"/>
                             <id>https://echosoar.github.io/weekly/2025/11/26/第160期-偷懒爱好者周刊.html</id>
@@ -175,24 +194,6 @@
 4. Ascii Motion
 5. Arya
 6. Napkin 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
-                        </entry><entry>
-                            <title>第151期 偷懒爱好者周刊</title>
-                            <link href="https://echosoar.github.io/weekly/2025/09/24/第151期-偷懒爱好者周刊.html"/>
-                            <id>https://echosoar.github.io/weekly/2025/09/24/第151期-偷懒爱好者周刊.html</id>
-                            <updated>2025-09-24T00:00:00.000Z</updated>
-                            <summary>第151期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。访问 https://echosoar.github.io/weekly/2025/09/24/第151期-偷懒爱好者周刊.html 阅读本期周刊全部内容。
-
-本期内容包含：
-1. Play Phrase
-2. ADRIFT
-3. Table Plan
-4. 网站视频录制
-5. 词云生成器
-6. Anycrap
-7. 天下老照片
-8. Library of Time 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
                         </entry>
