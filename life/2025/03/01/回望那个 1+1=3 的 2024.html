@@ -7,6 +7,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
                  html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
                     header {
                         position: fixed;
                         top: 0;
@@ -155,6 +156,21 @@
                         font-size: 16px;
                         color: rgb(23, 57, 87);
                     }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
                     .giscus {
                         width: 100%;
                         max-width: 700px;
@@ -166,6 +182,10 @@
                         margin: 0;
                         margin-bottom: 24px;
                         padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
                     }
                     li > p {
                         margin-bottom: 6px;
@@ -239,6 +259,32 @@
                     .giscus {
                         margin-bottom: 24px;
                     }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
                     @media screen {
                         @media (max-width: 750px) {
                             nav > a {
@@ -258,7 +304,8 @@
                     }
                 </style>
             </head>
-            <body><header>
+            <body>
+                <header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
                 <a class="header-title" href="/">Soar<span>'s Blog</span></a>
                 <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
@@ -267,7 +314,7 @@
         </header>
 <div class="pageHeader">
 <h2>回望那个 1+1=3 的 2024</h2>
-<div class="descInfo"><time class="time">2025/03/01</time><span class="divider"> | </span><span>10 min</span><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">欢迎在 X 上关注我</a></div>
+<div class="descInfo"><time class="time">2025/03/01</time><span class="divider"> | </span><span>10 min</span><span class="divider"> | </span><a href="/life/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
 <article><p>2024 年就这么过去了，时间无法回头，人生也将步入而立之年，这一年发生了很多故事，希望下个人生的十年可以更加幸福吧！</p>
 <h3>生活与家庭</h3>
@@ -281,6 +328,10 @@
 <p>近现代科学认知世界的方式一直以来都是通过对现有现象的观察、总结规律、推导出理论，然后再通过实验来验证理论的正确性，从而发展出来了物理、化学、生物等一系列的学科，然而随着科学的发展，很多学科已经变得越来越复杂，培养一个能够从宏观上来理解整个学科并推动发展的科学家已经变得越来越难了，而 AI 能够通过对大量知识的学习、总结、来帮助科研人员更快的找到规律、推导出理论。</p>
 <p>另外还有一些 AI 将会替代人类工作的观点，我个人认为可能在未来几年，有些重复性、经验性、通过现有知识总结能够完成得工作，大概率会被 AI 替代（例如翻译、写一些讲话文章、教育行业等），我也不认为 AI 提示词工程师是未来，因为 AI 会越来越智能化，未来可能会有更好的方式来和 AI 进行交互，可能不需要构建一个复杂的提示词了， 我不了解其他的行业，但是我觉得可以保持着一个打不过就加入的心态，去学习 AI 的相关知识，参与 AI 的发展，成为一个 AI 领域的从业者，至少能成为最后一个被替代的那个领域。</p>
 <p>对于世界的发展，有很多人都说随着特朗普再次当选了美国总统，他的移民限制主义、贸易保护主义、孤立主义特征等倾向会让这个世界”向右“发展，过去 20 年开放、包容的世界关系在未来也将不复存在。左代表的是开放、全球化、平等、公有制，右代表的是各种保护主义、民族主义、反全球化，站在我自己的立场，我还是喜欢一个更加开放的世界，大家可以互相交流、互相学习、互相帮助，可以让这个世界发展的更好，宇宙那么大，何必在一个地方内卷呢？不过咱说了也不算，只希望国家能越来越好，人民的生活越来越幸福吧，有需要的时候咱也会积极贡献自己的力量。</p></article>
+<div class="preAndNext">
+                        <a href="/life/2024/11/12/我觉得好用的免费、开源Mac软件.html">Prev: 我觉得好用的免费、开源Mac软件</a>
+                        <a href="/life/2025/12/31/21 世纪已过四分之一.html">Next: 21 世纪已过四分之一</a>
+                    </div>
 
         <div class="giscus">
         
@@ -308,6 +359,13 @@
             <div style="display: flex;align-items: center;justify-content: center;">
                 <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1740787200000-17?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
-        </footer></body>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
             </html>
         

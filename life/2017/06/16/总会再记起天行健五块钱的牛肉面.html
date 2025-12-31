@@ -7,6 +7,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
                  html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
                     header {
                         position: fixed;
                         top: 0;
@@ -155,6 +156,21 @@
                         font-size: 16px;
                         color: rgb(23, 57, 87);
                     }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
                     .giscus {
                         width: 100%;
                         max-width: 700px;
@@ -166,6 +182,10 @@
                         margin: 0;
                         margin-bottom: 24px;
                         padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
                     }
                     li > p {
                         margin-bottom: 6px;
@@ -239,6 +259,32 @@
                     .giscus {
                         margin-bottom: 24px;
                     }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
                     @media screen {
                         @media (max-width: 750px) {
                             nav > a {
@@ -258,7 +304,8 @@
                     }
                 </style>
             </head>
-            <body><header>
+            <body>
+                <header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
                 <a class="header-title" href="/">Soar<span>'s Blog</span></a>
                 <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
@@ -267,7 +314,7 @@
         </header>
 <div class="pageHeader">
 <h2>总会再记起天行健五块钱的牛肉面</h2>
-<div class="descInfo"><time class="time">2017/06/16</time><span class="divider"> | </span><span>10 min</span><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">欢迎在 X 上关注我</a></div>
+<div class="descInfo"><time class="time">2017/06/16</time><span class="divider"> | </span><span>10 min</span><span class="divider"> | </span><a href="/life/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
 <article><p>我的宿舍在学校最高的楼的最顶层，基本上没有感觉到睡在最高的地方有什么好处，不过也留下了一些难忘的记忆，记得大一的时候有次做电梯中途掉下去了，然后体验了一把失重飞翔的感觉，幸好掉着掉着卡住了，不然祖国未来的花又少了一朵。每次停电的时候都要走楼梯爬上爬下，由于在13层，每次中午都得等到实在饿得不行的时候才会下楼去食堂吃饭。</p>
 <p>记得还有一次，那一天刮大风，然后我刚刚从教室回来，走在楼下突然砰的一声一个杯子砸在了我的脚边，当时真的是吓的一下子跳了出去，后来琢磨了一下觉得肯定是楼上不知道哪个宿舍没有关窗户，放在窗台上的被子被刮出来的窗帘带了下来，如果当时走偏一小步，估计也就不会有这篇文章了。</p>
@@ -282,6 +329,10 @@
 <p>四年成长了很多，经历了很多，得到了很多，也明白了很多，希望下个四年会再这么精彩，会再遇到这么多可爱、可亲的人。</p>
 <p>希望一别之后，咱们都后会有期，且行且珍惜。</p>
 <p>于西安 长安大学渭水校区</p></article>
+<div class="preAndNext">
+                        <a href="/life/2015/12/30/2016即将来临，回忆一下我的2015.html">Prev: 2016即将来临，回忆一下我的2015</a>
+                        <a href="/life/2018/11/13/无论悲欢，新的一天总会充满激情.html">Next: 无论悲欢，新的一天总会充满激情</a>
+                    </div>
 
         <div class="giscus">
         
@@ -309,6 +360,13 @@
             <div style="display: flex;align-items: center;justify-content: center;">
                 <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1497571200000-15?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
-        </footer></body>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
             </html>
         

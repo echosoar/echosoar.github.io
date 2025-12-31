@@ -7,6 +7,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
                  html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
                     header {
                         position: fixed;
                         top: 0;
@@ -155,6 +156,21 @@
                         font-size: 16px;
                         color: rgb(23, 57, 87);
                     }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
                     .giscus {
                         width: 100%;
                         max-width: 700px;
@@ -166,6 +182,10 @@
                         margin: 0;
                         margin-bottom: 24px;
                         padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
                     }
                     li > p {
                         margin-bottom: 6px;
@@ -239,6 +259,32 @@
                     .giscus {
                         margin-bottom: 24px;
                     }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
                     @media screen {
                         @media (max-width: 750px) {
                             nav > a {
@@ -258,7 +304,8 @@
                     }
                 </style>
             </head>
-            <body><header>
+            <body>
+                <header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
                 <a class="header-title" href="/">Soar<span>'s Blog</span></a>
                 <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
@@ -267,7 +314,7 @@
         </header>
 <div class="pageHeader">
 <h2>2016即将来临，回忆一下我的2015</h2>
-<div class="descInfo"><time class="time">2015/12/30</time><span class="divider"> | </span><span>5 min</span><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">欢迎在 X 上关注我</a></div>
+<div class="descInfo"><time class="time">2015/12/30</time><span class="divider"> | </span><span>5 min</span><span class="divider"> | </span><a href="/life/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
 <article><p>2016年元旦还有一天就要来了，2015年就这么不知不觉的过去了，说是不知不觉一点都不夸张，真的是没有一点点防备它就悄然过去了。</p>
 <p>2015年的春天，走到了二年级的下半学期，大学在此即将过半，突然间得知四年级的学长学姐们找到的工作，那个心情啊！！！都羡慕死了，然后就在想自己以后的方向是什么？</p>
@@ -281,6 +328,10 @@
 <p>然后在上课的时候，也真正的感觉到了和大一或者是大二上学期不一样了，老师们也让我们自己去做自己喜欢的，去找自己以后的方向，于是课堂就变成了下面这个样子。。。几乎每个人上课都带着笔记本啊！！！</p>
 <p>到了秋天开学的时候，这个时候才终于感觉到时间过的真的不像小时候那样了（那个时候感觉一年时间好长啊，每天都盼着过年过年收红包 哈哈），现在的时间过的太快了，大学生活真的是已经过去一多半了（毕竟大四在学校的时间会很少），自己从一个萌萌哒小学弟长成了胡子拉碴的老学长了，有时候经过大一学弟学妹军训的队列旁边就会忍不住拍些照片~</p>
 <p>其实这一半年主要做的事情就是把上半年所有的想法一一去试着做了，买了很多专业方面的书，也看了很多书，当越来越了解这个领域的时候才真正发现自己拥有的不过只是一丢丢而已。</p></article>
+<div class="preAndNext">
+                        
+                        <a href="/life/2017/06/16/总会再记起天行健五块钱的牛肉面.html">Next: 总会再记起天行健五块钱的牛肉面</a>
+                    </div>
 
         <div class="giscus">
         
@@ -308,6 +359,13 @@
             <div style="display: flex;align-items: center;justify-content: center;">
                 <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1451433600000-19?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
-        </footer></body>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
             </html>
         

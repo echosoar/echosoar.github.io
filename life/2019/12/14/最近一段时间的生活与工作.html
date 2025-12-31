@@ -7,6 +7,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
                  html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
                     header {
                         position: fixed;
                         top: 0;
@@ -155,6 +156,21 @@
                         font-size: 16px;
                         color: rgb(23, 57, 87);
                     }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
                     .giscus {
                         width: 100%;
                         max-width: 700px;
@@ -166,6 +182,10 @@
                         margin: 0;
                         margin-bottom: 24px;
                         padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
                     }
                     li > p {
                         margin-bottom: 6px;
@@ -239,6 +259,32 @@
                     .giscus {
                         margin-bottom: 24px;
                     }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
                     @media screen {
                         @media (max-width: 750px) {
                             nav > a {
@@ -258,7 +304,8 @@
                     }
                 </style>
             </head>
-            <body><header>
+            <body>
+                <header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
                 <a class="header-title" href="/">Soar<span>'s Blog</span></a>
                 <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
@@ -267,7 +314,7 @@
         </header>
 <div class="pageHeader">
 <h2>最近一段时间的生活与工作</h2>
-<div class="descInfo"><time class="time">2019/12/14</time><span class="divider"> | </span><span>13 min</span><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">欢迎在 X 上关注我</a></div>
+<div class="descInfo"><time class="time">2019/12/14</time><span class="divider"> | </span><span>13 min</span><span class="divider"> | </span><a href="/life/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
 <article><h3>生活方面</h3>
 <p>上周去医院进行了一年一度的体检，发现了很多问题，脂肪肝、结石等等，都是和平时吃的东西太油腻有关系。于是计划每天晚上都吃饺子，不过看了一篇
@@ -295,6 +342,10 @@
 <p>之前一直在想是否要做一个单点登录，把自己的博客、工作台等等各种网站都整合成一个账号体系，因为随着站点越来越多，每个站点都要设计和实现一套用户系统就很烦，而且每一个系统都要注册一个账号即不好记，也很麻烦。</p>
 <h3>技术方面</h3>
 <p>经常看到一个不错的代码仓库想拉下来阅读以下源码，拉下来之后发现十几万行代码，估计要看吐血，其实我有很多时候想看一些代码量不是那么多的框架，于是就用 golang 写了个代码行数分析工具，我计划在接下来每周都用golang或者c++写一个帮助日常工作的小工具，同时也帮助我不会忘记这两门在日常工作中不是很常用的语言。</p></article>
+<div class="preAndNext">
+                        <a href="/life/2019/11/23/在阿里经历的第四次双十一.html">Prev: 在阿里经历的第四次双十一</a>
+                        <a href="/life/2020/01/01/感谢幸福的2019，和记忆深刻的这十年.html">Next: 感谢幸福的2019，和记忆深刻的这十年</a>
+                    </div>
 
         <div class="giscus">
         
@@ -322,6 +373,13 @@
             <div style="display: flex;align-items: center;justify-content: center;">
                 <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1576281600000-12?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
-        </footer></body>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
             </html>
         

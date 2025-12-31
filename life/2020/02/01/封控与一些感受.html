@@ -7,6 +7,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
                  html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
                     header {
                         position: fixed;
                         top: 0;
@@ -155,6 +156,21 @@
                         font-size: 16px;
                         color: rgb(23, 57, 87);
                     }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
                     .giscus {
                         width: 100%;
                         max-width: 700px;
@@ -166,6 +182,10 @@
                         margin: 0;
                         margin-bottom: 24px;
                         padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
                     }
                     li > p {
                         margin-bottom: 6px;
@@ -239,6 +259,32 @@
                     .giscus {
                         margin-bottom: 24px;
                     }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
                     @media screen {
                         @media (max-width: 750px) {
                             nav > a {
@@ -258,7 +304,8 @@
                     }
                 </style>
             </head>
-            <body><header>
+            <body>
+                <header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
                 <a class="header-title" href="/">Soar<span>'s Blog</span></a>
                 <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
@@ -267,12 +314,16 @@
         </header>
 <div class="pageHeader">
 <h2>封控与一些感受</h2>
-<div class="descInfo"><time class="time">2020/02/01</time><span class="divider"> | </span><span>4 min</span><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">欢迎在 X 上关注我</a></div>
+<div class="descInfo"><time class="time">2020/02/01</time><span class="divider"> | </span><span>4 min</span><span class="divider"> | </span><a href="/life/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
 <article><p>不知不觉也年初八了，今年过年因为老家各村封村，各小区封小区，每家每户都在家窝着，网上也有人调笑称鼠年大家就要和老鼠一样囤好粮食在家窝着过年，所以过年期间这几天没有和往年一样去各种亲戚家拜年串门，不过这样的感觉也还不错，陪伴家人的时间比往年大幅增长。</p>
 <p>武汉的这次肺炎病毒来势汹汹，从年前看到的几十个人确诊到如今的已经破万，上升的趋势丝毫没有变平稳，越来越害怕，尤其是在去年玩了一段时间的瘟疫这个游戏，对于传染性极强尤其是还能够致死的疾病无比恐惧，想想 03 年 SARS 的时候还在上小学，每天也是按时去学校上学，只不过是学校会一致使用84消毒液进行消毒，社会经济感觉也没有像今天这样停滞，这也是人生中第一次看到各村封村的场景，在每个村子通往外面的道路上要不是用土和石头拦着，要不就是有人在看守，大街上也没有了往年的人群，仿佛看起来如世界末日一般。</p>
 <p>打开了尘封已久的百度贴吧，看到武汉吧里面每时每刻都在更新的各种帖子，武汉已经封城，其实封城后大家都无法乘坐公共交通出行，那么疾病的传染带来的恐惧感会被削弱很多，但是封城之后带来的生活物资的抢购以及短缺，对于城市中许许多多的年轻人来说生活无比的艰难。在大城市中有许许多多的年轻人不会自己做饭，家里也不会有各种餐厨用具，然后封城之后外卖也没有了，在这种情况下吃饭成为了一个巨大的问题，因此我决定以后至少要在家里储备一箱榨菜和几箱泡面，哪怕有一天封城了也可以坚持一两个月。</p>
 <p>公司的返工时间也与国家建议的一样推迟了，不过我觉得到了2月8、9号左右铁路、机场都会出现巨大的人流，在这种情况下是不是会再次变成一个易于传染的热区？那么最好的办法是不是要避开人流，提前几天就返回工作的城市呢？不过各种专家们建议在家待到 9 号，必然也有他们的考虑，总而言之，希望大家在年后返程的路上以及新的一年里可以身体健康，百毒不侵。</p></article>
+<div class="preAndNext">
+                        <a href="/life/2020/01/01/感谢幸福的2019，和记忆深刻的这十年.html">Prev: 感谢幸福的2019，和记忆深刻的这十年</a>
+                        <a href="/life/2024/11/12/我觉得好用的免费、开源Mac软件.html">Next: 我觉得好用的免费、开源Mac软件</a>
+                    </div>
 
         <div class="giscus">
         
@@ -300,6 +351,13 @@
             <div style="display: flex;align-items: center;justify-content: center;">
                 <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1580515200000-7?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
-        </footer></body>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
             </html>
         

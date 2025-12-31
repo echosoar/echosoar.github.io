@@ -7,6 +7,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
                  html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
                     header {
                         position: fixed;
                         top: 0;
@@ -155,6 +156,21 @@
                         font-size: 16px;
                         color: rgb(23, 57, 87);
                     }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
                     .giscus {
                         width: 100%;
                         max-width: 700px;
@@ -166,6 +182,10 @@
                         margin: 0;
                         margin-bottom: 24px;
                         padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
                     }
                     li > p {
                         margin-bottom: 6px;
@@ -239,6 +259,32 @@
                     .giscus {
                         margin-bottom: 24px;
                     }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
                     @media screen {
                         @media (max-width: 750px) {
                             nav > a {
@@ -258,7 +304,8 @@
                     }
                 </style>
             </head>
-            <body><header>
+            <body>
+                <header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
                 <a class="header-title" href="/">Soar<span>'s Blog</span></a>
                 <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
@@ -267,7 +314,7 @@
         </header>
 <div class="pageHeader">
 <h2>如果没有了电脑，我还能做些什么</h2>
-<div class="descInfo"><time class="time">2019/08/12</time><span class="divider"> | </span><span>5 min</span><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">欢迎在 X 上关注我</a></div>
+<div class="descInfo"><time class="time">2019/08/12</time><span class="divider"> | </span><span>5 min</span><span class="divider"> | </span><a href="/life/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
 <article><p>周六在写代码的时候，突然看到系统可以升级到最新版系统了，于是就点击了一下升级，然后就开始自动安装新版系统的流程了，没想到的时候系统安装到了一半才提醒我硬盘空间不足（15G/256G），至少要17个G才能继续安装，但是这个时候原本的系统已经被升级程序给抹除了，陷入了一个进退两难的境地，网上搜索了很多方法都不行之后只能给公司的IT打电话寻求帮助。</p>
 <p>第二天（周日）把电脑带到公司IT师傅看了一会说得再过一天拿过来找苹果的工程师把硬盘给解密了拷贝出来数据才能给全盘抹掉重新安装系统，于是又要过没有电脑用的一天，对于一个程序员来说，没有电脑那还能做些什么事情呢？那天下午，我越想越感觉到恐怖，如果有一天完全不能使用电脑，完全不能使用网络，那我还能做些什么来维持自己的生活？</p>
@@ -275,6 +322,10 @@
 <p>那还能做些什么呢？其实很多时候我会在脑海中蹦出来很多闪光，有时候特别希望自己做一些好吃的，于是买了蒸锅自己蒸包子，不过遗憾的是做了一次感觉很累就没有再继续下去；也有时候想要玩一些木工艺，比如自己掏个勺子什么的，但是又觉得这个事情很多时候只是取决于想不想干而已，并不能有什么技术壁垒。</p>
 <p>思来想去，我觉得我还是得和电子电器类的东西产生关系，希望学习一些电路的知识，哪怕有一天大范围长时间的停电了，也能自给自足一段时间。同样的网络也是一样，曾经因为家里在一个很远的地方有个小果园，各种运营商实在是无法把网络给牵过去，那就只好自己尝试构建一个远程网络连接，通过两台tplink的网桥来将几公里外的有线网络定向传输，这件事情还是很有意思的，而且我对于这种需要动手+动脑思考的事情是很感兴趣的。</p>
 <p>那这么说，其实我的爱好是做一些在动手的同时还能够动脑的事情，以后的生活里可以多注意一下这些方面，看有什么可以同样变成自己的一项职业。</p></article>
+<div class="preAndNext">
+                        <a href="/life/2019/01/01/2018已成过往，期待更幸福的2019.html">Prev: 2018已成过往，期待更幸福的2019</a>
+                        <a href="/life/2019/11/23/在阿里经历的第四次双十一.html">Next: 在阿里经历的第四次双十一</a>
+                    </div>
 
         <div class="giscus">
         
@@ -302,6 +353,13 @@
             <div style="display: flex;align-items: center;justify-content: center;">
                 <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1565568000000-15?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
-        </footer></body>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
             </html>
         

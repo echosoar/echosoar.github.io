@@ -7,6 +7,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                 <style>
                  html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
                     header {
                         position: fixed;
                         top: 0;
@@ -155,6 +156,21 @@
                         font-size: 16px;
                         color: rgb(23, 57, 87);
                     }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
                     .giscus {
                         width: 100%;
                         max-width: 700px;
@@ -166,6 +182,10 @@
                         margin: 0;
                         margin-bottom: 24px;
                         padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
                     }
                     li > p {
                         margin-bottom: 6px;
@@ -239,6 +259,32 @@
                     .giscus {
                         margin-bottom: 24px;
                     }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
                     @media screen {
                         @media (max-width: 750px) {
                             nav > a {
@@ -258,7 +304,8 @@
                     }
                 </style>
             </head>
-            <body><header>
+            <body>
+                <header>
             <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
                 <a class="header-title" href="/">Soar<span>'s Blog</span></a>
                 <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/about/">About</a></nav>
@@ -267,7 +314,7 @@
         </header>
 <div class="pageHeader">
 <h2>Major technological events in 2025</h2>
-<div class="descInfo"><time class="time">2025/12/31</time><span class="divider"> | </span><span>12 min</span><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">欢迎在 X 上关注我</a></div>
+<div class="descInfo"><time class="time">2025/12/31</time><span class="divider"> | </span><span>12 min</span><span class="divider"> | </span><a href="/home/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
 <article><h3>一月</h3>
 <ul><li><p>首款干细胞治疗药品艾米迈托赛注射液上市</p></li><li><p>阿里宣布 131.38 亿港元出售高鑫零售</p></li><li><p>英伟达发布 RTX 5090 显卡</p></li><li><p>物理学家发现既不属于玻色子，也不属于费米子的新量子粒子“ 分数激子 ”</p></li><li><p>国家重大科技基础设施先进阿秒激光设施开建</p></li><li><p>小红书在苹果 App Store 免费应用排行榜登顶</p></li><li><p>支付宝发生立减优惠 20% 故障事件</p></li><li><p>人形机器人在央视春晚扭秧歌</p></li><li><p>阿里发布 Qwen2.5-Max 模型</p></li><li><p>OpenAI 发布 o3-mini 模型</p></li><li><p>AI 代码编辑器 Cursor 获得 Product Hunt 2024 年金猫奖</p></li></ul>
@@ -293,6 +340,10 @@
 <ul><li><p>我国首次实现基于熔盐堆的钍铀核燃料转换</p></li><li><p>小鹏发布人形机器人 IRON</p></li><li><p>神舟二十号载人飞船因疑似遭空间微小碎片撞击推迟返回</p></li><li><p>发现 DNA 双螺旋结构的诺贝尔奖得主、分子生物学家 James D. Watson 去世</p></li><li><p>百度文心 5.0 大模型发布</p></li><li><p>李飞飞团队上线世界模型 Marble</p></li><li><p>阿里巴巴 AI 助手千问 App 上线</p></li><li><p>Google 发布 Gemini 3 模型</p></li><li><p>xAI 发布 Grok 4.1 模型</p></li><li><p>Cloudflare 发生大规模宕机事件</p></li><li><p>谷歌发布全新图像生成与编辑模型 Nano Banana Pro</p></li><li><p>荷兰归还安世半导体控制权给其中国母公司闻泰科技</p></li><li><p>Anthropic 推出最新 AI 模型 Claude Opus 4.5</p></li><li><p>FLUX.2 图像生成模型发布</p></li><li><p>夸克发布融合千问助手的 AI 浏览器</p></li></ul>
 <h3>十二月</h3>
 <ul><li><p>字节发布豆包手机助手技术预览版</p></li><li><p>Anthropic 宣布收购 JavaScript 运行时 Bun</p></li><li><p>Next.js 官方发布紧急安全公告，存在严重远程代码执行高危漏洞</p></li><li><p>JavaScript 诞生 30 周年</p></li><li><p>Netflix 宣布以 827 亿美元收购华纳兄弟</p></li><li><p>摩尔线程在科创板挂牌上市</p></li><li><p>众擎 T800 人形机器人一脚踹翻众擎 CEO</p></li><li><p>天文学家利用韦伯望远镜观测到爆炸时间最早的超新星事件（宇宙诞生后约 7.3 亿年爆炸）</p></li><li><p>IBM 计划以 110 亿美元收购 Confluent</p></li><li><p>澳大利亚禁止 16 岁一下青少年使用社媒禁令正式生效</p></li><li><p>OpenAI 发布 GPT-5.2 系列模型</p></li><li><p>工信部公布首批 L3 级有条件自动驾驶车型准入许可</p></li><li><p>钉钉发布 Agent OS 以及录音和反录音的硬件</p></li></ul></article>
+<div class="preAndNext">
+                        <a href="/2024/12/31/Major-technological-events-in-2024.html">Prev: Major technological events in 2024</a>
+                        
+                    </div>
 
         <div class="giscus">
         
@@ -320,6 +371,13 @@
             <div style="display: flex;align-items: center;justify-content: center;">
                 <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1767139200000-34?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
-        </footer></body>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
             </html>
         
