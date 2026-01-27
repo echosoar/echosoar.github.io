@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <title>Annual awards in 2025 - soar's blog</title>
+                <meta charset="utf-8">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
+                    header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        padding: 24px;
+                        height: 72px;
+                        box-sizing: border-box;
+                        border-bottom: 1px solid rgba(106, 28, 113, 0.09);
+                        background-color: #fff;
+                        z-index: 3;
+                        overflow: hidden;
+                    }
+                    .header-title {
+                        color: rgb(23,57,87);
+                        font-weight: 500;
+                        font-size: 16px;
+                        text-decoration: none;
+                    }
+                    nav {
+                        padding: 0px;
+                        box-sizing: border-box;
+                    }
+                    nav > a {
+                        margin-left: 20px;
+                        font-size: 16px;
+                        color: rgb(23,57,87);
+                        line-height: 20px;
+                        text-decoration: none;
+                        font-weight: 400;
+                    }
+                    .pageHeader {
+                        padding: 48px;
+                        margin-top: 72px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        align-items: center;
+                        background-color: rgba(229, 229, 247, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .pageHeader h1 {
+                        font-size: 42px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                        .divider {
+                            margin: 0 8px;
+                            color: #ccc;
+                            user-select: none;
+                        }
+                    .pageHeader h2 {
+                        font-size: 32px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    .pageHeader a {
+                        font-size: 14px;
+                        color: #6c86ee;
+                        text-decoration: none;
+                    }
+                    .list {
+                        padding: 24px;
+                        padding-top: 48px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        min-height: 100vh;
+                        max-width: 700px;
+                        margin: 0 auto;
+                    }
+                    .list-item {
+                        display: block;
+                        text-decoration: none;
+                        color: #333;
+                        position: relative;
+                        box-sizing: border-box;
+                        padding-right: 90px;
+                        font-size: 16px;
+                        line-height: 26px;
+                        min-height: 26px;
+                        margin-bottom: 12px;
+                    }
+
+                    .list-item span {
+                        display: block;
+                        line-height: 26px;
+                        min-height: 26px;
+                        color: #007BB6;
+                    }
+                    .list-item span:hover {
+                        text-decoration: underline;
+                    }
+                    .list-item time {
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        height: 26px;
+                        display: flex;
+                        font-weight: 500;
+                        align-items: center;
+                        color: #17395780;
+                        line-height: 26px;
+                        font-size: 16px;
+                    }
+                    .title {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                        padding-top: 72px;
+                        text-align: center;
+                    }
+                    .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    .descInfo {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: #999;
+                        font-size: 13px;
+                        padding: 12px 0;
+                    }
+                    .descInfo time {
+                        padding: 0;
+                    }
+                    .descInfo a {
+                        color: rgb(0, 123, 182);
+                    }
+                    .descInfo a:hover {
+                        text-decoration: underline;
+                    }
+                    article {
+                        padding: 24px;
+                        box-sizing: border-box;
+                        line-height: 1.5;
+                        max-width: 700px;
+                        width: 100%;
+                        padding: 24px;
+                        margin: 0 auto;
+                        font-size: 16px;
+                        color: rgb(23, 57, 87);
+                    }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .copyrightInfo {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
+                    .giscus {
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 6px 24px;
+                        margin: 24px auto;
+                    }
+                    p {
+                        margin: 0;
+                        margin-bottom: 24px;
+                        padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
+                    }
+                    li > p {
+                        margin-bottom: 6px;
+                    }
+                    article {
+                        min-height: calc(100vh - 120px);
+                    }
+                    article img {
+                        max-width: 100%;
+                        height: auto;
+                        margin: 12px auto;
+                        display: block;
+                        border-radius: 4px;
+                        border: 1px solid #e5e5e5;
+                    }
+                    article a {
+                        color: rgb(0, 123, 182);
+                        text-decoration: none;
+                    }
+
+                    article a:hover {
+                        text-decoration: underline;
+                    }
+                    article pre {
+                        padding: 12px;
+                        background-color: #007BB608;
+                        border-radius: 4px;
+                        overflow: auto;
+                        font-size: 15px;
+                        line-height: 1.5;
+                        color: rgb(0, 128, 117);
+                        border: 1px solid #389ab129;
+                    }
+                    article .inline-code {
+                        padding: 0px 4px;
+                        background-color: #007BB608;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                       
+                    .center {
+                        position: relative;
+                        width: 100%;
+                        max-width: 1240px;
+                        margin: 0 auto;
+                    }
+                    .right {
+                        position: absolute;
+                        right: 0;
+                        font-size: 16px;
+                        color: #666;
+                        top: 0;
+                        line-height: 20px;
+                        text-decoration:none;
+                    }
+                    footer {
+                        color: rgba(23, 57, 87, 0.5);
+                        width: 100%;
+                        margin: 0 auto;
+                        padding: 24px;
+                        box-sizing: border-box;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 13px;
+                        background-color: rgba(229, 247, 237, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .giscus {
+                        margin-bottom: 24px;
+                    }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
+                    @media screen {
+                        @media (max-width: 750px) {
+                            nav > a {
+                                font-size: 14px;
+                                margin-left: 10px;
+                            }
+                            .pageHeader {
+                                padding: 24px;
+                            }
+                            .list-item time {
+                                font-size: 14px;
+                            }
+                            .header-title span {
+                                display: none;
+                            }
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <header>
+            <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
+                <a class="header-title" href="/">Soar<span>'s Blog</span></a>
+                <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
+                
+            </div>
+        </header>
+<div class="pageHeader">
+<h2>Annual awards in 2025</h2>
+<div class="descInfo"><time class="time">2026/01/27</time><span class="divider"> | </span><span>7 min</span><span class="divider"> | </span><a href="/other/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
+</div>
+<article><ul><li><p>The 2025 EU Industrial R&D Investment Scoreboard</p>
+<ul><li><p>全球企业研发投资分析报告</p></li><li><p>2025/12/22</p></li><li><p>https://iri.jrc.ec.europa.eu/scoreboard/2025-eu-industrial-rd-investment-scoreboard</p></li></ul></li><li><p>Radar Year in Review</p>
+<ul><li><p>Cloudfare 年度互联网状况回顾</p></li><li><p>2025/12/15</p></li><li><p>https://radar.cloudflare.com/year-in-review/2025</p></li></ul></li><li><p>Word of the Year</p>
+<ul><li><p>Merriam-Webster 词典评选的年度词汇</p></li><li><p>2025 年为 "Slop"</p></li><li><p>2025/12/14</p></li><li><p>https://www.merriam-webster.com/wordplay/word-of-the-year</p></li></ul></li><li><p>Top 10 Breakthroughs Of The Year</p>
+<ul><li><p>Science 杂志评选的年度十大科技突破</p></li><li><p>2025/12/12</p></li><li><p>https://www.science.org/content/article/breakthrough-2025</p></li></ul></li><li><p>2025: The State of Generative AI in the Enterprise</p>
+<ul><li><p>Menlo 分析的企业中生成式 AI 使用分析报告</p></li><li><p>2025/12/09</p></li><li><p>https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/</p></li></ul></li><li><p>TGA(The Game Awards) 游戏大奖</p>
+<ul><li><p>电子游戏奖项，以表彰过去一年里发售的优秀游戏</p></li><li><p>2025/12/08</p></li><li><p>https://thegameawards.com/winners/game-of-the-year</p></li></ul></li><li><p>Tech's biggest winners of 2025</p>
+<ul><li><p>由 engadget 评选的年度科技领域最大赢家</p></li><li><p>2025/12/08</p></li><li><p>https://www.engadget.com/techs-biggest-winners-of-2025-180000177.html</p></li></ul></li><li><p>CSS Wrapped</p>
+<ul><li><p>Chrome 团队的年度 CSS 更新报告</p></li><li><p>2025/12/08</p></li><li><p>https://chrome.dev/css-wrapped-2025</p></li></ul></li><li><p>Radser's Favorite Books</p>
+<ul><li><p>Goodreads 年度读书榜单</p></li><li><p>2025/12/04</p></li><li><p>https://www.goodreads.com/choiceawards/best-books-2025</p></li></ul></li><li><p>App Store Awards</p>
+<ul><li><p>苹果年度应用、年度游戏</p></li><li><p>2025/12/04</p></li><li><p>https://www.apple.com/newsroom/2025/12/apple-unveils-the-winners-of-the-2025-app-store-awards/</p></li></ul></li><li><p>English Wikipedia’s most popular articles</p>
+<ul><li><p>英文维基百科年度文章</p></li><li><p>2025/12/02</p></li><li><p>https://wikimediafoundation.org/news/2025/12/02/announcing-wikipedias-most-read-articles-of-2025/</p></li></ul></li><li><p>The year on YouTube</p>
+<ul><li><p>YouTube 年度趋势报告</p></li><li><p>2025/12/02</p></li><li><p>https://blog.youtube/culture-and-trends/end-of-year-summary-2025/</p></li></ul></li><li><p>The Oxford Word of the Year</p>
+<ul><li><p>牛津词典评选的年度词汇</p></li><li><p>2025 年为 "rage-bait"</p></li><li><p>2025/12/01</p></li><li><p>https://corp.oup.com/news/the-oxford-word-of-the-year-2025-is-rage-bait/</p></li></ul></li><li><p>Word of the Year</p>
+<ul><li><p>剑桥词典评选的年度词汇</p></li><li><p>2025 年为 "parasocial"</p></li><li><p>2025/11/20</p></li><li><p>https://dictionary.cambridge.org/editorial/word-of-the-year</p></li></ul></li><li><p>Word of the Year</p>
+<ul><li><p>Collins 柯林斯词典评选的年度词汇</p></li><li><p>2025 年为 "vibe coding"</p></li><li><p>2025/11/05</p></li><li><p>https://www.collinsdictionary.com/us/woty</p></li></ul></li><li><p>2025 FIFPRO World 11 winners</p>
+<ul><li><p>国际足联年度最佳阵容</p></li><li><p>2025/11/03</p></li><li><p>https://www.fifpro.org/en/articles/2025/11/2025-fifpro-world-11-winners-revealed</p></li></ul></li><li><p>State of CSS</p>
+<ul><li><p>CSS 技术发展现状报告</p></li><li><p>2025/10/30</p></li><li><p>https://2025.stateofcss.com/en-US</p></li></ul></li><li><p>Octoverse: A new developer joins GitHub every second as AI leads TypeScript to #1</p>
+<ul><li><p>GitHub 年度报告, 包括最受欢迎的编程语言、开源项目、开发者、组织等</p></li><li><p>2025/10/28</p></li><li><p>https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/</p></li></ul></li><li><p>The Best Inventions of 2025</p>
+<ul><li><p>时代周刊评选的年度 200 项最佳发明榜单</p></li><li><p>2025/10/18</p></li><li><p>https://time.com/collections/best-inventions-2025/</p></li></ul></li><li><p>Nikon Small World</p>
+<ul><li><p>Nikon 举办的摄影比赛，收集全球顶级光学显微镜拍的细胞、昆虫、晶体等微观图像/视频</p></li><li><p>2025/10/15</p></li><li><p>https://www.nikonsmallworld.com/galleries/2025-photomicrography-competition</p></li></ul></li><li><p>搞笑诺贝尔奖</p>
+<ul><li><p>主要表彰10种“乍看之下令人发笑，之后发人深省”成就</p></li><li><p>2025/09/18</p></li><li><p>https://improbable.com/ig/winners/#ig2025</p></li></ul></li><li><p>ZWO Astronomy Photographer of the Year 2025 winners</p>
+<ul><li><p>格林威治天文摄影师大赛：世界顶级天文摄影赛事</p></li><li><p>2025/09/11</p></li><li><p>https://www.rmg.co.uk/whats-on/astronomy-photographer-year/galleries/overall-winners-2025</p></li></ul></li><li><p>Innovation by Design 2025</p>
+<ul><li><p>《Fast Company》杂志旗下专注于设计创新的年度奖项</p></li><li><p>2025/07/23</p></li><li><p>https://www.fastcompany.com/innovation-by-design/list</p></li></ul></li><li><p>2025 Logo Trend Report</p>
+<ul><li><p>logo 设计趋势、设计中常见的视觉风格</p></li><li><p>2025/06/16</p></li><li><p>https://www.logolounge.com/trend/2025-logo-trend-report</p></li></ul></li><li><p>Apple Design Award</p>
+<ul><li><p>苹果设计奖，表彰在创新、创意和技术成就方面表现卓越的应用程序和游戏</p></li><li><p>2025/06/04</p></li><li><p>https://developer.apple.com/design/awards/</p></li></ul></li><li><p>中国年度建筑大奖 2025</p>
+<ul><li><p>ArchDaily 中国年度建筑大奖：根据项目体现的美感，智慧，创造性，或是对社区群体的服务性——选出最能体现年度中国建筑的作品</p></li><li><p>2025/04/04</p></li><li><p>https://boty.archdaily.cn/cn/2025</p></li></ul></li><li><p>文具屋大赏</p>
+<ul><li><p>有着全日本“最挑剔的文具设计评奖”称号</p></li><li><p>2025/02/14</p></li><li><p>https://www.fusosha.co.jp/special/bunbougu/index.html</p></li></ul></li><li><p>Golden Kitty Awards</p>
+<ul><li><p>Product Hunt 年度最佳产品奖（金猫奖）</p></li><li><p>2025/01/30</p></li><li><p>https://www.producthunt.com/golden-kitty-awards/hall-of-fame?year=2024</p></li></ul></li><li><p>The Future 100: 2025</p>
+<ul><li><p>伟门·汤逊年度百大趋势报告，呈现了未来一年全球的行业走向</p></li><li><p>2025/01/22</p></li><li><p>https://www.vml.com/insight/the-future-100-2025</p></li></ul></li><li><p>Ocean Art Contest</p>
+<ul><li><p>海洋艺术水下摄影大赛</p></li><li><p>2025/01/16</p></li><li><p>https://www.uwphotographyguide.com/ocean-art-contest-winners-2024</p></li></ul></li><li><p>JavaScript Rising Stars</p>
+<ul><li><p>年度 JavaScript 明星项目</p></li><li><p>2025/01/07</p></li><li><p>https://risingstars.js.org/2024/en</p></li></ul></li><li><p>Top Pens on CodePen</p>
+<ul><li><p>最受欢迎的 100 个 Pen，涉及 3D、Charts、CSS、WebGL、动画、VR 等多个领域</p></li><li><p>2025/01/04</p></li><li><p>https://codepen.io/2024/popular/pens/</p></li></ul></li><li><p>STEAM 大奖</p>
+<ul><li><p>由Steam用户选出的年度游戏大奖</p></li><li><p>2025/01/01</p></li><li><p>https://store.steampowered.com/steamawards/2024</p></li></ul></li></ul></article>
+<div class="preAndNext">
+                        <a href="/other/2025/12/31/Major-technological-events-in-2025.html">Prev: Major technological events in 2025</a>
+                        
+                    </div>
+
+        <div class="copyrightInfo"><img class="not-ai" src="/resources/not-ai.svg" /></div>
+        <div class="giscus">
+            
+        
+            <script src="https://giscus.app/client.js"
+                data-repo="echosoar/echosoar.github.io"
+                data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+                data-category="Announcements"
+                data-category-id="DIC_kwDOApSAOc4Co7sV"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>  
+        </div>
+        <footer>
+            <div>
+                © 2015-2026<br />
+                Soar's Blog. All rights reserved.
+            </div>
+            <div style="display: flex;align-items: center;justify-content: center;">
+                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1769472000000-21?scale=0.4&theme=3d-num" alt="page" height="20px" />
+            </div>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
+            </html>
+        

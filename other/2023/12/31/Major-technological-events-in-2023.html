@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+            <html>
+            <head>
+                <title>Major technological events in 2023 - soar's blog</title>
+                <meta charset="utf-8">
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                 html,body { padding: 0; margin: 0;font-size: 14px;font-family: 'Rubik, sans-serif, Menlo'; text-autospace: normal;}
+                 html { scroll-behavior: smooth; }
+                    header {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        padding: 24px;
+                        height: 72px;
+                        box-sizing: border-box;
+                        border-bottom: 1px solid rgba(106, 28, 113, 0.09);
+                        background-color: #fff;
+                        z-index: 3;
+                        overflow: hidden;
+                    }
+                    .header-title {
+                        color: rgb(23,57,87);
+                        font-weight: 500;
+                        font-size: 16px;
+                        text-decoration: none;
+                    }
+                    nav {
+                        padding: 0px;
+                        box-sizing: border-box;
+                    }
+                    nav > a {
+                        margin-left: 20px;
+                        font-size: 16px;
+                        color: rgb(23,57,87);
+                        line-height: 20px;
+                        text-decoration: none;
+                        font-weight: 400;
+                    }
+                    .pageHeader {
+                        padding: 48px;
+                        margin-top: 72px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        align-items: center;
+                        background-color: rgba(229, 229, 247, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .pageHeader h1 {
+                        font-size: 42px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                        .divider {
+                            margin: 0 8px;
+                            color: #ccc;
+                            user-select: none;
+                        }
+                    .pageHeader h2 {
+                        font-size: 32px;
+                        color: rgb(23, 57, 87);
+                        letter-spacing: -1px;
+                        line-height: 62px;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    .pageHeader a {
+                        font-size: 14px;
+                        color: #6c86ee;
+                        text-decoration: none;
+                    }
+                    .list {
+                        padding: 24px;
+                        padding-top: 48px;
+                        box-sizing: border-box;
+                        width: 100%;
+                        min-height: 100vh;
+                        max-width: 700px;
+                        margin: 0 auto;
+                    }
+                    .list-item {
+                        display: block;
+                        text-decoration: none;
+                        color: #333;
+                        position: relative;
+                        box-sizing: border-box;
+                        padding-right: 90px;
+                        font-size: 16px;
+                        line-height: 26px;
+                        min-height: 26px;
+                        margin-bottom: 12px;
+                    }
+
+                    .list-item span {
+                        display: block;
+                        line-height: 26px;
+                        min-height: 26px;
+                        color: #007BB6;
+                    }
+                    .list-item span:hover {
+                        text-decoration: underline;
+                    }
+                    .list-item time {
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                        height: 26px;
+                        display: flex;
+                        font-weight: 500;
+                        align-items: center;
+                        color: #17395780;
+                        line-height: 26px;
+                        font-size: 16px;
+                    }
+                    .title {
+                        padding: 0 24px;
+                        box-sizing: border-box;
+                        padding-top: 72px;
+                        text-align: center;
+                    }
+                    .time { display: block; text-align: center; color: #999; font-size: 13px;padding: 12px 0;} 
+                    .descInfo {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: #999;
+                        font-size: 13px;
+                        padding: 12px 0;
+                    }
+                    .descInfo time {
+                        padding: 0;
+                    }
+                    .descInfo a {
+                        color: rgb(0, 123, 182);
+                    }
+                    .descInfo a:hover {
+                        text-decoration: underline;
+                    }
+                    article {
+                        padding: 24px;
+                        box-sizing: border-box;
+                        line-height: 1.5;
+                        max-width: 700px;
+                        width: 100%;
+                        padding: 24px;
+                        margin: 0 auto;
+                        font-size: 16px;
+                        color: rgb(23, 57, 87);
+                    }
+                    .preAndNext {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .copyrightInfo {
+                        display: flex;
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 24px;
+                        flex-wrap: wrap;
+                        margin: 24px auto;
+                        justify-content: space-between;
+                    }
+
+                    .preAndNext a {
+                        color: #007BB6;
+                        text-decoration: dotted underline;
+                    }
+                    .giscus {
+                        width: 100%;
+                        max-width: 700px;
+                        box-sizing: border-box;
+                        padding: 6px 24px;
+                        margin: 24px auto;
+                    }
+                    p {
+                        margin: 0;
+                        margin-bottom: 24px;
+                        padding: 0;
+                    }
+                    hr {
+                        opacity: 0.3;
+                        margin: 24px 0;
+                    }
+                    li > p {
+                        margin-bottom: 6px;
+                    }
+                    article {
+                        min-height: calc(100vh - 120px);
+                    }
+                    article img {
+                        max-width: 100%;
+                        height: auto;
+                        margin: 12px auto;
+                        display: block;
+                        border-radius: 4px;
+                        border: 1px solid #e5e5e5;
+                    }
+                    article a {
+                        color: rgb(0, 123, 182);
+                        text-decoration: none;
+                    }
+
+                    article a:hover {
+                        text-decoration: underline;
+                    }
+                    article pre {
+                        padding: 12px;
+                        background-color: #007BB608;
+                        border-radius: 4px;
+                        overflow: auto;
+                        font-size: 15px;
+                        line-height: 1.5;
+                        color: rgb(0, 128, 117);
+                        border: 1px solid #389ab129;
+                    }
+                    article .inline-code {
+                        padding: 0px 4px;
+                        background-color: #007BB608;
+                        border-radius: 4px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+                       
+                    .center {
+                        position: relative;
+                        width: 100%;
+                        max-width: 1240px;
+                        margin: 0 auto;
+                    }
+                    .right {
+                        position: absolute;
+                        right: 0;
+                        font-size: 16px;
+                        color: #666;
+                        top: 0;
+                        line-height: 20px;
+                        text-decoration:none;
+                    }
+                    footer {
+                        color: rgba(23, 57, 87, 0.5);
+                        width: 100%;
+                        margin: 0 auto;
+                        padding: 24px;
+                        box-sizing: border-box;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 13px;
+                        background-color: rgba(229, 247, 237, 0.29);
+                        background-image: repeating-linear-gradient(135deg, rgba(68, 76, 247, 0) 0px, rgba(68, 76, 247, 0.09) 1px, rgba(229, 229, 247, 0) 0px, rgba(229, 229, 247, 0) 50%);
+                        background-size: 10px 10px;
+                    }
+                    .giscus {
+                        margin-bottom: 24px;
+                    }
+                    .back-to-top {
+                        position: fixed;
+                        bottom: 40px;
+                        right: 20px;
+                        width: 30px;
+                        height: 30px;
+                        background: #fff;
+                        color: #757575;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        text-decoration: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: all 0.3s;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+                        z-index: 999;
+                    }
+
+                    body.scrolled .back-to-top {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+
+                    @media screen {
+                        @media (max-width: 750px) {
+                            nav > a {
+                                font-size: 14px;
+                                margin-left: 10px;
+                            }
+                            .pageHeader {
+                                padding: 24px;
+                            }
+                            .list-item time {
+                                font-size: 14px;
+                            }
+                            .header-title span {
+                                display: none;
+                            }
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <header>
+            <div class="center" style="display: flex;justify-content: space-between;align-items: center;">
+                <a class="header-title" href="/">Soar<span>'s Blog</span></a>
+                <nav><a href="/">Tech</a><a href="/life/">Life</a><a href="/weekly/">Weekly</a><a href="/other/">Other</a><a href="/about/">About</a></nav>
+                
+            </div>
+        </header>
+<div class="pageHeader">
+<h2>Major technological events in 2023</h2>
+<div class="descInfo"><time class="time">2023/12/31</time><span class="divider"> | </span><span>6 min</span><span class="divider"> | </span><a href="/other/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
+</div>
+<article><h3>一月</h3>
+<ul><li><p>新冠感染实施“乙类乙管”，多地逐步恢复常态化出行与通关</p></li><li><p>微软拟追加投资 OpenAI 约 100 亿美元以加速生成式 AI 落地</p></li><li><p>上海检测到 XBB 变异株，公众关注新冠变异趋势与防护</p></li><li><p>英伟达发布 RTX 4070 Ti 显卡，桌面端 GPU 产品线更新</p></li></ul>
+<h3>二月</h3>
+<ul><li><p>全面实行股票发行注册制改革启动，资本市场进入新阶段</p></li><li><p>微软推出集成 ChatGPT 的新 Bing 与 Edge 体验，搜索进入“问答时代”</p></li><li><p>OpenAI 推出 ChatGPT Plus（$20/月）订阅版</p></li><li><p>美国击落误入领空的高空气球引发全球关注</p></li><li><p>Meta 发布大语言模型 LLaMA，开源生态迅速发展</p></li></ul>
+<h3>三月</h3>
+<ul><li><p>OpenAI 上线 ChatGPT 与 Whisper 官方 API，应用集成大幅提速</p></li><li><p>GPT-4 正式发布，模型能力显著提升；Midjourney 推出 V5 版本</p></li><li><p>微软发布多模态模型 Kosmos-1；宣布 Microsoft 365 Copilot</p></li><li><p>硅谷银行破产引发科技与创业圈连锁反应</p></li><li><p>OpenAI 上线 ChatGPT 插件系统；TikTok CEO 赴美听证</p></li></ul>
+<h3>四月</h3>
+<ul><li><p>Meta 发布图像分割模型 Segment Anything（SAM），引爆视觉分割应用</p></li><li><p>阿里巴巴发布通义千问大模型；多家厂商宣布大模型策略</p></li><li><p>SpaceX 星舰首飞后爆炸，重型可复用航天器迈出关键一步</p></li><li><p>中国首次发布“火星全球影像图”，行星科学数据再扩充</p></li><li><p>复旦 MOSS 模型开源，国内大模型开源探索加速</p></li></ul>
+<h3>五月</h3>
+<ul><li><p>“深度学习之父”Geoffrey Hinton 离职谷歌，公开呼吁重视 AI 风险</p></li><li><p>Google 发布 PaLM 2 大模型，I/O 大会全面升级 AI 家族</p></li><li><p>WHO 宣布新冠全球紧急状态结束，进入长期管理阶段</p></li><li><p>苹果、微软、OpenAI 等集中推出生成式 AI 新功能与 API</p></li><li><p>特斯拉在美大规模召回以优化制动与安全问题</p></li></ul>
+<h3>六月</h3>
+<ul><li><p>苹果 WWDC23 发布 Apple Vision Pro，空间计算时代揭幕</p></li><li><p>中国神舟十六号载人飞船发射成功，航天常态化运行推进</p></li><li><p>欧盟议会通过《人工智能法案》草案，AI 合规治理进入新阶段</p></li><li><p>深海潜水器 Titan 失事，引发极限工程安全与监管讨论</p></li></ul>
+<h3>七月</h3>
+<ul><li><p>“LK-99 室温超导”论文引发全球关注，后续实验多未复现</p></li><li><p>Meta 推出 Threads 并在数日内突破 1 亿注册，社交赛道掀起波澜</p></li><li><p>生成式 AI 在图像、语音、代码等多模态应用全面提速</p></li></ul>
+<h3>八月</h3>
+<ul><li><p>印度“月船三号”在月球南极成功软着陆，探月史上首次</p></li><li><p>华为 Mate 60 Pro 上市，国产高端芯片工艺突破引发热议</p></li><li><p>OpenAI 发布 ChatGPT Enterprise，企业级 AI 应用加速普及</p></li><li><p>英伟达市值快速攀升，AI 算力成为新型基础设施核心</p></li></ul>
+<h3>九月</h3>
+<ul><li><p>苹果发布 iPhone 15 全系，全面改用 USB‑C 接口</p></li><li><p>芯片设计公司 Arm 登陆纳斯达克完成超大型 IPO</p></li><li><p>Unity 推出收费政策引发开发者社区强烈反弹</p></li></ul>
+<h3>十月</h3>
+<ul><li><p>美国发布《人工智能安全行政令》，强调模型评测与安全标准</p></li><li><p>苹果发布 M3 系列芯片与新款 Mac，3nm 工艺落地消费端</p></li><li><p>开源与闭源大模型两条路线在推理、工具调用等方向加速迭代</p></li></ul>
+<h3>十一月</h3>
+<ul><li><p>OpenAI DevDay 发布 GPT‑4 Turbo、Assistants API 等重磅更新</p></li><li><p>OpenAI 董事会“宫斗”风波：Sam Altman 去留引发全球关注，后复职</p></li><li><p>微软发布自研 AI 加速芯片 Maia 100 与 Cobalt CPU，云端算力自给加码</p></li></ul>
+<h3>十二月</h3>
+<ul><li><p>Google 发布多模态大模型 Gemini，迈向端云协同与全面对标</p></li><li><p>英美批准首个 CRISPR 基因编辑疗法（镰刀型贫血），基因治疗里程碑</p></li><li><p>生成式 AI 在搜索、办公、设计、编程等领域进入规模应用期</p></li></ul></article>
+<div class="preAndNext">
+                        
+                        <a href="/other/2024/12/31/Major-technological-events-in-2024.html">Next: Major technological events in 2024</a>
+                    </div>
+
+        <div class="copyrightInfo"><img class="not-ai" src="/resources/not-ai.svg" /></div>
+        <div class="giscus">
+            
+        
+            <script src="https://giscus.app/client.js"
+                data-repo="echosoar/echosoar.github.io"
+                data-repo-id="MDEwOlJlcG9zaXRvcnk0MzI4NjU4NQ=="
+                data-category="Announcements"
+                data-category-id="DIC_kwDOApSAOc4Co7sV"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="light"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>  
+        </div>
+        <footer>
+            <div>
+                © 2015-2026<br />
+                Soar's Blog. All rights reserved.
+            </div>
+            <div style="display: flex;align-items: center;justify-content: center;">
+                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1703980800000-34?scale=0.4&theme=3d-num" alt="page" height="20px" />
+            </div>
+        </footer>
+                <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+            </body>
+            <script>
+                window.addEventListener('scroll', () => {
+                    document.body.classList.toggle('scrolled', window.scrollY > 300);
+                });
+            </script>
+            </html>
+        

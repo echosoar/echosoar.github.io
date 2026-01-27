@@ -3,7 +3,7 @@
                 <title>Home</title>
                 <link href="https://echosoar.github.io/home/atom.xml" rel="self"/>
                 <link href="https://echosoar.github.io/home/"/>
-                <updated>2026-01-21T00:20:11.272Z</updated>
+                <updated>2026-01-27T08:44:45.559Z</updated>
                 <id>https://echosoar.github.io/home/</id>
                 <author>
                     <name>soar</name>
@@ -13,22 +13,6 @@
                     <userId>62733912072851456</userId>
                 </follow_challenge>
                 <entry>
-                            <title>Major technological events in 2025</title>
-                            <link href="https://echosoar.github.io/2025/12/31/Major-technological-events-in-2025.html"/>
-                            <id>https://echosoar.github.io/2025/12/31/Major-technological-events-in-2025.html</id>
-                            <updated>2025-12-31T00:00:00.000Z</updated>
-                            <summary>Major technological events in 2025 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
-                        </entry><entry>
-                            <title>Major technological events in 2024</title>
-                            <link href="https://echosoar.github.io/2024/12/31/Major-technological-events-in-2024.html"/>
-                            <id>https://echosoar.github.io/2024/12/31/Major-technological-events-in-2024.html</id>
-                            <updated>2024-12-31T00:00:00.000Z</updated>
-                            <summary>Major technological events in 2024 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
-                        </entry><entry>
                             <title>System architect knowledge points</title>
                             <link href="https://echosoar.github.io/2024/09/01/System-architect-knowledge-points.html"/>
                             <id>https://echosoar.github.io/2024/09/01/System-architect-knowledge-points.html</id>
@@ -90,6 +74,14 @@
                             <id>https://echosoar.github.io/2018/12/04/用一行正则表达式将xml转换为json.html</id>
                             <updated>2018-12-04T00:00:00.000Z</updated>
                             <summary>用一行正则表达式将xml转换为json 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
+                        </entry><entry>
+                            <title>同事问了我一个问题：foo.x 的值是什么？</title>
+                            <link href="https://echosoar.github.io/2018/11/27/同事问了我一个问题：foo.x 的值是什么？.html"/>
+                            <id>https://echosoar.github.io/2018/11/27/同事问了我一个问题：foo.x 的值是什么？.html</id>
+                            <updated>2018-11-27T00:00:00.000Z</updated>
+                            <summary>同事问了我一个问题：foo.x 的值是什么？ 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
                         </entry>
