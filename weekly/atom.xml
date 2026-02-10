@@ -3,7 +3,7 @@
                 <title>偷懒爱好者周刊</title>
                 <link href="https://echosoar.github.io/weekly/atom.xml" rel="self"/>
                 <link href="https://echosoar.github.io/weekly/"/>
-                <updated>2026-02-06T10:33:35.414Z</updated>
+                <updated>2026-02-10T14:41:14.026Z</updated>
                 <id>https://echosoar.github.io/weekly/</id>
                 <author>
                     <name>soar</name>
@@ -13,6 +13,22 @@
                     <userId>62733912072851456</userId>
                 </follow_challenge>
                 <entry>
+                            <title>第171期 偷懒爱好者周刊</title>
+                            <link href="https://echosoar.github.io/weekly/2026/02/11/第171期-偷懒爱好者周刊.html"/>
+                            <id>https://echosoar.github.io/weekly/2026/02/11/第171期-偷懒爱好者周刊.html</id>
+                            <updated>2026-02-11T00:00:00.000Z</updated>
+                            <summary>第171期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。访问 https://echosoar.github.io/weekly/2026/02/11/第171期-偷懒爱好者周刊.html 阅读本期周刊全部内容。
+
+本期内容包含：
+1. Seeking Blue
+2. George & Jonathan III
+3. Rent a Human
+4. 地图精灵
+5. World Monitor
+6. Indo-European Explorer 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
+                        </entry><entry>
                             <title>第170期 偷懒爱好者周刊</title>
                             <link href="https://echosoar.github.io/weekly/2026/02/04/第170期-偷懒爱好者周刊.html"/>
                             <id>https://echosoar.github.io/weekly/2026/02/04/第170期-偷懒爱好者周刊.html</id>
@@ -180,25 +196,6 @@
 7. Models.dev
 8. Making Software
 9. 100 Lost Species 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
-                        </entry><entry>
-                            <title>第161期 偷懒爱好者周刊</title>
-                            <link href="https://echosoar.github.io/weekly/2025/12/03/第161期-偷懒爱好者周刊.html"/>
-                            <id>https://echosoar.github.io/weekly/2025/12/03/第161期-偷懒爱好者周刊.html</id>
-                            <updated>2025-12-03T00:00:00.000Z</updated>
-                            <summary>第161期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。访问 https://echosoar.github.io/weekly/2025/12/03/第161期-偷懒爱好者周刊.html 阅读本期周刊全部内容。
-
-本期内容包含：
-1. Model web viewer
-2. QbGrip
-3. 四十新闻
-4. Poline
-5. geojson
-6. jsfuck
-7. CCL 语料库检索系统
-8. VG Music
-9. The midi shrine 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。</summary>
                         </entry>
