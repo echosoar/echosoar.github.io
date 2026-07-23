@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
             <feed xmlns="http://www.w3.org/2005/Atom">
                 <title>Home</title>
-                <link href="https://echosoar.github.io/home/atom.xml" rel="self"/>
-                <link href="https://echosoar.github.io/home/"/>
-                <updated>2026-07-22T00:41:31.636Z</updated>
-                <id>https://echosoar.github.io/home/</id>
+                <link href="https://aiznb.com/home/atom.xml" rel="self"/>
+                <link href="https://aiznb.com/home/"/>
+                <updated>2026-07-23T23:28:28.214Z</updated>
+                <id>https://aiznb.com/home/</id>
                 <author>
                     <name>soar</name>
                 </author>
@@ -13,75 +13,83 @@
                     <userId>62733912072851456</userId>
                 </follow_challenge>
                 <entry>
+                            <title>21 世纪已过四分之一</title>
+                            <link href="https://aiznb.com/2025/12/31/21 世纪已过四分之一.html"/>
+                            <id>https://aiznb.com/2025/12/31/21 世纪已过四分之一.html</id>
+                            <updated>2025-12-31T00:00:00.000Z</updated>
+                            <summary><![CDATA[21 世纪已过四分之一 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
+                        </entry><entry>
+                            <title>回望那个 1+1=3 的 2024</title>
+                            <link href="https://aiznb.com/2025/03/01/回望那个 1+1=3 的 2024.html"/>
+                            <id>https://aiznb.com/2025/03/01/回望那个 1+1=3 的 2024.html</id>
+                            <updated>2025-03-01T00:00:00.000Z</updated>
+                            <summary><![CDATA[回望那个 1+1=3 的 2024 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
+                        </entry><entry>
+                            <title>我觉得好用的免费、开源Mac软件</title>
+                            <link href="https://aiznb.com/2024/11/12/我觉得好用的免费、开源Mac软件.html"/>
+                            <id>https://aiznb.com/2024/11/12/我觉得好用的免费、开源Mac软件.html</id>
+                            <updated>2024-11-12T00:00:00.000Z</updated>
+                            <summary><![CDATA[我觉得好用的免费、开源Mac软件 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
+                        </entry><entry>
                             <title>System architect knowledge points</title>
-                            <link href="https://echosoar.github.io/2024/09/01/System-architect-knowledge-points.html"/>
-                            <id>https://echosoar.github.io/2024/09/01/System-architect-knowledge-points.html</id>
+                            <link href="https://aiznb.com/2024/09/01/System-architect-knowledge-points.html"/>
+                            <id>https://aiznb.com/2024/09/01/System-architect-knowledge-points.html</id>
                             <updated>2024-09-01T00:00:00.000Z</updated>
                             <summary><![CDATA[System architect knowledge points 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry><entry>
                             <title>使用 Rust 实现 JS 原型链</title>
-                            <link href="https://echosoar.github.io/2023/01/16/使用 Rust 实现 JS 原型链.html"/>
-                            <id>https://echosoar.github.io/2023/01/16/使用 Rust 实现 JS 原型链.html</id>
+                            <link href="https://aiznb.com/2023/01/16/使用 Rust 实现 JS 原型链.html"/>
+                            <id>https://aiznb.com/2023/01/16/使用 Rust 实现 JS 原型链.html</id>
                             <updated>2023-01-16T00:00:00.000Z</updated>
                             <summary><![CDATA[使用 Rust 实现 JS 原型链 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry><entry>
                             <title>TS allowSyntheticDefaultImports and esModuleInterop</title>
-                            <link href="https://echosoar.github.io/2022/05/22/TS-allowSyntheticDefaultImports-and-esModuleInterop.html"/>
-                            <id>https://echosoar.github.io/2022/05/22/TS-allowSyntheticDefaultImports-and-esModuleInterop.html</id>
+                            <link href="https://aiznb.com/2022/05/22/TS-allowSyntheticDefaultImports-and-esModuleInterop.html"/>
+                            <id>https://aiznb.com/2022/05/22/TS-allowSyntheticDefaultImports-and-esModuleInterop.html</id>
                             <updated>2022-05-22T00:00:00.000Z</updated>
                             <summary><![CDATA[TS allowSyntheticDefaultImports and esModuleInterop 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry><entry>
                             <title>从 V8 源码分析 Node.js 在不同时间格式处理上的差异</title>
-                            <link href="https://echosoar.github.io/2021/09/28/从 V8 源码分析 Node.js 在不同时间格式处理上的差异.html"/>
-                            <id>https://echosoar.github.io/2021/09/28/从 V8 源码分析 Node.js 在不同时间格式处理上的差异.html</id>
+                            <link href="https://aiznb.com/2021/09/28/从 V8 源码分析 Node.js 在不同时间格式处理上的差异.html"/>
+                            <id>https://aiznb.com/2021/09/28/从 V8 源码分析 Node.js 在不同时间格式处理上的差异.html</id>
                             <updated>2021-09-28T00:00:00.000Z</updated>
                             <summary><![CDATA[从 V8 源码分析 Node.js 在不同时间格式处理上的差异 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry><entry>
                             <title>从 V8 源码分析一个JS 数组的内存占用问题</title>
-                            <link href="https://echosoar.github.io/2021/08/22/从 V8 源码分析一个JS 数组的内存占用问题.html"/>
-                            <id>https://echosoar.github.io/2021/08/22/从 V8 源码分析一个JS 数组的内存占用问题.html</id>
+                            <link href="https://aiznb.com/2021/08/22/从 V8 源码分析一个JS 数组的内存占用问题.html"/>
+                            <id>https://aiznb.com/2021/08/22/从 V8 源码分析一个JS 数组的内存占用问题.html</id>
                             <updated>2021-08-22T00:00:00.000Z</updated>
                             <summary><![CDATA[从 V8 源码分析一个JS 数组的内存占用问题 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry><entry>
-                            <title>What makes V8 async faster</title>
-                            <link href="https://echosoar.github.io/2019/11/15/What makes V8 async faster.html"/>
-                            <id>https://echosoar.github.io/2019/11/15/What makes V8 async faster.html</id>
-                            <updated>2019-11-15T00:00:00.000Z</updated>
-                            <summary><![CDATA[What makes V8 async faster 
+                            <title>封控与一些感受</title>
+                            <link href="https://aiznb.com/2020/02/01/封控与一些感受.html"/>
+                            <id>https://aiznb.com/2020/02/01/封控与一些感受.html</id>
+                            <updated>2020-02-01T00:00:00.000Z</updated>
+                            <summary><![CDATA[封控与一些感受 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry><entry>
-                            <title>Delay a JavaScript function call</title>
-                            <link href="https://echosoar.github.io/2019/10/30/Delay a JavaScript function call.html"/>
-                            <id>https://echosoar.github.io/2019/10/30/Delay a JavaScript function call.html</id>
-                            <updated>2019-10-30T00:00:00.000Z</updated>
-                            <summary><![CDATA[Delay a JavaScript function call 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
-                        </entry><entry>
-                            <title>用一行正则表达式将xml转换为json</title>
-                            <link href="https://echosoar.github.io/2018/12/04/用一行正则表达式将xml转换为json.html"/>
-                            <id>https://echosoar.github.io/2018/12/04/用一行正则表达式将xml转换为json.html</id>
-                            <updated>2018-12-04T00:00:00.000Z</updated>
-                            <summary><![CDATA[用一行正则表达式将xml转换为json 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
-                        </entry><entry>
-                            <title>同事问了我一个问题：foo.x 的值是什么？</title>
-                            <link href="https://echosoar.github.io/2018/11/27/同事问了我一个问题：foo.x 的值是什么？.html"/>
-                            <id>https://echosoar.github.io/2018/11/27/同事问了我一个问题：foo.x 的值是什么？.html</id>
-                            <updated>2018-11-27T00:00:00.000Z</updated>
-                            <summary><![CDATA[同事问了我一个问题：foo.x 的值是什么？ 
+                            <title>感谢幸福的2019，和记忆深刻的这十年</title>
+                            <link href="https://aiznb.com/2020/01/01/感谢幸福的2019，和记忆深刻的这十年.html"/>
+                            <id>https://aiznb.com/2020/01/01/感谢幸福的2019，和记忆深刻的这十年.html</id>
+                            <updated>2020-01-01T00:00:00.000Z</updated>
+                            <summary><![CDATA[感谢幸福的2019，和记忆深刻的这十年 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry>
