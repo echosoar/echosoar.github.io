@@ -1,7 +1,7 @@
 <!DOCTYPE html>
             <html>
             <head>
-                <title>About - soar's blog</title>
+                <title>How to comprehensively evaluate the performance of a model across multiple evaluation methods - soar's blog</title>
                 <meta charset="utf-8">
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -324,43 +324,116 @@
             </div>
         </header>
 <div class="pageHeader">
-<h2>About</h2>
-<div class="descInfo"><time class="time">2026/07/25</time><span class="divider"> | </span><span>2 min</span><span class="divider"> | </span><a href="/about/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
+<h2>How to comprehensively evaluate the performance of a model across multiple evaluation methods</h2>
+<div class="descInfo"><time class="time">2026/05/24</time><span class="divider"> | </span><span>8 min</span><span class="divider"> | </span><a href="/home/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
-<article><p>Hello, I'm Soar, a fullstack developer.</p>
-<p>Former maintainer 
-<a href="https://github.com/midwayjs" target="_blank">@midwayjs</a>
-, Former 
-<a href="https://github.com/alibaba" target="_blank">Alibaba</a>
- Technical Expert.</p>
-<p>My favorite languages are Javascript and Go, but I have broad experience with many languages and technologies.</p>
-<p><a href="https://aiznb.com/weekly/" target="_blank">Weekly</a>
- updates for many years.</p>
-<p>You can find me here: 
-<a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a>
-、
-<a href="https://github.com/echosoar" target="_blank">Github</a></p>
-<hr />
-<p>Some websites I built:</p>
-<ul><li><p><a href="https://toolight.cn/" target="_blank">Toolight</a>
-: Make better online tools.</p></li><li><p><a href="https://1htr.cn/" target="_blank">1HTR</a>
-: 1 hundred thousands ranks.</p></li><li><p><a href="https://aiznb.com/llm-score/" target="_blank">LLM Score</a>
-: Evaluating the performance of LLMs across various tasks and benchmarks.</p></li><li><p><a href="https://aiznb.com/news/" target="_blank">News</a>
-: AI-driven daily hot topic briefing</p></li></ul>
-<hr />
-<p>Some personal projects:</p>
-<ul><li><p><a href="https://ractai.com/" target="_blank">Ract AI</a>
-: Professional and fully functional automated AI agent.</p></li><li><p><a href="https://github.com/echosoar/jsi" target="_blank">JSI</a>
-: A JavaScript Interpreter written in Rust.</p></li><li><p><a href="https://github.com/echosoar/canvas-cli" target="_blank">Canvas-CLI</a>
-: Pure rust implemented drawer library( api like canvas), enables AI models that do not produce raw images to generate images</p></li><li><p><a href="https://github.com/echosoar/imgpro" target="_blank">ImgPro</a>
-: A multifunctional image information recognition library, supporting a variety of image formats. And it can be run in the browser through WebAssembly(wasm).</p></li><li><p><a href="https://github.com/echosoar/selecto" target="_blank">Selecto</a>
-: A macOS application developed in Swift that automatically displays a floating toolbar above selected text, providing various customizable functions.</p></li><li><p><a href="https://github.com/echosoar" target="_blank">...more</a></p></li></ul></article>
+<article><p>A while back, when I was collecting data for 
+<a href="https://aiznb.com/llm-score" target="_blank">llm-score</a>
+, I encountered a problem: how to combine scores from different benchmarks into a single score.</p>
+<p>For example, in 
+<span class="inline-code">data.json</span>
+, a model might contain the following two scores of benchmarks:</p>
+<pre><code>{
+  "GPQA Diamond": 0.935,
+  "GDPval-AA 2": 1668
+}</code></pre>
+<p>The former is in a range of 
+<span class="inline-code">0 ~ 1</span>
+, while the latter is in the thousands. If I directly sum all scores or take the average, the benchmark with a large score(like 
+<span class="inline-code">GDPval-AA</span>
+) will completely overwhelm the results of other benchmarks.</p>
+<p>Another problem is that not all models participated all benchmarks. Some models only have scores of programming benchmarks, while some models only have scores of tool-use or other benchmarks, which means the original data is actually a sparse matrix.</p>
+<p>So, in 
+<a href="https://github.com/echosoar/llm-score/blob/main/sort.js" target="_blank">sort.js</a>
+, i did not directly calculate the average score, instead used "pairwise win-loss relationships between models" to complete the sorting.</p>
+<h3>Compare models pairwise, not by average</h3>
+<p>The first step of sorting is to compare each model with all other models in pairs.</p>
+<p>When comparing, only compare scores that both models have been benchmarked on.</p>
+<p>if modelA's score higher than model b on a benchmark, then count ont win for modelA, and calculate the relative lead:</p>
+<pre><code>const midScore = (aScore + bScore) / 2;
+aWinScore += (aScore - bScore) / midScore;
+aWinCount += 1;</code></pre>
+<p>Here, the denominator is the average of the two scores, rather than directly using the original difference.</p>
+<p>In this way, whether it is 
+<span class="inline-code">0.9 vs 0.8</span>
+ of 
+<span class="inline-code">1800 vs 1600</span>
+, it can be converted into a releative difference, avoiding the final result being affected by the benchmark's scores with a larger range of values.</p>
+<p>To determine the win/loss outcome between two models, the first step in the code is to compare the win count:</p>
+<pre><code>if (aWinCount != bWinCount) {
+    sameRanksModels[otherModel.model] = aWinCount - bWinCount;
+} else if (aWin != bWin) {
+    sameRanksModels[otherModel.model] = aWin - bWin;
+}</code></pre>
+<p>In other words, priority is giving to judging which model won in more benchmarks, if both models have the same win count, then compare the average relative lead of each model when they won.</p>
+<p>For example：</p>
+<p>ModelA won 3 in 5 benchmarks(both a and b participated)</p>
+<p>ModelB won 2 in 5 benchmarks</p>
+<p>Considering the modelA is stronger than modelB</p>
+<p>If modelA and modelB both won on 3 benchmark:</p>
+<p>ModelA with average relative lead is 2%</p>
+<p>ModelB with average relative lead is 10%</p>
+<p>Condidering the modelB is stronger than modelA</p>
+<p>The advantage of this logic is that a model lossed in more benchmarks cannot be considered stronger than another model that won in more benchmarks, even if the model has a larger lead in a single benchmark.</p>
+<h3>Build graph by loss-win relationship</h3>
+<p>得到两两之间的胜负关系之后，代码会将结果转换成一张有向图。</p>
+<p>if modelA is stronger than modelB, then create a edge from A to B:</p>
+<pre><code>A -&gt; B</code></pre>
+<p>the code is：</p>
+<pre><code>outEdges.get(beater).add(model.model);
+beatersCount.set(model.model, beatersCount.get(model.model) + 1);</code></pre>
+<ul><li><p><span class="inline-code">outEdges</span>
+ means which models were outperformed by a model</p></li><li><p><span class="inline-code">beatersCount</span>
+ means how many models have outperformed the current model</p></li></ul>
+<p>Next is sorting:</p>
+<p>代码中使用的是一种从弱到强的拓扑排序：每次找到那些“没有战胜任何未放置模型”的节点，优先放置它们。</p>
+<pre><code>let candidates = unplaced.filter(name =&gt; remainingOutCount(name) === 0);</code></pre>
+<p>如果一个模型已经没有指向其他未放置模型的边，说明在当前剩余模型中，它没有战胜任何人，因此可以先被放到结果中。</p>
+<p>如果同时存在多个候选模型，就继续比较有多少个模型战胜过它：</p>
+<pre><code>candidates.sort((a, b) =&gt;
+    beatersCount.get(b) - beatersCount.get(a) || a.localeCompare(b, 'zh-CN'));</code></pre>
+<p>被更多模型战胜的节点会被认为更弱，因此先放入结果；如果还无法区分，最后使用名称排序来保证结果是稳定的。</p>
+<p>另外，两两胜负关系并不一定总是传递的，可能会出现：</p>
+<pre><code>A win B
+B win C
+C win A</code></pre>
+<p>也就是胜负关系成环。这个时候不存在严格的拓扑排序结果，代码会选择剩余出边最少的模型来打破循环：</p>
+<pre><code>const minOut = Math.min(...unplaced.map(remainingOutCount));
+candidates = unplaced.filter(name =&gt; remainingOutCount(name) === minOut);</code></pre>
+<p>这个处理方式并不追求完美，但可以保证在数据不完整或者存在冲突时，排序流程仍然能够继续执行下去。</p>
+<h3>Generate final rank</h3>
+<p>After sort the models，
+<span class="inline-code">sort.js</span>
+ will calculate the 
+<span class="inline-code">rank</span>
+ of each model.</p>
+<p>First model's rank is fixed at 
+<span class="inline-code">10</span>
+：</p>
+<pre><code>const scorePi = 10;
+cur.rank = scorePi;</code></pre>
+<p>从第二个模型开始，每个模型都只和前一个模型进行比较。如果当前模型在共同 benchmark 中比前一个模型强，就计算平均相对领先幅度，然后叠加到前一个模型的 rank 上：</p>
+<pre><code>cur.rank = prev.rank + (curWinScore / curWinCount) * scorePi;</code></pre>
+<p>如果当前模型没有在任何共同评测中赢过前一个模型，那么两者的 rank 相同：</p>
+<pre><code>cur.rank = prev.rank;</code></pre>
+<p>所以最终生成的 
+<span class="inline-code">rank</span>
+ 并不是一个百分制分数，也不表示模型的绝对能力值。它更像是一个基于排序结果的累计距离：</p>
+<ul><li><p>排得越靠后，模型越强</p></li><li><p>相邻模型之间的差距越大，rank 增长越多</p></li><li><p>如果两个模型无法拉开差距，它们的 rank 会保持一致</p></li></ul>
+<p>最后，脚本会把排序后的模型、原始 benchmark 数据、价格换算关系和更新时间写入 
+<span class="inline-code">score.json</span>
+。</p>
+<h3>What scene is suitable for this logic</h3>
+<p>这个实现并没有试图把所有 benchmark 强行转换成一个统一分数，而是把问题转换成了：在多个评测结果中，一个模型比另一个模型强多少。</p>
+<p>这样做有几个比较明显的优点：</p>
+<ol><li><p>不要求所有模型参与相同的 benchmark</p></li><li><p>不同评分体系之间可以通过相对差异进行比较</p></li><li><p>优先使用胜场数量，避免单个评测的大分差主导排序</p></li><li><p>胜负冲突时仍然可以通过拓扑排序的兜底逻辑输出结果</p></li></ol>
+<p>Actually, it is not a perfetc solution, if both models have no common benchmark, then whre is no direct win-loss edge between them, only rely on indirect releationship between other models, but this logic current handles the sorting of the existed data well.</p></article>
 <div class="preAndNext">
-                        
+                        <a href="/2025/12/31/21 世纪已过四分之一.html">Prev: 21 世纪已过四分之一</a>
                         
                     </div>
 
-        <div class="copyrightInfo"><a href="https://not.aiznb.com/" target="_blank"><img class="not-ai" width="240px" src="https://not.aiznb.com/img?url=https://aiznb.com/about/index.html" /></a></div>
+        <div class="copyrightInfo"><a href="https://not.aiznb.com/" target="_blank"><img class="not-ai" width="240px" src="https://not.aiznb.com/img?url=https://aiznb.com/2026/05/24/How to comprehensively evaluate the performance of a model across multiple evaluation methods.html" /></a></div>
         <div class="giscus">
             
         
@@ -386,7 +459,7 @@
                 Soar's Blog. All rights reserved.
             </div>
             <div style="display: flex;align-items: center;justify-content: center;">
-                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-about?scale=0.4&theme=3d-num" alt="page" height="20px" />
+                <img src="https://count.getloli.com/@codersoarblog?scale=0.4&theme=3d-num" alt="codersoar" height="20px" /> | <img src="https://count.getloli.com/@codersoarblog-1779580800000-93?scale=0.4&theme=3d-num" alt="page" height="20px" />
             </div>
         </footer>
                 <a href="#" class="back-to-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
