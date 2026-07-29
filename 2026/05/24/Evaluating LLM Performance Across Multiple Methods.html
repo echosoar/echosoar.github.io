@@ -376,7 +376,7 @@ aWinCount += 1;</code></pre>
 <p>Condidering the modelB is stronger than modelA</p>
 <p>The advantage of this logic is that a model lossed in more benchmarks cannot be considered stronger than another model that won in more benchmarks, even if the model has a larger lead in a single benchmark.</p>
 <h3>Build graph by loss-win relationship</h3>
-<p>得到两两之间的胜负关系之后，代码会将结果转换成一张有向图。</p>
+<p>After obtain the win-loss relationship between each pairs, this code will convert the result into a directed graph.</p>
 <p>if modelA is stronger than modelB, then create a edge from A to B:</p>
 <pre><code>A -&gt; B</code></pre>
 <p>the code is：</p>
@@ -386,7 +386,7 @@ beatersCount.set(model.model, beatersCount.get(model.model) + 1);</code></pre>
  means which models were outperformed by a model</p></li><li><p><span class="inline-code">beatersCount</span>
  means how many models have outperformed the current model</p></li></ul>
 <p>Next is sorting:</p>
-<p>代码中使用的是一种从弱到强的拓扑排序：每次找到那些“没有战胜任何未放置模型”的节点，优先放置它们。</p>
+<p>The code uses a topological sort from weak to strong, each time, nodes that "have not win any unplaced models" are found, there are placed first</p>
 <pre><code>let candidates = unplaced.filter(name =&gt; remainingOutCount(name) === 0);</code></pre>
 <p>如果一个模型已经没有指向其他未放置模型的边，说明在当前剩余模型中，它没有战胜任何人，因此可以先被放到结果中。</p>
 <p>如果同时存在多个候选模型，就继续比较有多少个模型战胜过它：</p>
@@ -419,12 +419,9 @@ cur.rank = scorePi;</code></pre>
 <p>所以最终生成的 
 <span class="inline-code">rank</span>
  并不是一个百分制分数，也不表示模型的绝对能力值。它更像是一个基于排序结果的累计距离：</p>
-<ul><li><p>排得越靠后，模型越强</p></li><li><p>相邻模型之间的差距越大，rank 增长越多</p></li><li><p>如果两个模型无法拉开差距，它们的 rank 会保持一致</p></li></ul>
-<p>最后，脚本会把排序后的模型、原始 benchmark 数据、价格换算关系和更新时间写入 
-<span class="inline-code">score.json</span>
-。</p>
+<ul><li><p>相邻模型之间的差距越大，rank 增长越多</p></li><li><p>如果两个模型无法拉开差距，它们的 rank 会保持一致</p></li></ul>
 <h3>What scene is suitable for this logic</h3>
-<p>这个实现并没有试图把所有 benchmark 强行转换成一个统一分数，而是把问题转换成了：在多个评测结果中，一个模型比另一个模型强多少。</p>
+<p>This implement does not attempt to convert all bencmarks into a unified score, but instead convert the problem into: in many benchmark results, how much better is one model than another.</p>
 <p>这样做有几个比较明显的优点：</p>
 <ol><li><p>不要求所有模型参与相同的 benchmark</p></li><li><p>不同评分体系之间可以通过相对差异进行比较</p></li><li><p>优先使用胜场数量，避免单个评测的大分差主导排序</p></li><li><p>胜负冲突时仍然可以通过拓扑排序的兜底逻辑输出结果</p></li></ol>
 <p>Actually, it is not a perfetc solution, if both models have no common benchmark, then whre is no direct win-loss edge between them, only rely on indirect releationship between other models, but this logic current handles the sorting of the existed data well.</p></article>
