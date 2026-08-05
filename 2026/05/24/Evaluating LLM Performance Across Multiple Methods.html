@@ -388,12 +388,12 @@ beatersCount.set(model.model, beatersCount.get(model.model) + 1);</code></pre>
 <p>Next is sorting:</p>
 <p>The code uses a topological sort from weak to strong, each time, nodes that "have not win any unplaced models" are found, there are placed first</p>
 <pre><code>let candidates = unplaced.filter(name =&gt; remainingOutCount(name) === 0);</code></pre>
-<p>如果一个模型已经没有指向其他未放置模型的边，说明在当前剩余模型中，它没有战胜任何人，因此可以先被放到结果中。</p>
+<p>If a model has no edges point to other unplaced models, it means that in the remaing models, it has not win any others, so it can be placed into the result first.</p>
 <p>如果同时存在多个候选模型，就继续比较有多少个模型战胜过它：</p>
 <pre><code>candidates.sort((a, b) =&gt;
     beatersCount.get(b) - beatersCount.get(a) || a.localeCompare(b, 'zh-CN'));</code></pre>
 <p>被更多模型战胜的节点会被认为更弱，因此先放入结果；如果还无法区分，最后使用名称排序来保证结果是稳定的。</p>
-<p>另外，两两胜负关系并不一定总是传递的，可能会出现：</p>
+<p>Furthermore, the win-loss relationship between two models is not always passed, it may occur:</p>
 <pre><code>A win B
 B win C
 C win A</code></pre>
@@ -418,7 +418,7 @@ cur.rank = scorePi;</code></pre>
 <pre><code>cur.rank = prev.rank;</code></pre>
 <p>所以最终生成的 
 <span class="inline-code">rank</span>
- 并不是一个百分制分数，也不表示模型的绝对能力值。它更像是一个基于排序结果的累计距离：</p>
+ 并不是一个百分制分数，也不表示模型的绝对能力值。是一个基于排序结果的累计距离：</p>
 <ul><li><p>相邻模型之间的差距越大，rank 增长越多</p></li><li><p>如果两个模型无法拉开差距，它们的 rank 会保持一致</p></li></ul>
 <h3>What scene is suitable for this logic</h3>
 <p>This implement does not attempt to convert all bencmarks into a unified score, but instead convert the problem into: in many benchmark results, how much better is one model than another.</p>
