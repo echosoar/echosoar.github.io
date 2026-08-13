@@ -215,6 +215,101 @@
                         border-radius: 4px;
                         border: 1px solid #e5e5e5;
                     }
+                    .gallery-article {
+                        max-width: 1280px;
+                    }
+                    .gallery-grid {
+                        display: grid;
+                        grid-template-columns: repeat(4, minmax(0, 1fr));
+                        grid-auto-rows: 300px;
+                        gap: 16px;
+                    }
+                    .gallery-card {
+                        display: flex;
+                        flex-direction: column;
+                        min-width: 0;
+                        height: 300px;
+                        margin: 0;
+                    }
+                    .gallery-image-button {
+                        display: block;
+                        flex: 1;
+                        min-height: 0;
+                        padding: 0;
+                        border: 0;
+                        border-radius: 4px;
+                        background: transparent;
+                        cursor: zoom-in;
+                        overflow: hidden;
+                    }
+                    .gallery-image-button:focus-visible {
+                        outline: 2px solid #007BB6;
+                        outline-offset: 3px;
+                    }
+                    article .gallery-image {
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        max-width: none;
+                        max-height: none;
+                        margin: 0;
+                        border: 1px solid #e5e5e5;
+                        box-sizing: border-box;
+                        border-radius: 4px;
+                        object-fit: contain;
+                    }
+                    .gallery-caption {
+                        flex: 0 0 18px;
+                        height: 18px;
+                        margin-top: 6px;
+                        overflow: hidden;
+                        color: #999;
+                        font-size: 12px;
+                        line-height: 18px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    .gallery-preview {
+                        width: min(90vw, 1200px);
+                        max-width: none;
+                        max-height: 90vh;
+                        padding: 16px;
+                        border: 0;
+                        border-radius: 8px;
+                        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+                        background: #fff;
+                    }
+                    .gallery-preview::backdrop {
+                        background: rgba(0, 0, 0, 0.7);
+                    }
+                    .gallery-preview-close {
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                        width: 32px;
+                        height: 32px;
+                        padding: 0;
+                        border: 0;
+                        border-radius: 50%;
+                        background: rgba(0, 0, 0, 0.6);
+                        color: #fff;
+                        cursor: pointer;
+                        font-size: 24px;
+                        line-height: 32px;
+                    }
+                    .gallery-preview-image {
+                        display: block;
+                        max-width: 100%;
+                        max-height: calc(90vh - 64px);
+                        margin: 0 auto;
+                        object-fit: contain;
+                    }
+                    .gallery-preview-caption {
+                        margin: 8px 0 0;
+                        color: #666;
+                        font-size: 12px;
+                        text-align: center;
+                    }
                     article a {
                         color: rgb(0, 123, 182);
                         text-decoration: none;
@@ -314,6 +409,17 @@
                             .header-title span {
                                 display: none;
                             }
+                            .gallery-article {
+                                padding: 16px;
+                            }
+                            .gallery-grid {
+                                grid-template-columns: repeat(2, minmax(0, 1fr));
+                                grid-auto-rows: 200px;
+                                gap: 12px;
+                            }
+                            .gallery-card {
+                                height: 200px;
+                            }
                         }
                     }
                 </style>
@@ -330,64 +436,7 @@
 <h2>Pelican Riding a Bicycle</h2>
 <div class="descInfo"><time class="time">2026/08/10</time><span class="divider"> | </span><span>1 min</span><span class="divider"> | </span><a href="/gallery/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
-<article><h3>Claude Fable 5</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/claude-fable-5.png" alt="" /></p>
-<h3>gpt-5.6-sol</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/gpt-5.6-sol.png" alt="" /></p>
-<h3>claude-haiku-4.5</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/claude-haiku-4.5.png" alt="" /></p>
-<h3>grok-4.3</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/grok-4.3.png" alt="" /></p>
-<h3>claude-opus-4.8</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/claude-opus-4.8.png" alt="" /></p>
-<h3>grok-4.5</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/grok-4.5.png" alt="" /></p>
-<h3>claude-sonnet-4.6</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/claude-sonnet-4.6.png" alt="" /></p>
-<h3>hunyuan-3</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/hunyuan-3.png" alt="" /></p>
-<h3>claude-sonnet-5</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/claude-sonnet-5.png" alt="" /></p>
-<h3>kimi-k2.6</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/kimi-k2.6.png" alt="" /></p>
-<h3>deepseek-3.2</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/deepseek-3.2.png" alt="" /></p>
-<h3>kimi-k2.7-code</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/kimi-k2.7-code.png" alt="" /></p>
-<h3>DeepSeek v4 Pro Preview</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/deepseek-v4-pro-preview.png" alt="" /></p>
-<h3>DeepSeek v4 Flash Preview</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/deepseek-4-flash-preview.png" alt="" /></p>
-<h3>longcat-2.0-preview</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/longcat-2.0-preview.png" alt="" /></p>
-<h3>mimo-v2.5-pro</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/mimo-v2.5-pro.png" alt="" /></p>
-<h3>gemini-3.5-flash</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/gemini-3.5-flash.png" alt="" /></p>
-<h3>minimax-m2.5</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/minimax-m2.5.png" alt="" /></p>
-<h3>glm-4.7-flash</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/glm-4.7-flash.png" alt="" /></p>
-<h3>minimax-m2.7</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/minimax-m2.7.png" alt="" /></p>
-<h3>glm-5.1</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/glm-5.1.png" alt="" /></p>
-<h3>minimax-m3</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/minimax-m3.png" alt="" /></p>
-<h3>glm-5.2</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/glm-5.2.png" alt="" /></p>
-<h3>qwen-3.7-max</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/qwen-3.7-max.png" alt="" /></p>
-<h3>glm-5</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/glm-5.png" alt="" /></p>
-<h3>qwen-3.7-plus</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/qwen-3.7-plus.png" alt="" /></p>
-<h3>gpt-5-nano</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/gpt-5-nano.png" alt="" /></p>
-<h3>step-3.7-flash</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/step-3.7-flash.png" alt="" /></p>
-<h3>gpt-5.5</h3>
-<p><img src="/resources/pelican-riding-a-bicycle/gpt-5.5.png" alt="" /></p></article>
+<article class="gallery-article"><div class="gallery-grid"><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：Claude Fable 5"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/claude-fable-5.png" alt="Claude Fable 5" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">Claude Fable 5</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：gpt-5.6-sol"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/gpt-5.6-sol.png" alt="gpt-5.6-sol" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">gpt-5.6-sol</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：claude-haiku-4.5"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/claude-haiku-4.5.png" alt="claude-haiku-4.5" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">claude-haiku-4.5</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：grok-4.3"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/grok-4.3.png" alt="grok-4.3" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">grok-4.3</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：claude-opus-4.8"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/claude-opus-4.8.png" alt="claude-opus-4.8" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">claude-opus-4.8</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：grok-4.5"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/grok-4.5.png" alt="grok-4.5" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">grok-4.5</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：claude-sonnet-4.6"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/claude-sonnet-4.6.png" alt="claude-sonnet-4.6" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">claude-sonnet-4.6</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：hunyuan-3"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/hunyuan-3.png" alt="hunyuan-3" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">hunyuan-3</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：claude-sonnet-5"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/claude-sonnet-5.png" alt="claude-sonnet-5" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">claude-sonnet-5</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：kimi-k2.6"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/kimi-k2.6.png" alt="kimi-k2.6" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">kimi-k2.6</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：deepseek-3.2"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/deepseek-3.2.png" alt="deepseek-3.2" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">deepseek-3.2</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：kimi-k2.7-code"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/kimi-k2.7-code.png" alt="kimi-k2.7-code" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">kimi-k2.7-code</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：DeepSeek v4 Pro Preview"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/deepseek-v4-pro-preview.png" alt="DeepSeek v4 Pro Preview" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">DeepSeek v4 Pro Preview</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：DeepSeek v4 Flash Preview"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/deepseek-4-flash-preview.png" alt="DeepSeek v4 Flash Preview" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">DeepSeek v4 Flash Preview</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：longcat-2.0-preview"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/longcat-2.0-preview.png" alt="longcat-2.0-preview" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">longcat-2.0-preview</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：mimo-v2.5-pro"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/mimo-v2.5-pro.png" alt="mimo-v2.5-pro" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">mimo-v2.5-pro</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：gemini-3.5-flash"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/gemini-3.5-flash.png" alt="gemini-3.5-flash" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">gemini-3.5-flash</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：minimax-m2.5"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/minimax-m2.5.png" alt="minimax-m2.5" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">minimax-m2.5</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：glm-4.7-flash"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/glm-4.7-flash.png" alt="glm-4.7-flash" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">glm-4.7-flash</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：minimax-m2.7"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/minimax-m2.7.png" alt="minimax-m2.7" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">minimax-m2.7</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：glm-5.1"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/glm-5.1.png" alt="glm-5.1" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">glm-5.1</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：minimax-m3"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/minimax-m3.png" alt="minimax-m3" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">minimax-m3</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：glm-5.2"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/glm-5.2.png" alt="glm-5.2" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">glm-5.2</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：qwen-3.7-max"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/qwen-3.7-max.png" alt="qwen-3.7-max" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">qwen-3.7-max</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：glm-5"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/glm-5.png" alt="glm-5" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">glm-5</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：qwen-3.7-plus"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/qwen-3.7-plus.png" alt="qwen-3.7-plus" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">qwen-3.7-plus</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：gpt-5-nano"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/gpt-5-nano.png" alt="gpt-5-nano" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">gpt-5-nano</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：step-3.7-flash"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/step-3.7-flash.png" alt="step-3.7-flash" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">step-3.7-flash</figcaption></figure><figure class="gallery-card"><button class="gallery-image-button" type="button" aria-label="预览图片：gpt-5.5"><img class="gallery-image" src="/resources/pelican-riding-a-bicycle/gpt-5.5.png" alt="gpt-5.5" loading="lazy" decoding="async" /></button><figcaption class="gallery-caption">gpt-5.5</figcaption></figure></div></article><dialog class="gallery-preview" aria-labelledby="gallery-preview-caption"><button class="gallery-preview-close" type="button" aria-label="关闭图片预览">×</button><img class="gallery-preview-image" src="" alt="" /><p class="gallery-preview-caption" id="gallery-preview-caption"></p></dialog>
 <div class="preAndNext">
                         
                         
@@ -428,6 +477,41 @@
                 window.addEventListener('scroll', () => {
                     document.body.classList.toggle('scrolled', window.scrollY > 300);
                 });
+
+                const galleryPreview = document.querySelector('.gallery-preview');
+                if (galleryPreview instanceof HTMLDialogElement) {
+                    const previewImage = galleryPreview.querySelector('.gallery-preview-image');
+                    const previewCaption = galleryPreview.querySelector('.gallery-preview-caption');
+                    const closeButton = galleryPreview.querySelector('.gallery-preview-close');
+
+                    document.addEventListener('click', (event) => {
+                        if (!(event.target instanceof Element)) {
+                            return;
+                        }
+                        const trigger = event.target.closest('.gallery-image-button');
+                        if (!trigger) {
+                            return;
+                        }
+                        const image = trigger.querySelector('img');
+                        if (!(image instanceof HTMLImageElement) || !(previewImage instanceof HTMLImageElement)) {
+                            return;
+                        }
+                        const caption = trigger.parentElement?.querySelector('.gallery-caption')?.textContent || image.alt;
+                        previewImage.src = image.currentSrc || image.src;
+                        previewImage.alt = image.alt;
+                        if (previewCaption) {
+                            previewCaption.textContent = caption;
+                        }
+                        galleryPreview.showModal();
+                    });
+
+                    closeButton?.addEventListener('click', () => galleryPreview.close());
+                    galleryPreview.addEventListener('click', (event) => {
+                        if (event.target === galleryPreview) {
+                            galleryPreview.close();
+                        }
+                    });
+                }
             </script>
             </html>
         

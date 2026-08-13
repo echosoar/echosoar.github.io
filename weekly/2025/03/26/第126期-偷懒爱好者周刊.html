@@ -215,6 +215,101 @@
                         border-radius: 4px;
                         border: 1px solid #e5e5e5;
                     }
+                    .gallery-article {
+                        max-width: 1280px;
+                    }
+                    .gallery-grid {
+                        display: grid;
+                        grid-template-columns: repeat(4, minmax(0, 1fr));
+                        grid-auto-rows: 300px;
+                        gap: 16px;
+                    }
+                    .gallery-card {
+                        display: flex;
+                        flex-direction: column;
+                        min-width: 0;
+                        height: 300px;
+                        margin: 0;
+                    }
+                    .gallery-image-button {
+                        display: block;
+                        flex: 1;
+                        min-height: 0;
+                        padding: 0;
+                        border: 0;
+                        border-radius: 4px;
+                        background: transparent;
+                        cursor: zoom-in;
+                        overflow: hidden;
+                    }
+                    .gallery-image-button:focus-visible {
+                        outline: 2px solid #007BB6;
+                        outline-offset: 3px;
+                    }
+                    article .gallery-image {
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        max-width: none;
+                        max-height: none;
+                        margin: 0;
+                        border: 1px solid #e5e5e5;
+                        box-sizing: border-box;
+                        border-radius: 4px;
+                        object-fit: contain;
+                    }
+                    .gallery-caption {
+                        flex: 0 0 18px;
+                        height: 18px;
+                        margin-top: 6px;
+                        overflow: hidden;
+                        color: #999;
+                        font-size: 12px;
+                        line-height: 18px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    .gallery-preview {
+                        width: min(90vw, 1200px);
+                        max-width: none;
+                        max-height: 90vh;
+                        padding: 16px;
+                        border: 0;
+                        border-radius: 8px;
+                        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+                        background: #fff;
+                    }
+                    .gallery-preview::backdrop {
+                        background: rgba(0, 0, 0, 0.7);
+                    }
+                    .gallery-preview-close {
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                        width: 32px;
+                        height: 32px;
+                        padding: 0;
+                        border: 0;
+                        border-radius: 50%;
+                        background: rgba(0, 0, 0, 0.6);
+                        color: #fff;
+                        cursor: pointer;
+                        font-size: 24px;
+                        line-height: 32px;
+                    }
+                    .gallery-preview-image {
+                        display: block;
+                        max-width: 100%;
+                        max-height: calc(90vh - 64px);
+                        margin: 0 auto;
+                        object-fit: contain;
+                    }
+                    .gallery-preview-caption {
+                        margin: 8px 0 0;
+                        color: #666;
+                        font-size: 12px;
+                        text-align: center;
+                    }
                     article a {
                         color: rgb(0, 123, 182);
                         text-decoration: none;
@@ -313,6 +408,17 @@
                             }
                             .header-title span {
                                 display: none;
+                            }
+                            .gallery-article {
+                                padding: 16px;
+                            }
+                            .gallery-grid {
+                                grid-template-columns: repeat(2, minmax(0, 1fr));
+                                grid-auto-rows: 200px;
+                                gap: 12px;
+                            }
+                            .gallery-card {
+                                height: 200px;
                             }
                         }
                     }
@@ -438,6 +544,41 @@
                 window.addEventListener('scroll', () => {
                     document.body.classList.toggle('scrolled', window.scrollY > 300);
                 });
+
+                const galleryPreview = document.querySelector('.gallery-preview');
+                if (galleryPreview instanceof HTMLDialogElement) {
+                    const previewImage = galleryPreview.querySelector('.gallery-preview-image');
+                    const previewCaption = galleryPreview.querySelector('.gallery-preview-caption');
+                    const closeButton = galleryPreview.querySelector('.gallery-preview-close');
+
+                    document.addEventListener('click', (event) => {
+                        if (!(event.target instanceof Element)) {
+                            return;
+                        }
+                        const trigger = event.target.closest('.gallery-image-button');
+                        if (!trigger) {
+                            return;
+                        }
+                        const image = trigger.querySelector('img');
+                        if (!(image instanceof HTMLImageElement) || !(previewImage instanceof HTMLImageElement)) {
+                            return;
+                        }
+                        const caption = trigger.parentElement?.querySelector('.gallery-caption')?.textContent || image.alt;
+                        previewImage.src = image.currentSrc || image.src;
+                        previewImage.alt = image.alt;
+                        if (previewCaption) {
+                            previewCaption.textContent = caption;
+                        }
+                        galleryPreview.showModal();
+                    });
+
+                    closeButton?.addEventListener('click', () => galleryPreview.close());
+                    galleryPreview.addEventListener('click', (event) => {
+                        if (event.target === galleryPreview) {
+                            galleryPreview.close();
+                        }
+                    });
+                }
             </script>
             </html>
         
