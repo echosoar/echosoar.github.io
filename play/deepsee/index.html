@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>DeepSee Image Playground</title>
+	<style>
+		:root {
+			color-scheme: light;
+			--bg-1: #f3eee6;
+			--bg-2: #dce8ef;
+			--panel: rgba(255, 250, 244, 0.72);
+			--panel-border: rgba(23, 35, 51, 0.12);
+			--text-main: #182230;
+			--text-sub: rgba(24, 34, 48, 0.72);
+			--accent: #ff6b2c;
+			--accent-strong: #ed3e00;
+			--shadow: 0 24px 60px rgba(34, 36, 44, 0.16);
+			--radius-xl: 28px;
+			--radius-lg: 20px;
+			--radius-md: 14px;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			margin: 0;
+			min-height: 100%;
+			font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", sans-serif;
+			color: var(--text-main);
+			background:
+				radial-gradient(circle at top left, rgba(255, 170, 92, 0.42), transparent 32%),
+				radial-gradient(circle at right center, rgba(62, 142, 187, 0.3), transparent 28%),
+				linear-gradient(135deg, var(--bg-1), var(--bg-2));
+		}
+
+		body {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 32px 20px;
+		}
+
+		.app-shell {
+			width: min(1160px, 100%);
+			display: grid;
+			gap: 24px;
+		}
+
+		.hero {
+			display: grid;
+			grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+			gap: 24px;
+			align-items: stretch;
+		}
+
+		.card {
+			background: var(--panel);
+			backdrop-filter: blur(22px);
+			border: 1px solid var(--panel-border);
+			border-radius: var(--radius-xl);
+			box-shadow: var(--shadow);
+		}
+
+		.control-panel {
+			padding: 28px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			gap: 24px;
+		}
+
+		.eyebrow {
+			margin: 0 0 10px;
+			font-size: 12px;
+			letter-spacing: 0.2em;
+			text-transform: uppercase;
+			color: rgba(24, 34, 48, 0.58);
+		}
+
+		h1 {
+			margin: 0;
+			font-size: clamp(32px, 4vw, 52px);
+			line-height: 0.95;
+			letter-spacing: -0.05em;
+		}
+
+		.lead {
+			margin: 16px 0 0;
+			font-size: 15px;
+			line-height: 1.7;
+			color: var(--text-sub);
+		}
+
+		.upload-actions {
+			display: grid;
+			gap: 14px;
+		}
+
+		.button {
+			appearance: none;
+			border: 0;
+			border-radius: 999px;
+			padding: 14px 18px;
+			font-size: 15px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+		}
+
+		.button:hover {
+			transform: translateY(-1px);
+		}
+
+		.button:active {
+			transform: translateY(1px);
+		}
+
+		.button.primary {
+			color: #fff;
+			background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+			box-shadow: 0 12px 26px rgba(237, 62, 0, 0.24);
+		}
+
+		.button.ghost {
+			color: var(--text-main);
+			background: rgba(255, 255, 255, 0.72);
+			border: 1px solid rgba(24, 34, 48, 0.08);
+		}
+
+		.button[disabled] {
+			cursor: not-allowed;
+			opacity: 0.58;
+			transform: none;
+			box-shadow: none;
+		}
+
+		#fileInput {
+			display: none;
+		}
+
+		.meta-grid {
+			display: grid;
+			gap: 12px;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.meta-item {
+			padding: 14px 16px;
+			border-radius: var(--radius-md);
+			background: rgba(255, 255, 255, 0.58);
+			border: 1px solid rgba(24, 34, 48, 0.08);
+		}
+
+		.meta-label {
+			display: block;
+			margin-bottom: 8px;
+			font-size: 12px;
+			color: rgba(24, 34, 48, 0.56);
+		}
+
+		.meta-value {
+			display: block;
+			font-size: 15px;
+			font-weight: 700;
+		}
+
+		.canvas-panel {
+			position: relative;
+			min-height: 72vh;
+			padding: 24px;
+			overflow: hidden;
+		}
+
+		.canvas-panel::before,
+		.canvas-panel::after {
+			content: "";
+			position: absolute;
+			inset: auto;
+			border-radius: 999px;
+			pointer-events: none;
+			filter: blur(16px);
+			opacity: 0.55;
+		}
+
+		.canvas-panel::before {
+			width: 180px;
+			height: 180px;
+			top: -36px;
+			right: 18px;
+			background: rgba(255, 145, 77, 0.44);
+		}
+
+		.canvas-panel::after {
+			width: 220px;
+			height: 220px;
+			left: -60px;
+			bottom: -80px;
+			background: rgba(76, 159, 196, 0.3);
+		}
+
+		.canvas-stage {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+			min-height: calc(72vh - 48px);
+			border-radius: calc(var(--radius-xl) - 4px);
+			border: 1px dashed rgba(24, 34, 48, 0.14);
+			background:
+				linear-gradient(135deg, rgba(255, 255, 255, 0.74), rgba(255, 247, 239, 0.45)),
+				repeating-linear-gradient(
+					45deg,
+					rgba(24, 34, 48, 0.04),
+					rgba(24, 34, 48, 0.04) 12px,
+					transparent 12px,
+					transparent 24px
+				);
+			overflow: hidden;
+		}
+
+		.empty-state {
+			max-width: 420px;
+			padding: 32px;
+			text-align: center;
+		}
+
+		.empty-state strong {
+			display: block;
+			margin-bottom: 10px;
+			font-size: 24px;
+			letter-spacing: -0.04em;
+		}
+
+		.empty-state p {
+			margin: 0;
+			line-height: 1.8;
+			color: var(--text-sub);
+		}
+
+		.image-wrap {
+			position: relative;
+			display: inline-block;
+			max-width: 100%;
+			max-height: 100%;
+			border-radius: 26px;
+			overflow: visible;
+			user-select: none;
+		}
+
+		.image-wrap img {
+			display: block;
+			max-width: min(100%, 900px);
+			max-height: calc(72vh - 120px);
+			border-radius: 26px;
+			box-shadow: 0 24px 54px rgba(22, 26, 38, 0.18);
+			cursor: crosshair;
+		}
+
+		.selection-box,
+		.result-layer,
+		.status-chip {
+			position: absolute;
+			pointer-events: none;
+		}
+        .status-chip {
+            display: none;
+            opacity: 0;
+        }
+
+		.selection-box {
+			width: 100px;
+			height: 100px;
+			border-radius: 20px;
+			border: 2px solid rgba(255, 255, 255, 0.98);
+			box-shadow:
+				0 0 0 1px rgba(17, 28, 42, 0.24),
+				0 0 0 12px rgba(255, 107, 44, 0.14),
+				0 0 24px rgba(255, 107, 44, 0.42);
+			overflow: hidden;
+			animation: pulse-box 0.85s linear infinite;
+			backdrop-filter: blur(2px);
+		}
+
+		.selection-box::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(135deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0));
+			mix-blend-mode: screen;
+		}
+
+		.selection-old-snapshot {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: opacity 2s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		.selection-old-snapshot.fade-out {
+			opacity: 0;
+		}
+
+		.result-layer {
+			inset: 0;
+			overflow: hidden;
+			border-radius: 26px;
+			transform-origin: top left;
+			will-change: transform, clip-path;
+			transition:
+				transform 2s cubic-bezier(0.22, 1, 0.36, 1),
+				clip-path 2s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		.result-layer img {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			transition: opacity 2s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		.result-layer .new-image {
+			opacity: 0;
+		}
+
+		.result-layer .old-crop-overlay {
+			inset: auto;
+			object-fit: cover;
+		}
+
+		.result-layer.animate .new-image {
+			opacity: 1;
+		}
+
+		.status-chip {
+			left: 12px;
+			bottom: 12px;
+			z-index: 5;
+			padding: 7px 10px;
+			border-radius: 999px;
+			font-size: 12px;
+			letter-spacing: 0.03em;
+			color: #fff;
+			background: rgba(17, 28, 42, 0.74);
+			backdrop-filter: blur(8px);
+		}
+
+		.status-chip.error {
+			background: rgba(161, 29, 29, 0.86);
+		}
+
+		.footer-tip {
+			padding: 0 8px;
+			font-size: 13px;
+			line-height: 1.7;
+			color: rgba(24, 34, 48, 0.65);
+			text-align: center;
+		}
+
+		@keyframes pulse-box {
+			0%,
+			100% {
+				opacity: 1;
+				transform: scale(1);
+			}
+
+			50% {
+				opacity: 0.35;
+				transform: scale(1.03);
+			}
+		}
+
+		@media (max-width: 980px) {
+			.hero {
+				grid-template-columns: 1fr;
+			}
+
+			.canvas-panel {
+				min-height: 58vh;
+			}
+
+			.canvas-stage {
+				min-height: calc(58vh - 48px);
+			}
+		}
+
+		@media (max-width: 640px) {
+			body {
+				padding: 18px;
+			}
+
+			.control-panel,
+			.canvas-panel {
+				padding: 18px;
+			}
+
+			.meta-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.image-wrap img {
+				max-height: calc(60vh - 100px);
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="app-shell">
+		<section class="hero">
+			<section class="card control-panel">
+				<div>
+					<p class="eyebrow">X@codersoar</p>
+					<h3>DeepSee 深度看</h3>
+				</div>
+
+				<div class="upload-actions">
+					<label class="button primary" for="fileInput">选择本地图片</label>
+					<input id="fileInput" type="file" accept="image/*" />
+					<button id="resetButton" class="button ghost" type="button" disabled>清空当前图片</button>
+				</div>
+
+				<section class="meta-grid" aria-label="状态信息">
+					<div class="meta-item">
+						<span class="meta-label">当前状态</span>
+						<span id="statusValue" class="meta-value">等待选择图片</span>
+					</div>
+					<div class="meta-item">
+						<span class="meta-label">图片信息</span>
+						<span id="imageInfoValue" class="meta-value">未加载</span>
+					</div>
+				</section>
+			</section>
+
+			<section class="card canvas-panel">
+				<div id="canvasStage" class="canvas-stage">
+					<div id="emptyState" class="empty-state">
+						<strong>上传一张图片开始交互</strong>
+					</div>
+				</div>
+			</section>
+		</section>
+	</main>
+
+	<script>
+		const fileInput = document.getElementById('fileInput');
+		const resetButton = document.getElementById('resetButton');
+		const canvasStage = document.getElementById('canvasStage');
+		const emptyState = document.getElementById('emptyState');
+		const statusValue = document.getElementById('statusValue');
+		const imageInfoValue = document.getElementById('imageInfoValue');
+
+		let originalBase64 = '';
+		let currentImageUrl = '';
+		let currentImgEl = null;
+		let currentWrapEl = null;
+		let imageNaturalWidth = 0;
+		let imageNaturalHeight = 0;
+
+		fileInput.addEventListener('change', handleFileSelect);
+		resetButton.addEventListener('click', resetStage);
+
+		function setStatus(text) {
+			statusValue.textContent = text;
+		}
+
+		function handleFileSelect(event) {
+			const [file] = event.target.files || [];
+			if (!file) {
+				return;
+			}
+
+			if (currentImageUrl) {
+				URL.revokeObjectURL(currentImageUrl);
+			}
+
+			const objectUrl = URL.createObjectURL(file);
+			currentImageUrl = objectUrl;
+			originalBase64 = '';
+			setStatus('读取图片中');
+			imageInfoValue.textContent = `${file.name}`;
+
+			const reader = new FileReader();
+			reader.onload = () => {
+				originalBase64 = typeof reader.result === 'string' ? reader.result : '';
+			};
+			reader.readAsDataURL(file);
+
+			renderPreview(objectUrl, file.name);
+			resetButton.disabled = false;
+		}
+
+		function renderPreview(imageUrl, fileName) {
+			canvasStage.innerHTML = '';
+
+			const wrap = document.createElement('div');
+			wrap.className = 'image-wrap';
+
+			const img = document.createElement('img');
+			img.alt = fileName || '本地预览图';
+			img.src = imageUrl;
+
+			img.addEventListener('load', () => {
+				currentImgEl = img;
+				currentWrapEl = wrap;
+				imageNaturalWidth = img.naturalWidth;
+				imageNaturalHeight = img.naturalHeight;
+				imageInfoValue.textContent = `${img.naturalWidth} x ${img.naturalHeight}`;
+				setStatus('点击图片任意位置开始处理');
+			});
+
+			img.addEventListener('click', onImageClick);
+
+			wrap.appendChild(img);
+			canvasStage.appendChild(wrap);
+		}
+
+		function resetStage() {
+			if (currentImageUrl) {
+				URL.revokeObjectURL(currentImageUrl);
+			}
+
+			currentImageUrl = '';
+			originalBase64 = '';
+			currentImgEl = null;
+			currentWrapEl = null;
+			imageNaturalWidth = 0;
+			imageNaturalHeight = 0;
+			fileInput.value = '';
+			resetButton.disabled = true;
+			canvasStage.innerHTML = '';
+			canvasStage.appendChild(emptyState);
+			imageInfoValue.textContent = '未加载';
+			setStatus('等待选择图片');
+		}
+
+		async function onImageClick(event) {
+			if (!currentImgEl || !currentWrapEl || !originalBase64) {
+				setStatus('图片尚未准备好，请稍后再试');
+				return;
+			}
+
+			const imageRect = currentImgEl.getBoundingClientRect();
+			const localX = event.clientX - imageRect.left;
+			const localY = event.clientY - imageRect.top;
+			const displayWidth = imageRect.width;
+			const displayHeight = imageRect.height;
+			const selectionSize = 100;
+
+			const cropLeft = clamp(localX - selectionSize / 2, 0, Math.max(displayWidth - selectionSize, 0));
+			const cropTop = clamp(localY - selectionSize / 2, 0, Math.max(displayHeight - selectionSize, 0));
+
+			const cropMeta = buildCropMeta(cropLeft, cropTop, displayWidth, displayHeight, selectionSize);
+			const cropBase64 = cropMeta.cropBase64;
+			const snapshotBase64 = cropMeta.snapshotBase64;
+
+			const overlay = createSelectionOverlay(cropLeft, cropTop, snapshotBase64);
+			currentWrapEl.appendChild(overlay.selectionBox);
+			currentWrapEl.appendChild(overlay.statusChip);
+			setStatus('正在请求 /api/gen');
+            console.log('originalBase64', originalBase64);
+            console.log('cropBase64', cropBase64);
+
+			try {
+            /*
+				const response = await fetch('/api/gen', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						originalBase64,
+						cropBase64,
+						crop: {
+							x: Math.round(cropMeta.naturalX),
+							y: Math.round(cropMeta.naturalY),
+							width: Math.round(cropMeta.naturalWidth),
+							height: Math.round(cropMeta.naturalHeight)
+						},
+						image: {
+							naturalWidth: imageNaturalWidth,
+							naturalHeight: imageNaturalHeight,
+							displayWidth,
+							displayHeight
+						}
+					})
+				});
+
+				if (!response.ok) {
+					throw new Error(`接口请求失败：${response.status}`);
+				}
+
+				const nextImageBase64 = await parseResponseImage(response);
+                */
+
+                const nextImageBase64 = await new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(cropBase64);
+                     }, 1200);
+                });
+				if (!nextImageBase64) {
+					throw new Error('接口响应中没有可用的新图片');
+				}
+
+				overlay.statusChip.textContent = '结果已返回';
+				setStatus('接口返回成功，开始执行放大替换动画');
+				animateResultLayer({
+					wrap: currentWrapEl,
+					overlay,
+					nextImageBase64,
+					cropLeft,
+					cropTop,
+					displayWidth,
+					displayHeight,
+					snapshotBase64
+				});
+			} catch (error) {
+				overlay.statusChip.textContent = error.message || '请求失败';
+				overlay.statusChip.classList.add('error');
+				setStatus('请求失败，请检查 /api/gen');
+				window.setTimeout(() => {
+					overlay.selectionBox.remove();
+					overlay.statusChip.remove();
+				}, 2200);
+			}
+		}
+
+		function buildCropMeta(cropLeft, cropTop, displayWidth, displayHeight, selectionSize) {
+			const scaleX = imageNaturalWidth / displayWidth;
+			const scaleY = imageNaturalHeight / displayHeight;
+			const naturalX = cropLeft * scaleX;
+			const naturalY = cropTop * scaleY;
+			const naturalWidth = selectionSize * scaleX;
+			const naturalHeight = selectionSize * scaleY;
+
+			const cropCanvas = document.createElement('canvas');
+			cropCanvas.width = selectionSize;
+			cropCanvas.height = selectionSize;
+			const cropCtx = cropCanvas.getContext('2d');
+
+			cropCtx.drawImage(
+				currentImgEl,
+				naturalX,
+				naturalY,
+				naturalWidth,
+				naturalHeight,
+				0,
+				0,
+				selectionSize,
+				selectionSize
+			);
+
+			const cropBase64 = cropCanvas.toDataURL('image/png');
+
+			return {
+				cropBase64,
+				snapshotBase64: cropBase64,
+				naturalX,
+				naturalY,
+				naturalWidth,
+				naturalHeight
+			};
+		}
+
+		function createSelectionOverlay(left, top, snapshotBase64) {
+			const selectionBox = document.createElement('div');
+			selectionBox.className = 'selection-box';
+			selectionBox.style.left = `${left}px`;
+			selectionBox.style.top = `${top}px`;
+
+			const oldSnapshot = document.createElement('img');
+			oldSnapshot.className = 'selection-old-snapshot';
+			oldSnapshot.alt = 'selected preview';
+			oldSnapshot.src = snapshotBase64;
+			selectionBox.appendChild(oldSnapshot);
+
+			const statusChip = document.createElement('div');
+			statusChip.className = 'status-chip';
+			statusChip.style.left = `${left}px`;
+			statusChip.style.top = `${top + 110}px`;
+			statusChip.textContent = '处理中';
+
+			return {
+				selectionBox,
+				statusChip,
+				oldSnapshot
+			};
+		}
+
+		function animateResultLayer(options) {
+			const {
+				wrap,
+				overlay,
+				nextImageBase64,
+				cropLeft,
+				cropTop,
+				displayWidth,
+				displayHeight,
+				snapshotBase64
+			} = options;
+
+			const resultLayer = document.createElement('div');
+			resultLayer.className = 'result-layer';
+			resultLayer.style.width = `${displayWidth}px`;
+			resultLayer.style.height = `${displayHeight}px`;
+			resultLayer.style.transform = `translate(${cropLeft}px, ${cropTop}px) scale(${100 / displayWidth}, ${100 / displayHeight})`;
+			resultLayer.style.clipPath = makeClipPath(cropLeft, cropTop, displayWidth, displayHeight, 100);
+
+			const newImage = document.createElement('img');
+			newImage.className = 'new-image';
+			newImage.alt = 'generated result';
+			newImage.src = normalizeToDataUrl(nextImageBase64);
+
+			const oldImage = document.createElement('img');
+			oldImage.className = 'selection-old-snapshot old-crop-overlay';
+			oldImage.alt = 'old crop';
+			oldImage.src = snapshotBase64;
+			oldImage.style.inset = 'auto';
+			oldImage.style.left = `0`;
+			oldImage.style.top = `0`;
+			oldImage.style.width = '100%';
+			oldImage.style.height = '100%';
+
+			resultLayer.appendChild(newImage);
+			resultLayer.appendChild(oldImage);
+			wrap.appendChild(resultLayer);
+
+			window.requestAnimationFrame(() => {
+				window.requestAnimationFrame(() => {
+					resultLayer.classList.add('animate');
+					resultLayer.style.transform = 'translate(0, 0) scale(1, 1)';
+					resultLayer.style.clipPath = makeClipPath(0, 0, displayWidth, displayHeight, displayWidth, displayHeight);
+					oldImage.classList.add('fade-out');
+					overlay.oldSnapshot.classList.add('fade-out');
+					overlay.statusChip.textContent = '动画执行中';
+				});
+			});
+
+			window.setTimeout(() => {
+				overlay.selectionBox.remove();
+				overlay.statusChip.remove();
+				resultLayer.style.clipPath = 'inset(0 round 26px)';
+				setStatus('替换完成，可继续点击其他位置');
+			}, 2100);
+		}
+
+		async function parseResponseImage(response) {
+			const contentType = response.headers.get('content-type') || '';
+
+			if (contentType.includes('application/json')) {
+				const payload = await response.json();
+				return extractBase64FromPayload(payload);
+			}
+
+			const text = await response.text();
+			if (!text) {
+				return '';
+			}
+
+			try {
+				const payload = JSON.parse(text);
+				return extractBase64FromPayload(payload);
+			} catch {
+				return normalizeToDataUrl(text.trim());
+			}
+		}
+
+		function extractBase64FromPayload(payload) {
+			if (!payload) {
+				return '';
+			}
+
+			if (typeof payload === 'string') {
+				return normalizeToDataUrl(payload.trim());
+			}
+
+			const candidates = [
+				payload.imageBase64,
+				payload.base64,
+				payload.data,
+				payload.result,
+				payload.image,
+				payload.url
+			].filter(Boolean);
+
+			if (!candidates.length) {
+				return '';
+			}
+
+			return normalizeToDataUrl(String(candidates[0]).trim());
+		}
+
+		function normalizeToDataUrl(value) {
+			if (!value) {
+				return '';
+			}
+
+			if (value.startsWith('data:image')) {
+				return value;
+			}
+
+			return `data:image/png;base64,${value.replace(/^data:.+;base64,/, '')}`;
+		}
+
+		function makeClipPath(left, top, width, height, boxWidth = 100, boxHeight = 100) {
+			const right = Math.max(width - left - boxWidth, 0);
+			const bottom = Math.max(height - top - boxHeight, 0);
+			return `inset(${top}px ${right}px ${bottom}px ${left}px round 20px)`;
+		}
+
+		function clamp(value, min, max) {
+			return Math.min(Math.max(value, min), max);
+		}
+	</script>
+</body>
+</html>
