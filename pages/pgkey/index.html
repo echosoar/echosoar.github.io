@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>党政文章关键词</title>
+  <style>
+    :root {
+      --ink: rgba(0, 0, 0, 0.92);
+      --muted-ink: rgba(0, 0, 0, 0.52);
+      --faint-ink: rgba(0, 0, 0, 0.14);
+      --wash: rgba(0, 0, 0, 0.035);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      background: #fff;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(100% - 48px, 960px);
+      margin: 0 auto;
+      padding: 72px 0;
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 42px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 44px);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 1;
+    }
+
+    #result-count {
+      margin: 0;
+      color: var(--muted-ink);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .filter-area {
+      display: grid;
+      gap: 17px;
+      margin-bottom: 42px;
+    }
+
+    .filter-label {
+      color: var(--muted-ink);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+    }
+
+    .filter {
+      appearance: none;
+      padding: 0 0 3px;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      border-radius: 0;
+      background: transparent;
+      color: var(--muted-ink);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .filter[aria-pressed="true"] {
+      border-bottom-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .filter:focus-visible {
+      outline: 1px solid var(--ink);
+      outline-offset: 4px;
+    }
+
+    .table-wrap { min-height: 180px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    thead { border-bottom: 1px solid var(--ink); }
+
+    th, td { text-align: left; }
+
+    th {
+      padding: 0 0 13px;
+      color: var(--muted-ink);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    th:last-child, td:last-child {
+      width: 27%;
+      text-align: right;
+    }
+
+    tbody tr { border-bottom: 1px solid var(--faint-ink); }
+
+    td { padding: 12px 0; }
+
+    td:first-child {
+      font-size: 16px;
+      letter-spacing: 0.01em;
+    }
+
+    td:last-child {
+      color: var(--muted-ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .message {
+      margin: 0;
+      padding: 26px 0;
+      color: var(--muted-ink);
+      border-bottom: 1px solid var(--faint-ink);
+    }
+
+    .error { color: var(--ink); }
+
+    @media (max-width: 560px) {
+      main {
+        width: min(100% - 32px, 960px);
+        padding-top: 56px;
+      }
+
+      header { margin-bottom: 48px; }
+      .filters { gap: 8px 15px; }
+      th:last-child, td:last-child { width: 32%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>党政文章关键词</h1>
+      <p id="result-count" aria-live="polite">Loading...</p>
+    </header>
+
+    <section class="filter-area" aria-labelledby="filter-title">
+      <span class="filter-label" id="filter-title">按关键词长度筛选</span>
+      <div class="filters" id="filters" aria-label="关键词长度筛选"></div>
+    </section>
+
+    <section class="table-wrap" aria-label="关键词列表">
+      <table>
+        <thead>
+          <tr><th scope="col">关键词</th><th scope="col">数量</th></tr>
+        </thead>
+        <tbody id="keyword-list">
+          <tr><td class="message" colspan="2">正在读取关键词数据…</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const DATA_URL = 'https://data.mdcsv.com/datasets/keywords.json';
+      const filters = document.querySelector('#filters');
+      const keywordList = document.querySelector('#keyword-list');
+      const resultCount = document.querySelector('#result-count');
+      let keywords = [];
+      let selectedLengths = new Set();
+
+      const escapeHTML = (value) => String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+
+      const wordLength = (word) => Array.from(word).length;
+
+      function renderFilters() {
+        const maxLength = Math.max(2, ...keywords.map(({ word }) => wordLength(word)));
+        const lengths = Array.from({ length: maxLength - 1 }, (_, index) => index + 2);
+        filters.innerHTML = [
+          '<button class="filter" type="button" data-all="true" aria-pressed="true">全部</button>',
+          ...lengths.map((length) => `<button class="filter" type="button" data-length="${length}" aria-pressed="false">长度${length}</button>`)
+        ].join('');
+      }
+
+      function updateFilterState() {
+        const isAll = selectedLengths.size === 0;
+        filters.querySelector('[data-all]').setAttribute('aria-pressed', String(isAll));
+        filters.querySelectorAll('[data-length]').forEach((button) => {
+          button.setAttribute('aria-pressed', String(selectedLengths.has(Number(button.dataset.length))));
+        });
+      }
+
+      function renderTable() {
+        const visibleKeywords = selectedLengths.size === 0
+          ? keywords
+          : keywords.filter(({ word }) => selectedLengths.has(wordLength(word)));
+
+        resultCount.textContent = `共 ${visibleKeywords.length} 个`;
+        keywordList.innerHTML = visibleKeywords.length
+          ? visibleKeywords.map(({ word, count }) => `\n            <tr><td>${escapeHTML(word)}</td><td>${escapeHTML(count)}</td></tr>`).join('')
+          : '<tr><td class="message" colspan="2">暂无符合条件的关键词</td></tr>';
+      }
+
+      filters.addEventListener('click', (event) => {
+        const button = event.target.closest('button');
+        if (!button) return;
+
+        if (button.dataset.all) {
+          selectedLengths.clear();
+        } else {
+          const length = Number(button.dataset.length);
+          selectedLengths.has(length) ? selectedLengths.delete(length) : selectedLengths.add(length);
+        }
+
+        updateFilterState();
+        renderTable();
+      });
+
+      async function loadKeywords() {
+        try {
+          const response = await fetch(DATA_URL);
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const data = await response.json();
+          if (!Array.isArray(data.list)) throw new Error('数据格式无效');
+
+          keywords = data.list
+            .filter((item) => typeof item?.word === 'string' && Number.isFinite(Number(item?.count)))
+            .map(({ word, count }) => ({ word, count: Number(count) }));
+
+          renderFilters();
+          renderTable();
+        } catch (error) {
+          resultCount.textContent = '读取失败';
+          keywordList.innerHTML = '<tr><td class="message error" colspan="2">关键词数据暂时无法读取，请稍后再试。</td></tr>';
+          console.error('无法读取关键词数据：', error);
+        }
+      }
+
+      loadKeywords();
+    })();
+  </script>
+</body>
+</html>
