@@ -3,7 +3,7 @@
                 <title>偷懒爱好者周刊</title>
                 <link href="https://aiznb.com/weekly/atom.xml" rel="self"/>
                 <link href="https://aiznb.com/weekly/"/>
-                <updated>2026-09-22T14:24:43.289Z</updated>
+                <updated>2026-09-23T00:52:58.160Z</updated>
                 <id>https://aiznb.com/weekly/</id>
                 <author>
                     <name>soar</name>
@@ -13,6 +13,25 @@
                     <userId>62733912072851456</userId>
                 </follow_challenge>
                 <entry>
+                            <title>第202期 偷懒爱好者周刊</title>
+                            <link href="https://aiznb.com/weekly/2026/09/23/第202期-偷懒爱好者周刊.html"/>
+                            <id>https://aiznb.com/weekly/2026/09/23/第202期-偷懒爱好者周刊.html</id>
+                            <updated>2026-09-23T00:00:00.000Z</updated>
+                            <summary><![CDATA[第202期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。访问 https://aiznb.com/weekly/2026/09/23/第202期-偷懒爱好者周刊.html 阅读本期周刊全部内容。
+
+本期内容包含：
+1. StitchCraft
+2. JS13K 2026
+3. Sandboard33
+4. Dot Motion Builder
+5. Image to SVG
+6. Cross Draw
+7. Celestial
+8. Component Gallery
+9. Jev Table 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
+                        </entry><entry>
                             <title>第201期 偷懒爱好者周刊</title>
                             <link href="https://aiznb.com/weekly/2026/09/16/第201期-偷懒爱好者周刊.html"/>
                             <id>https://aiznb.com/weekly/2026/09/16/第201期-偷懒爱好者周刊.html</id>
@@ -181,25 +200,6 @@
 7. LLM Score
 8. Vault
 9. 小报童集合 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
-                        </entry><entry>
-                            <title>第192期 偷懒爱好者周刊</title>
-                            <link href="https://aiznb.com/weekly/2026/07/15/第192期-偷懒爱好者周刊.html"/>
-                            <id>https://aiznb.com/weekly/2026/07/15/第192期-偷懒爱好者周刊.html</id>
-                            <updated>2026-07-15T00:00:00.000Z</updated>
-                            <summary><![CDATA[第192期 偷懒爱好者周刊，本周分享 3 个有趣的网站、 3 个在线工具和 3 个收藏的数据资源。访问 https://aiznb.com/weekly/2026/07/15/第192期-偷懒爱好者周刊.html 阅读本期周刊全部内容。
-
-本期内容包含：
-1. Daily Akari
-2. PhyloPic
-3. cartographia imperialis
-4. FeralUI Gradients
-5. Incompetech Graph Paper
-6. PhotoMosh
-7. Name That UI
-8. The Public Domain Review
-9. clevergoat 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry>
