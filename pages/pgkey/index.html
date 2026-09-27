@@ -163,9 +163,13 @@
       <p id="result-count" aria-live="polite">Loading...</p>
     </header>
 
-    <section class="filter-area" aria-labelledby="filter-title">
-      <span class="filter-label" id="filter-title">按关键词长度筛选</span>
-      <div class="filters" id="filters" aria-label="关键词长度筛选"></div>
+    <section class="filter-area" aria-label="关键词筛选">
+      <div class="filter-group">
+        <div class="filters" id="year-filters" aria-label="年份筛选"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filters" id="filters" aria-label="关键词长度筛选"></div>
+      </div>
     </section>
 
     <section class="table-wrap" aria-label="关键词列表">
@@ -183,10 +187,12 @@
   <script>
     (() => {
       const DATA_URL = 'https://data.mdcsv.com/datasets/keywords.json';
+      const yearFilters = document.querySelector('#year-filters');
       const filters = document.querySelector('#filters');
       const keywordList = document.querySelector('#keyword-list');
       const resultCount = document.querySelector('#result-count');
-      let keywords = [];
+      let yearlyKeywords = [];
+      let selectedYears = new Set();
       let selectedLengths = new Set();
 
       const escapeHTML = (value) => String(value)
@@ -198,24 +204,42 @@
 
       const wordLength = (word) => Array.from(word).length;
 
-      function renderFilters() {
-        const maxLength = Math.max(2, ...keywords.map(({ word }) => wordLength(word)));
-        const lengths = Array.from({ length: maxLength - 1 }, (_, index) => index + 2);
-        filters.innerHTML = [
-          '<button class="filter" type="button" data-all="true" aria-pressed="true">全部</button>',
-          ...lengths.map((length) => `<button class="filter" type="button" data-length="${length}" aria-pressed="false">长度${length}</button>`)
+      function getKeywordsForSelectedYears() {
+        const countsByWord = new Map();
+
+        yearlyKeywords
+          .filter(({ year }) => selectedYears.size === 0 || selectedYears.has(year))
+          .forEach(({ words }) => {
+            words.forEach(({ word, count }) => {
+              countsByWord.set(word, (countsByWord.get(word) || 0) + count);
+            });
+          });
+
+        return Array.from(countsByWord, ([word, count]) => ({ word, count }))
+          .sort((a, b) => b.count - a.count || a.word.localeCompare(b.word, 'zh-CN'));
+      }
+
+      function renderYearFilters() {
+        const years = [...new Set(yearlyKeywords.map(({ year }) => year))].sort((a, b) => b - a);
+        yearFilters.innerHTML = [
+          `<button class="filter" type="button" data-all="true" aria-pressed="${selectedYears.size === 0}">全部年份</button>`,
+          ...years.map((year) => `<button class="filter" type="button" data-year="${year}" aria-pressed="${selectedYears.has(year)}">${year}年</button>`)
         ].join('');
       }
 
-      function updateFilterState() {
-        const isAll = selectedLengths.size === 0;
-        filters.querySelector('[data-all]').setAttribute('aria-pressed', String(isAll));
-        filters.querySelectorAll('[data-length]').forEach((button) => {
-          button.setAttribute('aria-pressed', String(selectedLengths.has(Number(button.dataset.length))));
+      function renderLengthFilters(keywords) {
+        const lengths = [...new Set(keywords.map(({ word }) => wordLength(word)))].sort((a, b) => a - b);
+        selectedLengths.forEach((length) => {
+          if (!lengths.includes(length)) selectedLengths.delete(length);
         });
+
+        filters.innerHTML = [
+          `<button class="filter" type="button" data-all="true" aria-pressed="${selectedLengths.size === 0}">全部长度</button>`,
+          ...lengths.map((length) => `<button class="filter" type="button" data-length="${length}" aria-pressed="${selectedLengths.has(length)}">长度${length}</button>`)
+        ].join('');
       }
 
-      function renderTable() {
+      function renderTable(keywords) {
         const visibleKeywords = selectedLengths.size === 0
           ? keywords
           : keywords.filter(({ word }) => selectedLengths.has(wordLength(word)));
@@ -225,6 +249,27 @@
           ? visibleKeywords.map(({ word, count }) => `\n            <tr><td>${escapeHTML(word)}</td><td>${escapeHTML(count)}</td></tr>`).join('')
           : '<tr><td class="message" colspan="2">暂无符合条件的关键词</td></tr>';
       }
+
+      function renderKeywords() {
+        const keywords = getKeywordsForSelectedYears();
+        renderLengthFilters(keywords);
+        renderTable(keywords);
+      }
+
+      yearFilters.addEventListener('click', (event) => {
+        const button = event.target.closest('button');
+        if (!button) return;
+
+        if (button.dataset.all) {
+          selectedYears.clear();
+        } else {
+          const year = Number(button.dataset.year);
+          selectedYears.has(year) ? selectedYears.delete(year) : selectedYears.add(year);
+        }
+
+        renderYearFilters();
+        renderKeywords();
+      });
 
       filters.addEventListener('click', (event) => {
         const button = event.target.closest('button');
@@ -237,8 +282,7 @@
           selectedLengths.has(length) ? selectedLengths.delete(length) : selectedLengths.add(length);
         }
 
-        updateFilterState();
-        renderTable();
+        renderKeywords();
       });
 
       async function loadKeywords() {
@@ -249,12 +293,17 @@
           const data = await response.json();
           if (!Array.isArray(data.list)) throw new Error('数据格式无效');
 
-          keywords = data.list
-            .filter((item) => typeof item?.word === 'string' && Number.isFinite(Number(item?.count)))
-            .map(({ word, count }) => ({ word, count: Number(count) }));
+          yearlyKeywords = data.list
+            .filter((item) => Number.isInteger(Number(item?.year)) && Array.isArray(item?.words))
+            .map(({ year, words }) => ({
+              year: Number(year),
+              words: words
+                .filter((item) => typeof item?.word === 'string' && Number.isFinite(Number(item?.count)))
+                .map(({ word, count }) => ({ word, count: Number(count) }))
+            }));
 
-          renderFilters();
-          renderTable();
+          renderYearFilters();
+          renderKeywords();
         } catch (error) {
           resultCount.textContent = '读取失败';
           keywordList.innerHTML = '<tr><td class="message error" colspan="2">关键词数据暂时无法读取，请稍后再试。</td></tr>';
