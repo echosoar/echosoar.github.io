@@ -170,15 +170,18 @@
       <div class="filter-group">
         <div class="filters" id="filters" aria-label="关键词长度筛选"></div>
       </div>
+      <div class="filter-group">
+        <div class="filters" id="pos-filters" aria-label="关键词词性筛选"></div>
+      </div>
     </section>
 
     <section class="table-wrap" aria-label="关键词列表">
       <table>
         <thead>
-          <tr><th scope="col">关键词</th><th scope="col">数量</th></tr>
+          <tr><th scope="col">关键词</th><th scope="col">词性</th><th scope="col">数量</th></tr>
         </thead>
         <tbody id="keyword-list">
-          <tr><td class="message" colspan="2">正在读取关键词数据…</td></tr>
+          <tr><td class="message" colspan="3">正在读取关键词数据…</td></tr>
         </tbody>
       </table>
     </section>
@@ -189,11 +192,13 @@
       const DATA_URL = 'https://data.mdcsv.com/datasets/keywords.json';
       const yearFilters = document.querySelector('#year-filters');
       const filters = document.querySelector('#filters');
+      const posFilters = document.querySelector('#pos-filters');
       const keywordList = document.querySelector('#keyword-list');
       const resultCount = document.querySelector('#result-count');
       let yearlyKeywords = [];
       let selectedYears = new Set();
       let selectedLengths = new Set();
+      let selectedPoses = new Set();
 
       const escapeHTML = (value) => String(value)
         .replaceAll('&', '&amp;')
@@ -202,21 +207,25 @@
         .replaceAll('"', '&quot;')
         .replaceAll("'", '&#039;');
 
-      const wordLength = (word) => Array.from(word).length;
+      const wordLength = (word) => word.replace(/\s/g, '').length;
+      const normalizePos = (pos) => typeof pos === 'string' ? pos : '';
 
       function getKeywordsForSelectedYears() {
-        const countsByWord = new Map();
+        const countsByWordAndPos = new Map();
 
         yearlyKeywords
           .filter(({ year }) => selectedYears.size === 0 || selectedYears.has(year))
           .forEach(({ words }) => {
-            words.forEach(({ word, count }) => {
-              countsByWord.set(word, (countsByWord.get(word) || 0) + count);
+            words.forEach(({ word, count, pos }) => {
+              const key = `${word}\u0000${pos}`;
+              const keyword = countsByWordAndPos.get(key) || { word, pos, count: 0 };
+              keyword.count += count;
+              countsByWordAndPos.set(key, keyword);
             });
           });
 
-        return Array.from(countsByWord, ([word, count]) => ({ word, count }))
-          .sort((a, b) => b.count - a.count || a.word.localeCompare(b.word, 'zh-CN'));
+        return Array.from(countsByWordAndPos.values())
+          .sort((a, b) => b.count - a.count || a.word.localeCompare(b.word, 'zh-CN') || a.pos.localeCompare(b.pos));
       }
 
       function renderYearFilters() {
@@ -239,20 +248,37 @@
         ].join('');
       }
 
+      function renderPosFilters() {
+        const posOptions = [
+          ['n', '名词'],
+          ['v', '动词'],
+          ['a', '形容词'],
+          ['u', '助词'],
+          ['', '其他']
+        ];
+
+        posFilters.innerHTML = [
+          `<button class="filter" type="button" data-all="true" aria-pressed="${selectedPoses.size === 0}">全部词性</button>`,
+          ...posOptions.map(([pos, label]) => `<button class="filter" type="button" data-pos="${pos}" aria-pressed="${selectedPoses.has(pos)}">${label}</button>`)
+        ].join('');
+      }
+
       function renderTable(keywords) {
-        const visibleKeywords = selectedLengths.size === 0
-          ? keywords
-          : keywords.filter(({ word }) => selectedLengths.has(wordLength(word)));
+        const visibleKeywords = keywords.filter(({ word, pos }) =>
+          (selectedLengths.size === 0 || selectedLengths.has(wordLength(word))) &&
+          (selectedPoses.size === 0 || selectedPoses.has(pos))
+        );
 
         resultCount.textContent = `共 ${visibleKeywords.length} 个`;
         keywordList.innerHTML = visibleKeywords.length
-          ? visibleKeywords.map(({ word, count }) => `\n            <tr><td>${escapeHTML(word)}</td><td>${escapeHTML(count)}</td></tr>`).join('')
-          : '<tr><td class="message" colspan="2">暂无符合条件的关键词</td></tr>';
+          ? visibleKeywords.map(({ word, pos, count }) => `\n            <tr><td>${escapeHTML(word)}</td><td>${escapeHTML(pos)}</td><td>${escapeHTML(count)}</td></tr>`).join('')
+          : '<tr><td class="message" colspan="3">暂无符合条件的关键词</td></tr>';
       }
 
       function renderKeywords() {
         const keywords = getKeywordsForSelectedYears();
         renderLengthFilters(keywords);
+        renderPosFilters();
         renderTable(keywords);
       }
 
@@ -285,6 +311,20 @@
         renderKeywords();
       });
 
+      posFilters.addEventListener('click', (event) => {
+        const button = event.target.closest('button');
+        if (!button) return;
+
+        if (button.dataset.all) {
+          selectedPoses.clear();
+        } else {
+          const pos = button.dataset.pos;
+          selectedPoses.has(pos) ? selectedPoses.delete(pos) : selectedPoses.add(pos);
+        }
+
+        renderKeywords();
+      });
+
       async function loadKeywords() {
         try {
           const response = await fetch(DATA_URL);
@@ -299,14 +339,14 @@
               year: Number(year),
               words: words
                 .filter((item) => typeof item?.word === 'string' && Number.isFinite(Number(item?.count)))
-                .map(({ word, count }) => ({ word, count: Number(count) }))
+                .map(({ word, count, pos }) => ({ word, count: Number(count), pos: normalizePos(pos) }))
             }));
 
           renderYearFilters();
           renderKeywords();
         } catch (error) {
           resultCount.textContent = '读取失败';
-          keywordList.innerHTML = '<tr><td class="message error" colspan="2">关键词数据暂时无法读取，请稍后再试。</td></tr>';
+          keywordList.innerHTML = '<tr><td class="message error" colspan="3">关键词数据暂时无法读取，请稍后再试。</td></tr>';
           console.error('无法读取关键词数据：', error);
         }
       }
