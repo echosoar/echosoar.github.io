@@ -96,6 +96,13 @@
       outline-offset: 4px;
     }
 
+    #word-cloud {
+      display: block;
+      width: 100%;
+      height: 320px;
+      margin-bottom: 42px;
+    }
+
     .table-wrap { min-height: 180px; }
 
     table {
@@ -175,6 +182,10 @@
       </div>
     </section>
 
+    <section id="word-cloud-wrap" aria-label="关键词词云" hidden>
+      <canvas id="word-cloud" role="img" aria-label="当前筛选关键词词云"></canvas>
+    </section>
+
     <section class="table-wrap" aria-label="关键词列表">
       <table>
         <thead>
@@ -187,12 +198,15 @@
     </section>
   </main>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.2.2/wordcloud2.min.js"></script>
   <script>
     (() => {
       const DATA_URL = 'https://data.mdcsv.com/datasets/keywords.json';
       const yearFilters = document.querySelector('#year-filters');
       const filters = document.querySelector('#filters');
       const posFilters = document.querySelector('#pos-filters');
+      const wordCloudWrap = document.querySelector('#word-cloud-wrap');
+      const wordCloud = document.querySelector('#word-cloud');
       const keywordList = document.querySelector('#keyword-list');
       const resultCount = document.querySelector('#result-count');
       let yearlyKeywords = [];
@@ -209,6 +223,12 @@
 
       const wordLength = (word) => word.replace(/\s/g, '').length;
       const normalizePos = (pos) => typeof pos === 'string' ? pos : '';
+      const posMatches = (pos, selectedPoses) => {
+        const poses = pos.split('/').map((item) => item.trim()).filter(Boolean);
+        return poses.length
+          ? poses.some((item) => selectedPoses.has(item))
+          : selectedPoses.has('');
+      };
 
       function getKeywordsForSelectedYears() {
         const countsByWordAndPos = new Map();
@@ -269,13 +289,28 @@
       function renderTable(keywords) {
         const visibleKeywords = keywords.filter(({ word, pos }) =>
           (selectedLengths.size === 0 || selectedLengths.has(wordLength(word))) &&
-          (selectedPoses.size === 0 || selectedPoses.has(pos))
+          (selectedPoses.size === 0 || posMatches(pos, selectedPoses))
         );
 
         resultCount.textContent = `共 ${visibleKeywords.length} 个`;
         keywordList.innerHTML = visibleKeywords.length
           ? visibleKeywords.map(({ word, pos, count }) => `\n            <tr><td>${escapeHTML(word)}</td><td>${escapeHTML(pos)}</td><td>${escapeHTML(count)}</td></tr>`).join('')
           : '<tr><td class="message" colspan="3">暂无符合条件的关键词</td></tr>';
+
+        wordCloudWrap.hidden = visibleKeywords.length <= 20 || typeof window.WordCloud !== 'function';
+        if (!wordCloudWrap.hidden) {
+          const countsByWord = new Map();
+          visibleKeywords.forEach(({ word, count }) => {
+            countsByWord.set(word, (countsByWord.get(word) || 0) + count);
+          });
+          wordCloud.width = wordCloudWrap.clientWidth;
+          wordCloud.height = 320;
+          window.WordCloud(wordCloud, {
+            list: Array.from(countsByWord, ([word, count]) => [word, count]),
+            weightFactor: (weight) => 12 + Math.log2(Math.max(weight, 1)) * 5,
+            backgroundColor: '#fff'
+          });
+        }
       }
 
       function renderKeywords() {
