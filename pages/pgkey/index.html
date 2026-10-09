@@ -297,7 +297,7 @@
           ? visibleKeywords.map(({ word, pos, count }) => `\n            <tr><td>${escapeHTML(word)}</td><td>${escapeHTML(pos)}</td><td>${escapeHTML(count)}</td></tr>`).join('')
           : '<tr><td class="message" colspan="3">暂无符合条件的关键词</td></tr>';
 
-        wordCloudWrap.hidden = visibleKeywords.length <= 20 || typeof window.WordCloud !== 'function';
+        wordCloudWrap.hidden = visibleKeywords.length <= 10 || typeof window.WordCloud !== 'function';
         if (!wordCloudWrap.hidden) {
           const countsByWord = new Map();
           visibleKeywords.forEach(({ word, count }) => {
@@ -307,7 +307,7 @@
           wordCloud.height = 320;
           window.WordCloud(wordCloud, {
             list: Array.from(countsByWord, ([word, count]) => [word, count]),
-            weightFactor: (weight) => 12 + Math.log2(Math.max(weight, 1)) * 5,
+            weightFactor: (weight) => 12 + Math.max(weight/4, 1),
             backgroundColor: '#fff'
           });
         }
