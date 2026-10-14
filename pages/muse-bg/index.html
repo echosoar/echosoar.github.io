@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#071827">
+	<title>Muse Background</title>
+	<style>
+		:root {
+			color-scheme: dark;
+			background: #071827;
+			font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+		}
+
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			overflow: hidden;
+		}
+
+		canvas {
+			position: fixed;
+			inset: 0;
+			display: block;
+			width: 100vw;
+			height: 100vh;
+		}
+	</style>
+</head>
+<body>
+	<canvas aria-hidden="true"></canvas>
+	<script>
+		(() => {
+			const settings = {
+				ambientAmount: 0.215, // 环境字符明暗变化幅度
+				ambientSpeed: 1.85, // 环境明暗变化速度
+				baseOpacity: 0.72, // 普通字符基础不透明度
+				density: 5, // 字符分布密度
+				glyphs: [..."·⠄░▒⣿⠿▒"], // 普通状态下循环使用的字符
+				maxDevicePixelRatio: 2, // 画布最大设备像素比，限制渲染开销
+				opacityFalloff: 1, // 字符向画布左右边缘渐隐的强度
+				randomizationSpeed: 2.5, // 普通字符随机切换速度
+				seed: 371, // 随机种子，用于稳定生成字符分布
+				sequenceSpeed: 5, // 鼠标唤醒字符的序列变化速度
+				typeSize: 14, // 字符基础字号，单位为像素
+				wakeDuration: 0.5, // 鼠标轨迹影响持续时间，单位为秒
+				wakeGlyphs: [..."SOAR"], // 鼠标经过时显示的字符
+				wakeOpacity: 0.95, // 鼠标唤醒字符的不透明度
+				wakeRadius: 82, // 鼠标影响半径，单位为像素
+				wakeSpread: 2 // 鼠标影响造成的字符位移幅度
+			};
+			const canvas = document.querySelector("canvas");
+			const context = canvas.getContext("2d", { alpha: false });
+			const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+			let particles = [];
+			let pointer = null;
+			let previousPointer = null;
+			let trail = [];
+			let frame = 0;
+
+			function random(...values) {
+				let value = 0x9e3779b9 ^ settings.seed;
+				for (const item of values) {
+					value = Math.imul(value ^ item, 0x85ebca6b);
+					value ^= value >>> 13;
+				}
+				return (value >>> 0) / 0x100000000;
+			}
+
+			function smoothstep(start, end, value) {
+				const progress = Math.max(0, Math.min(1, (value - start) / (end - start)));
+				return progress * progress * (3 - 2 * progress);
+			}
+
+			function buildParticles() {
+				particles = [];
+				const columns = Math.max(2, Math.round(window.innerWidth / 30));
+				const rows = Math.max(4, Math.round(window.innerHeight / 22));
+				const threshold = Math.min(0.46, 0.11 + 0.17 * settings.density);
+
+				for (let row = 0; row < rows; row += 1) {
+					for (let column = 0; column < columns; column += 1) {
+						if (random(row, column, 1) > threshold) continue;
+						particles.push({
+							index: particles.length,
+							phase: random(row, column, 4) * Math.PI * 2,
+							glyphSeed: random(row, column, 5),
+							x: (column + 0.5 + (random(row, column, 2) - 0.5) * 0.48) * window.innerWidth / columns,
+							y: (row + 0.5 + (random(row, column, 3) - 0.5) * 0.36) * window.innerHeight / rows
+						});
+					}
+				}
+			}
+
+			function resize() {
+				const ratio = Math.min(window.devicePixelRatio || 1, settings.maxDevicePixelRatio);
+				canvas.width = Math.max(1, Math.round(window.innerWidth * ratio));
+				canvas.height = Math.max(1, Math.round(window.innerHeight * ratio));
+				context.setTransform(ratio, 0, 0, ratio, 0, 0);
+				buildParticles();
+				requestRender();
+			}
+
+			function recordPointer(event) {
+				const time = performance.now();
+				const elapsed = Math.max(1, event.timeStamp - (previousPointer?.time ?? event.timeStamp - 16));
+				pointer = {
+					time,
+					vx: (event.clientX - (previousPointer?.x ?? event.clientX)) / elapsed,
+					x: event.clientX,
+					y: event.clientY
+				};
+				previousPointer = { time: event.timeStamp, x: event.clientX };
+				const last = trail.at(-1);
+				if (!last || time - last.time >= 24) trail.push(pointer);
+				if (trail.length > 28) trail = trail.slice(-28);
+				requestRender();
+			}
+
+			function requestRender() {
+				if (frame === 0) frame = requestAnimationFrame(render);
+			}
+
+			function pointerInfluence(x, y, time) {
+				let displacementX = 0;
+				let displacementY = 0;
+				let intensity = 0;
+
+				for (const sample of pointer ? [...trail, pointer] : trail) {
+					const age = pointer === sample ? 0 : (time - sample.time) / 1000;
+					if (age < 0 || age > settings.wakeDuration) continue;
+					const dx = x - sample.x;
+					const dy = y - sample.y;
+					const distance = Math.hypot(dx / 1.45, dy) / settings.wakeRadius;
+					const strength = Math.min(
+						1,
+						(Math.exp(-4.2 * Math.abs(distance - age / settings.wakeDuration * 1.15)) +
+							0.48 * Math.exp(-2.6 * distance)) *
+							(1 - smoothstep(0.45 * settings.wakeDuration, settings.wakeDuration, age))
+					);
+					intensity = Math.max(intensity, strength);
+					const length = Math.max(1, Math.hypot(dx, dy));
+					displacementX += (dx / length + 0.45 * Math.sign(sample.vx || dx || 1)) * strength;
+					displacementY += dy / length * strength * 0.45;
+				}
+
+				return { displacementX, displacementY, intensity };
+			}
+
+			function render(timestamp) {
+				frame = 0;
+				const time = timestamp / 1000;
+				const background = "#071827";
+				context.fillStyle = background;
+				context.fillRect(0, 0, window.innerWidth, window.innerHeight);
+				context.textAlign = "center";
+				context.textBaseline = "middle";
+
+				for (const particle of particles) {
+					const influence = reducedMotion.matches
+						? { displacementX: 0, displacementY: 0, intensity: 0 }
+						: pointerInfluence(particle.x, particle.y, timestamp);
+					const ambient = reducedMotion.matches
+						? 0
+						: Math.pow(0.5 + 0.5 * Math.sin(time * settings.ambientSpeed + particle.phase), 10) * settings.ambientAmount;
+					const active = influence.intensity > 0.08;
+					const variation = reducedMotion.matches
+						? Math.floor(particle.glyphSeed * settings.glyphs.length)
+						: Math.floor(random(particle.index, Math.floor(time * settings.randomizationSpeed), 701) * settings.glyphs.length);
+					const glyph = active
+						? settings.wakeGlyphs[(particle.index + Math.floor(time * settings.sequenceSpeed)) % settings.wakeGlyphs.length]
+						: settings.glyphs[variation % settings.glyphs.length];
+					  const edgeDistance = Math.min(particle.x, window.innerWidth - particle.x) / (window.innerWidth / 2);
+					  const edge = 0.08 + 0.92 * smoothstep(0, 0.62, edgeDistance);
+					const opacity = (settings.baseOpacity + ambient + influence.intensity * (settings.wakeOpacity - settings.baseOpacity)) *
+						(1 - settings.opacityFalloff * (1 - edge));
+					const scale = 1 + 0.16 * influence.intensity;
+
+					context.font = `500 ${settings.typeSize * scale}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`;
+					context.fillStyle = active ? "#63e3ff" : "#4e7890";
+					context.globalAlpha = Math.max(0, Math.min(1, opacity));
+					context.fillText(
+						glyph,
+						particle.x + influence.displacementX * settings.wakeSpread + 0.7 * Math.sin(0.2 * time + particle.phase),
+						particle.y + influence.displacementY * settings.wakeSpread
+					);
+				}
+
+				context.globalAlpha = 1;
+				trail = trail.filter(sample => (timestamp - sample.time) / 1000 <= settings.wakeDuration);
+				if (!reducedMotion.matches) requestRender();
+			}
+
+			function clearPointer() {
+				pointer = null;
+				previousPointer = null;
+				requestRender();
+			}
+
+			function handleMotionPreference() {
+				trail = [];
+				requestRender();
+			}
+
+			window.addEventListener("resize", resize, { passive: true });
+			window.addEventListener("pointermove", recordPointer, { passive: true });
+			window.addEventListener("pointerdown", recordPointer, { passive: true });
+			window.addEventListener("blur", clearPointer);
+			document.documentElement.addEventListener("pointerleave", clearPointer);
+			reducedMotion.addEventListener("change", handleMotionPreference);
+			resize();
+		})();
+	</script>
+</body>
+</html>
