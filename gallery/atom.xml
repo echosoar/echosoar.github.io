@@ -3,7 +3,7 @@
                 <title>Gallery</title>
                 <link href="https://aiznb.com/gallery/atom.xml" rel="self"/>
                 <link href="https://aiznb.com/gallery/"/>
-                <updated>2026-10-14T14:35:17.221Z</updated>
+                <updated>2026-10-18T23:55:57.841Z</updated>
                 <id>https://aiznb.com/gallery/</id>
                 <author>
                     <name>soar</name>
@@ -13,6 +13,14 @@
                     <userId>62733912072851456</userId>
                 </follow_challenge>
                 <entry>
+                            <title>Beautiful Shaders</title>
+                            <link href="https://aiznb.com/gallery/Beautiful-Shaders.html"/>
+                            <id>https://aiznb.com/gallery/Beautiful-Shaders.html</id>
+                            <updated>2026-10-18T00:00:00.000Z</updated>
+                            <summary><![CDATA[Beautiful Shaders 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
+                        </entry><entry>
                             <title>Those Flowers</title>
                             <link href="https://aiznb.com/gallery/Those-Flowers.html"/>
                             <id>https://aiznb.com/gallery/Those-Flowers.html</id>
@@ -26,14 +34,6 @@
                             <id>https://aiznb.com/gallery/Pelican-Riding-a-Bicycle.html</id>
                             <updated>2026-09-14T00:00:00.000Z</updated>
                             <summary><![CDATA[Pelican Riding a Bicycle 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
-                        </entry><entry>
-                            <title>Beautiful Shaders</title>
-                            <link href="https://aiznb.com/gallery/Beautiful-Shaders.html"/>
-                            <id>https://aiznb.com/gallery/Beautiful-Shaders.html</id>
-                            <updated>2026-06-06T00:00:00.000Z</updated>
-                            <summary><![CDATA[Beautiful Shaders 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry>
