@@ -141,7 +141,7 @@
   var audio = $('audio'), listEl = $('list'), seek = $('seek');
   var FILTERS = [{ key: 'category', label: '类型' }, { key: 'artist', label: '艺术家' }];
   var songs = [], queue = [], current = null, index = -1;
-  var shuffle = false, repeat = 'list', seeking = false;
+  var shuffle = true, repeat = 'list', seeking = false;
   var selected = { category: new Set(), artist: new Set() };
   var history = [];
 
