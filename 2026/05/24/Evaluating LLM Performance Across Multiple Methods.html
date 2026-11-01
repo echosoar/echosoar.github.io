@@ -6,7 +6,7 @@
                 <meta charset="utf-8">
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                <meta name="keywords" content="前一个模型,models only have scores of,is to compare,it can be,between two models,won in more benchmarks,if both models have,of each model,in 5 benchmarks,modelA is stronger than modelB,博客,soar,codersoar,ai 真牛逼" />
+                <meta name="keywords" content="前一个模型,models only have scores of,is to compare,it can be,between two models,In other words,won in more benchmarks,if both models have,of each model,in 5 benchmarks,博客,soar,codersoar,ai 真牛逼" />
                 <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
                 <meta name="robots" content="index,follow" />
                 <style>
@@ -698,18 +698,18 @@ beatersCount.set(model.model, beatersCount.get(model.model) + 1);</code></pre>
 <p>The code uses a topological sort from weak to strong, each time, nodes that "have not win any unplaced models" are found, there are placed first</p>
 <pre><code>let candidates = unplaced.filter(name =&gt; remainingOutCount(name) === 0);</code></pre>
 <p>If a model has no edges point to other unplaced models, it means that in the remaing models, it has not win any others, so it can be placed into the result first.</p>
-<p>如果同时存在多个候选模型，就继续比较有多少个模型战胜过它：</p>
+<p>If multiple candidate models exists at same time, processed by comparing how many models have outpeformed it:</p>
 <pre><code>candidates.sort((a, b) =&gt;
     beatersCount.get(b) - beatersCount.get(a) || a.localeCompare(b, 'zh-CN'));</code></pre>
-<p>被更多模型战胜的节点会被认为更弱，因此先放入结果；如果还无法区分，最后使用名称排序来保证结果是稳定的。</p>
+<p>Node that have been defeated by a greater number of models was considered weaker and will be placed earlier in the result. If there is still a tie, the final order is sorted by the model name to ensure a stable result.</p>
 <p>Furthermore, the win-loss relationship between two models is not always passed, it may occur:</p>
 <pre><code>A win B
 B win C
 C win A</code></pre>
-<p>也就是胜负关系成环。这个时候不存在严格的拓扑排序结果，代码会选择剩余出边最少的模型来打破循环：</p>
+<p>In other words, the win-loss relationshop from a cycle, a strict topological sort result does not exists, the code will choose a model with the fewest remaining outgoing edges to break the cycle.</p>
 <pre><code>const minOut = Math.min(...unplaced.map(remainingOutCount));
 candidates = unplaced.filter(name =&gt; remainingOutCount(name) === minOut);</code></pre>
-<p>这个处理方式并不追求完美，但可以保证在数据不完整或者存在冲突时，排序流程仍然能够继续执行下去。</p>
+<p>This method does not aim for perfection, but it ensures that the sorting process can continue even when data is incomplete or contains conflicts.</p>
 <h3>Generate final rank</h3>
 <p>After sort the models，
 <span class="inline-code">sort.js</span>
@@ -736,7 +736,7 @@ cur.rank = scorePi;</code></pre>
 <p>Actually, it is not a perfetc solution, if both models have no common benchmark, then whre is no direct win-loss edge between them, only rely on indirect releationship between other models, but this logic current handles the sorting of the existed data well.</p></article>
 <div class="preAndNext">
                         <a href="/2025/12/31/21 世纪已过四分之一.html">Prev: 21 世纪已过四分之一</a>
-                        
+                        <a href="/2026/10/25/Build-own-Jev-model.html">Next: Build own Jev model</a>
                     </div>
 
         <div class="giscus">
