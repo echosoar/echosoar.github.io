@@ -6,7 +6,7 @@
                 <meta charset="utf-8">
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                <meta name="keywords" content="选项 extra,提示词,最简单,次前向传播,最后一个位置,候选选项,转化为,有问题,原始输出分数,下面是执行的输出结果,博客,soar,codersoar,ai 真牛逼" />
+                <meta name="keywords" content="选项 extra,最简单,提示词,进行决策,次前向传播,最后一个位置,候选选项,转化为,有问题,原始输出分数,博客,soar,codersoar,ai 真牛逼" />
                 <link rel="sitemap" href="/sitemap.xml" type="application/xml" />
                 <meta name="robots" content="index,follow" />
                 <style>
@@ -634,7 +634,7 @@
         </header>
 <div class="pageHeader">
 <h2>Build own Jev model</h2>
-<div class="descInfo"><time class="time">2026/10/25</time><span class="divider"> | </span><span>7 min</span><span class="divider"> | </span><a href="/home/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
+<div class="descInfo"><time class="time">2026/10/25</time><span class="divider"> | </span><span>12 min</span><span class="divider"> | </span><a href="/home/atom.xml" target="_blank">RSS</a><span class="divider"> | </span><a href="https://x.com/intent/user?screen_name=codersoar" target="_blank">X / Twitter</a></div>
 </div>
 <article><p>最近一段时间，Jev 这个决策模型引发了很多热议，我也翻阅了不少文章希望能搞清楚它的原理和如何构建一个自己的 jev 模型，所以本篇文章就从一段最简单的代码开始，探讨一下 jev 的原理，以及如何基于 Qwen 训练一个可以进行决策的模型。</p>
 <pre><code>import torch
@@ -661,7 +661,9 @@ messages = [
 prompt = tokenizer.apply_chat_template(
     messages, 
     tokenize=False, 
-    add_generation_prompt=True
+    add_generation_prompt=True,
+    # 关闭思维链，避免输出思考标签
+    enable_thinking=False
 )
 prompt += "答案："
 
@@ -703,7 +705,7 @@ num_added = tokenizer.add_special_tokens({
     "additional_special_tokens": options
 })
 model.resize_token_embeddings(len(tokenizer))</code></pre>
-<p>如果只是这样简单地添加替换，那么最后的输出肯定是有问题的，因为这些自定义 token 的初始向量基本上是一样的，而且并没有经过训练，所以计算出来的 target_logits 基本上是相同的：</p>
+<p>如果只是这样简单地添加替换，那么最后的输出肯定是有问题的，因为这些自定义 token 的初始向量(使用已有词表分布的均值初始化)基本上是一样的，而且并没有经过训练，所以计算出来的 target_logits 基本上是相同的：</p>
 <pre><code># 下面是执行的输出结果
 tensor([-0.7266, -0.7266, -0.7266, -0.7266], dtype=torch.bfloat16)
 选项 &lt;|extra_0|&gt;: 0.2500
@@ -711,6 +713,70 @@ tensor([-0.7266, -0.7266, -0.7266, -0.7266], dtype=torch.bfloat16)
 选项 &lt;|extra_2|&gt;: 0.2500
 选项 &lt;|extra_3|&gt;: 0.2500</code></pre>
 <p>因此，还需要使用一些训练数据对这些自定义 token 进行微调，使模型能够正确区分这些 token 的含义，从而在决策时能够给出合理的概率分布。</p>
+<p>由于我只有一台 Intel 芯片的低配电脑，所以没有办法对模型进行全量微调，这里有两种做法：</p>
+<ol><li><p>最简单的，从词表里面寻找一些不常用的 token（如 "①", "②", "③", "④" 这样的），用它们的 Embedding 权重直接复制给 `<|extra
+<i>n|>`，然后冻结 embed</i>
+tokens 和 lm_head 的权重，这样只需要训练非常小的 LoRA 矩阵就可以了。</p></li><li><p>另一种做法是，对 
+<span class="inline-code">&lt;|extra_n|&gt;</span>
+ 进行正交随机初始化，生成四个正交的随机向量，这样就保证了这四个 token 的初始向量彼此独立，不会相互干扰，同时在反向传播的时候，挂上一个简单的 Hook，仅对这些自定义 token 的梯度进行更新。</p></li></ol>
+<pre><code>from peft import LoraConfig, get_peft_model, TaskType
+
+lora_config = LoraConfig(
+    task_type=TaskType.CAUSAL_LM,
+    r=4,
+    lora_alpha=8,
+    lora_dropout=0.05,
+    # 注意力层的 query 和 value
+    target_modules=["q_proj", "v_proj"]
+)
+model = get_peft_model(model, lora_config)
+
+embed_weight = model.get_input_embeddings().weight
+head_weight = model.get_output_embeddings().weight
+# 全放开参数更新，让新增的几个 token 可以更新
+embed_weight.requires_grad = True
+head_weight.requires_grad = True
+
+# 在反向传播计算出整个词表的梯度后、优化器修改参数前，把原有的词的梯度强行抹零，只保留新增的几个词的梯度
+def mask_other_tokens_grad(grad):
+    mask = torch.zeros_like(grad)
+    mask[option_ids] = 1.0
+    return grad * mask
+
+embed_weight.register_hook(mask_other_tokens_grad)
+head_weight.register_hook(mask_other_tokens_grad)
+
+model.train()
+optimizer = torch.optim.AdamW([
+    # 
+    {"params": [p for n, p in model.named_parameters() if "lora_" in n], "lr": 2e-4},
+    {"params": [embed_weight, head_weight], "lr": 1e-3, "weight_decay": 0.0}
+])
+
+for epoch in range(15):
+    total_loss = 0
+    for query, ans in train_samples:
+        # build_training_sample 用来构建训练样本的输入和标签
+        input_ids, labels = build_training_sample(query, ans)
+        
+        optimizer.zero_grad()
+        outputs = model(input_ids=input_ids, labels=labels)
+        loss = outputs.loss
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()</code></pre>
+<p>训练以及用训练数据再进行决策之后的结果：</p>
+<pre><code>Epoch 01 | Loss: 3.5951
+Epoch 01 | Loss: 12.4791
+Epoch 02 | Loss: 0.0534
+Epoch 02 | Loss: 4.8745
+...
+
+
+选项 &lt;|extra_0|&gt;: 0.0000
+选项 &lt;|extra_1|&gt;: 1.0000
+选项 &lt;|extra_2|&gt;: 0.0000
+选项 &lt;|extra_3|&gt;: 0.0000</code></pre>
 <h4>Ref</h4>
 <ul><li><p>https://archerhume.com/posts/jevs-architecture-unmasked</p></li><li><p>https://github.com/jaredpalmer/kev</p></li></ul></article>
 <div class="preAndNext">
