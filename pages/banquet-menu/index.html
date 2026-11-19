@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f2eee6">
+<title>宴会菜单</title>
+<style>
+  :root {
+    --ink: #17385d;
+    --ink-soft: #60758c;
+    --gold: #b89a42;
+    --gold-light: #dfca75;
+    --paper: #d9edf0;
+    --canvas: #f2eee6;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { min-height: 100%; }
+
+  body {
+    margin: 0;
+    overflow-x: hidden;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, rgba(112, 88, 49, .035) 1px, transparent 1px),
+      linear-gradient(rgba(112, 88, 49, .035) 1px, transparent 1px),
+      var(--canvas);
+    background-size: 28px 28px;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif;
+  }
+
+  .masthead {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 42px 0 22px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(23, 56, 93, .18);
+  }
+
+  .eyebrow {
+    margin: 0 0 8px;
+    color: #8c7130;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 500;
+    letter-spacing: .16em;
+  }
+
+  .count {
+    margin: 0 0 5px;
+    color: var(--ink-soft);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+
+  .gallery-wrap {
+    position: relative;
+  }
+
+  .gallery {
+    display: flex;
+    gap: 28px;
+    overflow-x: auto;
+    padding: 34px max(24px, calc((100vw - 1180px) / 2)) 64px;
+    scroll-padding-inline: max(24px, calc((100vw - 1180px) / 2));
+    scroll-snap-type: x mandatory;
+    scrollbar-color: rgba(23, 56, 93, .25) transparent;
+    scrollbar-width: thin;
+  }
+
+  .gallery::after {
+    content: "";
+    flex: 0 0 1px;
+  }
+
+  .menu-card {
+    flex: 0 0 auto;
+    width: min(460px, calc(100vw - 48px));
+    scroll-snap-align: start;
+  }
+
+  .menu-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 53px;
+    margin-bottom: 14px;
+    color: var(--ink-soft);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .menu-meta strong {
+    display: block;
+    max-width: 300px;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.45;
+  }
+
+  .menu-date {
+    flex: 0 0 auto;
+    padding-top: 2px;
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: .04em;
+  }
+
+  .frame {
+    position: relative;
+    isolation: isolate;
+    padding: 18px;
+    background:
+      linear-gradient(135deg, transparent 0 13px, var(--gold-light) 13px 15px, transparent 15px),
+      linear-gradient(-135deg, transparent 0 13px, var(--gold-light) 13px 15px, transparent 15px),
+      linear-gradient(45deg, transparent 0 13px, var(--gold-light) 13px 15px, transparent 15px),
+      linear-gradient(-45deg, transparent 0 13px, var(--gold-light) 13px 15px, transparent 15px),
+      var(--gold);
+    box-shadow: 0 22px 52px rgba(69, 55, 27, .13), 0 3px 8px rgba(69, 55, 27, .12);
+  }
+
+  .frame::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 7px;
+    border: 1px solid rgba(255, 245, 188, .82);
+    box-shadow: inset 0 0 0 2px rgba(115, 88, 20, .26);
+    pointer-events: none;
+  }
+
+  .frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: .3;
+    background:
+      linear-gradient(45deg, transparent 9px, rgba(255,255,255,.65) 9px 11px, transparent 11px 18px) 0 0 / 24px 24px,
+      linear-gradient(-45deg, transparent 9px, rgba(79,56,8,.4) 9px 11px, transparent 11px 18px) 0 0 / 24px 24px;
+    mix-blend-mode: soft-light;
+  }
+
+  .paper {
+    height: 100%;
+    min-height: 690px;
+    padding: 40px 35px 30px;
+    position: relative;
+    background:
+      radial-gradient(circle at 28% 14%, rgba(255,255,255,.66), transparent 32%),
+      linear-gradient(120deg, rgba(255,255,255,.1), rgba(92,156,168,.09)),
+      var(--paper);
+    border: 1px solid rgba(129, 102, 32, .65);
+    box-shadow: inset 0 0 35px rgba(255, 255, 255, .5);
+  }
+
+  .paper::before,
+  .paper::after {
+    content: "◆";
+    position: absolute;
+    left: 50%;
+    color: var(--gold);
+    font-size: 20px;
+    transform: translateX(-50%) scaleX(2.2);
+  }
+
+  .paper::before { top: 12px; }
+  .paper::after { bottom: 10px; }
+
+  .menu-heading {
+    margin: 0 0 24px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: .44em;
+    text-indent: .44em;
+  }
+
+  .course {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
+    padding: 15px 0;
+    border-top: 1px solid rgba(23, 56, 93, .17);
+  }
+
+  .course:first-of-type { border-top-color: rgba(184, 154, 66, .65); }
+
+  .course-items {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 68px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+    padding: 6px 0;
+    gap: 12px;
+  }
+
+  .dish {
+    margin: 0;
+    min-height: 24px;
+    color: var(--ink);
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: .18em;
+  }
+
+  .course-label {
+    padding-top: 1px;
+    color: #8c7130;
+    font-size: 10px;
+    line-height: 1.3;
+    letter-spacing: .18em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .course-label strong {
+    display: block;
+    margin-bottom: 4px;
+    font-family: "Kaiti SC", "STKaiti", serif;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .wine {
+    padding: 22px 0 2px;
+    border-top: 1px solid rgba(184, 154, 66, .7);
+  }
+
+  .wine-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    color: #8c7130;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+  }
+
+  .wine-heading::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: rgba(184, 154, 66, .45);
+  }
+
+  .wine-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 12px;
+    margin-top: 11px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .wine-name { font-weight: 500; }
+  .wine-year { color: #8c7130; font-family: Georgia, "Times New Roman", serif; }
+  .wine-address { grid-column: 1 / -1; color: var(--ink-soft); font-size: 11px; }
+
+  .status,
+  .error {
+    min-width: min(460px, calc(100vw - 48px));
+    padding: 80px 24px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  .error { color: #8b493b; }
+
+  @media (max-width: 600px) {
+    .masthead {
+      width: calc(100% - 36px);
+      padding-top: 28px;
+    }
+
+    .count { display: none; }
+    .gallery { padding-top: 24px; padding-left: 18px; padding-right: 18px; gap: 18px; }
+    .menu-card { width: calc(100vw - 36px); }
+    .frame { padding: 13px; }
+    .paper { min-height: 660px; padding: 39px 24px 28px; }
+    .course-items { gap: 9px; }
+    .dish { font-size: 18px; }
+    .menu-meta strong { font-size: 14px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .menu-card {
+      animation: reveal .65s both;
+      animation-delay: calc(var(--index, 0) * 80ms);
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div>
+    <p class="eyebrow">Banquet Collection</p>
+    <h1>宴会菜单</h1>
+  </div>
+  <p class="count" id="count">正在整理菜单</p>
+</header>
+
+<main class="gallery-wrap">
+  <section class="gallery" id="gallery" aria-label="宴会菜单列表" aria-live="polite">
+    <div class="status">正在加载菜单…</div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var gallery = document.getElementById('gallery');
+  var count = document.getElementById('count');
+  var resizeTimer;
+
+  function syncFrameHeights() {
+    var frames = gallery.querySelectorAll('.frame');
+    var maxHeight = 0;
+
+    Array.prototype.forEach.call(frames, function (frame) {
+      frame.style.height = '';
+    });
+    Array.prototype.forEach.call(frames, function (frame) {
+      maxHeight = Math.max(maxHeight, frame.getBoundingClientRect().height);
+    });
+    Array.prototype.forEach.call(frames, function (frame) {
+      frame.style.height = maxHeight + 'px';
+    });
+  }
+
+  function escapeHTML(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function dishLines(items) {
+    return (items || []).map(function (item) {
+      return '<p class="dish">' + escapeHTML(item) + '</p>';
+    }).join('');
+  }
+
+  function course(label, english, items) {
+    var dishes = items || [];
+    if (!dishes.length) return '';
+    return '<section class="course">' +
+      '<div class="course-items">' + dishLines(dishes) + '</div>' +
+      '<div class="course-label"><strong>' + escapeHTML(label) + '</strong>' + escapeHTML(english) + '</div>' +
+      '</section>';
+  }
+
+  function wines(items) {
+    if (!items || !items.length) return '';
+    return '<section class="wine">' +
+      '<h2 class="wine-heading">Wine Selection</h2>' +
+      items.map(function (wine) {
+        return '<div class="wine-item">' +
+          '<span class="wine-name">' + escapeHTML(wine.name) + '</span>' +
+          '<span class="wine-year">' + escapeHTML(wine.year || '') + '</span>' +
+          '<span class="wine-address">' + escapeHTML(wine.addr || '') + '</span>' +
+          '</div>';
+      }).join('') +
+      '</section>';
+  }
+
+  function render(menu, index) {
+    return '<article class="menu-card" style="--index:' + index + '">' +
+      '<header class="menu-meta">' +
+        '<div><strong>' + escapeHTML(menu.event || '宴会晚宴') + '</strong><span>' + escapeHTML(menu.city || '') + '</span></div>' +
+        '<time class="menu-date">' + escapeHTML(menu.time || '') + '</time>' +
+      '</header>' +
+      '<div class="frame"><div class="paper">' +
+        '<h2 class="menu-heading">菜单</h2>' +
+        course('冷盘', 'Cold', menu.cold) +
+        course('热菜', 'Main', (menu.main || []).slice(0, 2).concat((menu.main || []).slice(2))) +
+        (menu.dessert && menu.dessert.length ? course('点心', 'Dessert', menu.dessert || []): '') +
+        (menu.more && menu.more.length ? course('其他', 'Other', menu.more) : '') +
+        wines(menu.wine) +
+      '</div></div>' +
+      '</article>';
+  }
+
+  fetch('./list.json', { cache: 'no-store' })
+    .then(function (response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return response.json();
+    })
+    .then(function (data) {
+      var list = Array.isArray(data) ? data : data.list;
+      if (!Array.isArray(list) || !list.length) {
+        gallery.innerHTML = '<div class="status">暂无宴会菜单</div>';
+        count.textContent = '0 份菜单';
+        return;
+      }
+      gallery.innerHTML = list.map(render).join('');
+      count.textContent = list.length + ' 份菜单';
+      requestAnimationFrame(syncFrameHeights);
+    })
+    .catch(function (error) {
+      gallery.innerHTML = '<div class="error">菜单加载失败，请刷新页面重试。</div>';
+      count.textContent = '加载失败';
+      console.error('Unable to load banquet menus:', error);
+    });
+
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(syncFrameHeights, 100);
+  });
+}());
+</script>
+</body>
+</html>
