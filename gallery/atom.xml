@@ -3,7 +3,7 @@
                 <title>Gallery</title>
                 <link href="https://aiznb.com/gallery/atom.xml" rel="self"/>
                 <link href="https://aiznb.com/gallery/"/>
-                <updated>2026-11-19T16:03:25.250Z</updated>
+                <updated>2026-11-20T01:02:42.749Z</updated>
                 <id>https://aiznb.com/gallery/</id>
                 <author>
                     <name>soar</name>
@@ -13,6 +13,30 @@
                     <userId>62733912072851456</userId>
                 </follow_challenge>
                 <entry>
+                            <title>LLM Score</title>
+                            <link href="https://aiznb.com/llm-score/"/>
+                            <id>https://aiznb.com/llm-score/</id>
+                            <updated>2026-11-20T00:00:00.000Z</updated>
+                            <summary><![CDATA[LLM Score 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
+                        </entry><entry>
+                            <title>Top Articles</title>
+                            <link href="https://aiznb.com/top-articles"/>
+                            <id>https://aiznb.com/top-articles</id>
+                            <updated>2026-11-19T00:00:00.000Z</updated>
+                            <summary><![CDATA[Top Articles 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
+                        </entry><entry>
+                            <title>Banquet Menu</title>
+                            <link href="https://aiznb.com/pages/banquet-menu"/>
+                            <id>https://aiznb.com/pages/banquet-menu</id>
+                            <updated>2026-11-18T00:00:00.000Z</updated>
+                            <summary><![CDATA[Banquet Menu 
+
+非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
+                        </entry><entry>
                             <title>Beautiful Shaders</title>
                             <link href="https://aiznb.com/gallery/Beautiful-Shaders.html"/>
                             <id>https://aiznb.com/gallery/Beautiful-Shaders.html</id>
@@ -26,14 +50,6 @@
                             <id>https://aiznb.com/gallery/Those-Flowers.html</id>
                             <updated>2026-10-10T00:00:00.000Z</updated>
                             <summary><![CDATA[Those Flowers 
-
-非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
-                        </entry><entry>
-                            <title>LLM Score</title>
-                            <link href="https://aiznb.com/llm-score/"/>
-                            <id>https://aiznb.com/llm-score/</id>
-                            <updated>2026-10-05T00:00:00.000Z</updated>
-                            <summary><![CDATA[LLM Score 
 
 非常期待您在 X （ https://x.com/intent/user?screen_name=codersoar ）上关注我。]]></summary>
                         </entry><entry>
